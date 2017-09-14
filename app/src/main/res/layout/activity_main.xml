@@ -1,18 +1,248 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.health1st.yeop9657.health1st.MainActivity">
+    android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <!-- Main AppBarLayout -->
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-</android.support.constraint.ConstraintLayout>
+        <!-- Main ToolBar -->
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/MainToolBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </android.support.design.widget.AppBarLayout>p
+
+    <!-- Main Total ScrollView -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- Main LearLayout in ScrollView -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Main Helper Information CardView -->
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/MainHelperImage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:minHeight="125dp"
+                        android:minWidth="125dp" />
+
+                    <!-- Main Helper Text Layout -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <!-- Main Helper Name TextView -->
+                        <TextView
+                            android:id="@+id/MainHelperName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:text="@string/Main_Helper_Name"
+                            android:textColor="@color/colorBasicText" />
+
+                        <!-- Main Helper Address TextView -->
+                        <TextView
+                            android:id="@+id/MainHelperAddress"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:text="@string/Main_Helper_Address"
+                            android:textColor="@color/colorBasicText" />
+
+                        <!-- Main Helper Tel TextView -->
+                        <TextView
+                            android:id="@+id/MainHelperTel"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:text="@string/Main_Helper_Tel"
+                            android:textColor="@color/colorBasicText" />
+
+                        <!-- Main Helper Call Button -->
+                        <Button
+                            android:id="@+id/MainHelperCall"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:padding="5dp"
+                            android:background="@color/colorAccent"
+                            android:drawableLeft="@drawable/ic_call_white_24dp"
+                            android:text="@string/Main_Helper_Call"
+                            android:textColor="@color/colorWhiteText"
+                            android:textSize="20sp" />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <!-- Main Patient Information Layout -->
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <!-- Main Patient State Information Layout -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_weight="1">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:id="@+id/Patient_State_Image"
+                                android:layout_width="64dp"
+                                android:layout_height="64dp"
+                                android:layout_margin="10dp"
+                                android:layout_centerInParent="true"
+                                android:background="@drawable/ic_circle_green"/>
+
+                            <TextView
+                                android:id="@+id/Patient_State_Text"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:text="@string/Main_Patient_State_1"
+                                android:textSize="20sp"
+                                android:textStyle="bold"
+                                android:textColor="@color/colorWhiteText"/>
+
+                        </RelativeLayout>
+
+                        <TextView
+                            android:id="@+id/textView3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="@string/Main_Patient_State"
+                            android:textColor="@color/colorBasicText"
+                            android:textSize="20sp" />
+
+                    </LinearLayout>
+
+                    <!-- Main Patient SOS Layout -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <Button
+                            android:id="@+id/Main_Patient_SOS_Call"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_margin="5dp"
+                            android:background="@color/colorPrimary"
+                            android:drawableLeft="@drawable/ic_call_white_24dp"
+                            android:text="@string/Main_Patient_SOS_Call"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/colorWhiteText"/>
+
+                        <Button
+                            android:id="@+id/Main_Patient_SOS_MMS"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_margin="5dp"
+                            android:padding="5dp"
+                            android:drawableLeft="@drawable/ic_chat_white_24dp"
+                            android:background="@color/colorPrimaryDark"
+                            android:text="@string/Main_Patient_SOS_Message"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/colorWhiteText"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <!-- Main Google Google Map CardView -->
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp">
+
+                <!-- Main Google Map Layout -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.google.android.gms.maps.MapView
+                        android:id="@+id/MainGoogleMap"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="250dp" />
+
+                    <TextView
+                        android:id="@+id/MainMapLocation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#C5CAE9"
+                        android:gravity="center"
+                        android:text="@string/Main_Map_Location"
+                        android:textColor="@color/colorBasicText" />
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <!-- Main Medical History CardView -->
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp">
+
+                <TextView
+                    android:id="@+id/Main_Medical_History"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Main_Medical_History_Edit"
+                    android:textColor="@color/colorBasicText"/>
+
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

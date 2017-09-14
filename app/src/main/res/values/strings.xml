@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">Health1st</string>
+    <!-- Main Helper String -->
+    <string name="Main_Helper_Name">보호자 이름</string>
+    <string name="Main_Helper_Address">보호자 주소</string>
+    <string name="Main_Helper_Tel">보호자 번호</string>
+    <string name="Main_Helper_Call">전화하기</string>
+    <!-- Main Patient String -->
+    <string name="Main_Patient_SOS_Call">SOS 전화하기</string>
+    <string name="Main_Patient_SOS_Message">SOS 문자하기</string>
+    <string name="Main_Patient_State_1">정상</string>
+    <string name="Main_Patient_State_2">위험</string>
+    <string name="Main_Patient_State_3">긴급</string>
+    <string name="Main_Patient_State">현재상태</string>
+    <!-- Main Google Map String -->
+    <string name="Main_Map_Location">현재위치</string>
+    <!-- Main Medical History String -->
+    <string name="Main_Medical_History_Edit">설정화면에서 병력사항을 입력해주세요.</string>
 </resources>
