@@ -16,4 +16,28 @@
     <string name="Main_Map_Location">현재위치</string>
     <!-- Main Medical History String -->
     <string name="Main_Medical_History_Edit">설정화면에서 병력사항을 입력해주세요.</string>
+    <!-- Main Menu String -->
+    <string name="Main_Menu_Setting">설정</string>
+    <string name="Main_Menu_Sync">동기화</string>
+    <!-- Preference String -->
+    <string name="Preference_Helper_Information">HELPER INFORMATION</string>
+    <string name="Preference_Patient_Information">PATIENT INFORMATION</string>
+    <string name="Preference_Helper_Name">- 보호자 이름 설정</string>
+    <string name="Preference_Helper_Name_Text">보호자 이름을 설정합니다.</string>
+    <string name="Preference_Helper_Address">- 보호자 주소 설정</string>
+    <string name="Preference_Helper_Address_Test">보호자 주소을 설정합니다.</string>
+    <string name="Preference_Helper_Tel">- 보호자 전화번호 설정</string>
+    <string name="Preference_Helper_Tel_Text">보호자 전화번호을 설정합니다.</string>
+    <string name="Preference_Helper_Image">- 보호자 사진 설정</string>
+    <string name="Preference_Helper_Image_Text">보호자 사진 설정합니다.</string>
+    <string name="Preference_Patient_Blood">- 환자 혈액형 설정</string>
+    <string name="Preference_Patient_Blood_Text">환자 혈액형을 설정합니다.</string>
+    <string name="Preference_Patient_Height">- 환자 신장 설정</string>
+    <string name="Preference_Patient_Height_Text">환자 신장 설정을 합니다.</string>
+    <string name="Preference_Patient_Weight">- 환자 체중 설정</string>
+    <string name="Preference_Patient_Weight_Text">환자 신장 체중을 합니다.</string>
+    <string name="Preference_Patient_Medicine">- 환자 복용약 설정</string>
+    <string name="Preference_Patient_Medicine_Text">환자 복용약 설정을 합니다.</string>
+    <string name="Preference_Patient_Disease">- 환자 질병 설정</string>
+    <string name="Preference_Patient_Disease_Text">환자 질병 설정을 합니다.</string>
 </resources>

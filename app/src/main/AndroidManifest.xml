@@ -16,6 +16,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Activity -->
+        <activity android:name=".Preference.ChildActivity" android:label=".ChildActivity"/>
+        <activity android:name=".Preference.ParentActivity" android:label="ParentActivity"/>
+
     </application>
+
+    <!-- Permission -->
+    <uses-permission android:name="android.permission.VIBRATE"/>
 
 </manifest>

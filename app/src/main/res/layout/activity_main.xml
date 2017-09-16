@@ -12,11 +12,11 @@
 
         <!-- Main ToolBar -->
         <android.support.v7.widget.Toolbar
-            android:id="@+id/MainToolBar"
+            android:id="@+id/Main_ToolBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
-    </android.support.design.widget.AppBarLayout>p
+    </android.support.design.widget.AppBarLayout>
 
     <!-- Main Total ScrollView -->
     <ScrollView
@@ -128,9 +128,9 @@
                                 android:id="@+id/Patient_State_Image"
                                 android:layout_width="64dp"
                                 android:layout_height="64dp"
-                                android:layout_margin="10dp"
                                 android:layout_centerInParent="true"
-                                android:background="@drawable/ic_circle_green"/>
+                                android:layout_margin="10dp"
+                                android:background="@drawable/ic_circle_green" />
 
                             <TextView
                                 android:id="@+id/Patient_State_Text"
@@ -138,9 +138,9 @@
                                 android:layout_height="wrap_content"
                                 android:layout_centerInParent="true"
                                 android:text="@string/Main_Patient_State_1"
+                                android:textColor="@color/colorWhiteText"
                                 android:textSize="20sp"
-                                android:textStyle="bold"
-                                android:textColor="@color/colorWhiteText"/>
+                                android:textStyle="bold" />
 
                         </RelativeLayout>
 
@@ -236,6 +236,7 @@
                     android:id="@+id/Main_Medical_History"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
                     android:text="@string/Main_Medical_History_Edit"
                     android:textColor="@color/colorBasicText"/>
 

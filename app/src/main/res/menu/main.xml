@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/Main_Sync"
+        android:title="@string/Main_Menu_Sync"
+        android:orderInCategory="1"
+        android:icon="@drawable/ic_autorenew_white_24dp"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/Main_Setting"
+        android:title="@string/Main_Menu_Setting"
+        android:icon="@drawable/ic_settings_white_24dp"
+        android:orderInCategory="2"
+        app:showAsAction="always" />
+
+</menu>
