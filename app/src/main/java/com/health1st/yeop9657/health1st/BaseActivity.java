@@ -45,7 +45,7 @@ public class BaseActivity extends AppCompatActivity implements PermissionListene
 
         /* POINT - : Permission */
         TedPermission.with(this).setPermissionListener(this).setDeniedMessage(R.string.Basic_Permission_Information)
-                .setPermissions(Manifest.permission.CALL_PHONE, Manifest.permission.SEND_SMS).check();
+                .setPermissions(Manifest.permission.CALL_PHONE, Manifest.permission.SEND_SMS, Manifest.permission.ACCESS_FINE_LOCATION).check();
     }
 
     /* MARK - : Typekit Method */
