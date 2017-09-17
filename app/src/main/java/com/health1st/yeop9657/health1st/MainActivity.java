@@ -115,8 +115,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
             case R.id.Main_Patient_SOS_Call: { startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:01064295758"))); break; }
 
-            case R.id.Main_Patient_SOS_MMS: {
-                break;
+            case R.id.Main_Patient_SOS_MMS: {break;
             }
         }
     }
