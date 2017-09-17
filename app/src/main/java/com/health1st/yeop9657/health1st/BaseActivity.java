@@ -1,5 +1,6 @@
 package com.health1st.yeop9657.health1st;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -12,12 +13,16 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.gun0912.tedpermission.PermissionListener;
+import com.gun0912.tedpermission.TedPermission;
 import com.tsengvn.typekit.Typekit;
 import com.tsengvn.typekit.TypekitContextWrapper;
 
+import java.util.ArrayList;
+
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
-public class BaseActivity extends AppCompatActivity
+public class BaseActivity extends AppCompatActivity implements PermissionListener
 {
     /* Vibrator */
     protected Vibrator mVibrator = null;
@@ -37,6 +42,10 @@ public class BaseActivity extends AppCompatActivity
 
         /* POINT - : FONT Open Source */
         Typekit.getInstance().addNormal(Typekit.createFromAsset(this, "BMHANNA_11yrs_ttf.ttf")).addBold(Typekit.createFromAsset(this, "BMHANNA_11yrs_ttf.ttf"));
+
+        /* POINT - : Permission */
+        TedPermission.with(this).setPermissionListener(this).setDeniedMessage(R.string.Basic_Permission_Information)
+                .setPermissions(Manifest.permission.CALL_PHONE, Manifest.permission.SEND_SMS).check();
     }
 
     /* MARK - : Typekit Method */
@@ -61,5 +70,16 @@ public class BaseActivity extends AppCompatActivity
         /* POINT - : Glide Open Source */
         Glide.with(mContext).load(mResourceID)
                 .apply(RequestOptions.bitmapTransform(new CropCircleTransformation())).into(mImageView);
+    }
+
+    /* MARK : - Permission Listener */
+    @Override
+    public void onPermissionGranted() {
+
+    }
+
+    @Override
+    public void onPermissionDenied(ArrayList<String> arrayList) {
+
     }
 }

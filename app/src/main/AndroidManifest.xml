@@ -18,12 +18,13 @@
         </activity>
 
         <!-- Activity -->
-        <activity android:name=".Preference.ChildActivity" android:label=".ChildActivity"/>
         <activity android:name=".Preference.ParentActivity" android:label="ParentActivity"/>
 
     </application>
 
     <!-- Permission -->
     <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.SEND_SMS"/>
 
 </manifest>

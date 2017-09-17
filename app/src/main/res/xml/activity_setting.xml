@@ -64,6 +64,46 @@
             android:title="@string/Preference_Patient_Medicine"
             android:summary="@string/Preference_Patient_Medicine_Text"/>
 
+        <EditTextPreference
+            android:id="@+id/Preference_Patient_Etc"
+            android:key="Patient_Etc"
+            android:title="@string/Preference_Patient_Etc"
+            android:summary="@string/Preference_Patient_Etc_Text"/>
+
+    </PreferenceCategory>
+
+    <!-- Developer Category -->
+    <PreferenceCategory
+        android:title="@string/Preference_Developer_Information"
+        android:key="Developer_Information">
+
+        <Preference
+            android:title="@string/Preference_Developer_State"
+            android:summary="@string/Preference_Developer_State_Text"
+            android:key="Developer_State">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="http://yeop9657.blog.me"/>
+        </Preference>
+
+        <Preference
+            android:title="@string/Preference_Developer_OpenSource"
+            android:summary="@string/Preference_Developer_OpenSource_Text"
+            android:key="Developer_OpenSource">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="http://yeop9657.blog.me/221099065729"/>
+        </Preference>
+
+        <Preference
+            android:title="@string/Preference_Developer_Email"
+            android:summary="@string/Preference_Developer_Email_Text"
+            android:key="Developer_Email">
+            <intent
+                android:action="android.intent.action.SENDTO"
+                android:data="mailto:yeop9657@naver.com"/>
+        </Preference>
+
     </PreferenceCategory>
 
 </PreferenceScreen>
