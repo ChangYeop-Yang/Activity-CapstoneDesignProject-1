@@ -1,5 +1,6 @@
 package com.health1st.yeop9657.health1st.Preference;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
@@ -8,6 +9,9 @@ import com.health1st.yeop9657.health1st.R;
 
 public class ParentActivity extends BaseActivity
 {
+    /* POINT - : Context */
+    public Context mContext = ParentActivity.this;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

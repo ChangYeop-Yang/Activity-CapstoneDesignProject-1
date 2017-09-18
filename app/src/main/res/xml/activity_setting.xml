@@ -26,6 +26,11 @@
             android:title="@string/Preference_Helper_Tel"
             android:summary="@string/Preference_Helper_Tel_Text"/>
 
+        <Preference
+            android:title="@string/Preference_Helper_Image"
+            android:key="Helper_Image"
+            android:summary="@string/Preference_Helper_Image_Text"/>
+
     </PreferenceCategory>
 
     <!-- Preference Patient Category -->

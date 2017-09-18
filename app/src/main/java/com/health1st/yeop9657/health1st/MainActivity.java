@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.telephony.SmsManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,12 +19,16 @@ import com.health1st.yeop9657.health1st.ResourceData.BasicData;
 
 import java.util.HashMap;
 
-public class MainActivity extends BaseActivity implements View.OnClickListener {
+public class MainActivity extends BaseActivity implements View.OnClickListener
+{
     /* HashMap Collection */
     private HashMap<String, TextView> cTextViewMap = new HashMap<String, TextView>();
 
     /* Context */
     private Context mContext = MainActivity.this;
+
+    /* POINT - : ImageView */
+    private ImageView mHelperImage = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,9 +41,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
         /* MARK - : Button */
         final Button aButton[] = {(Button) findViewById(R.id.Main_Patient_SOS_Call), (Button) findViewById(R.id.Main_Patient_SOS_MMS), (Button) findViewById(R.id.MainHelperCall)};
-        for (final Button mButton : aButton) {
-            mButton.setOnClickListener(this);
-        }
+        for (final Button mButton : aButton) { mButton.setOnClickListener(this); }
 
         /* MARK - : TextView */
         cTextViewMap.put("Helper_Name", (TextView) findViewById(R.id.MainHelperName));
@@ -50,7 +53,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         getSharedText();
 
         /* MARK - : ImageView */
-        final ImageView mHelperImage = (ImageView) findViewById(R.id.MainHelperImage);
+        mHelperImage = (ImageView) findViewById(R.id.MainHelperImage);
         setImageView(mContext, mHelperImage, BasicData.HELPER_IMAGE);
     }
 
@@ -59,6 +62,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         super.onRestart();
 
         getSharedText();
+        setImageView(mContext, mHelperImage, BasicData.HELPER_IMAGE);
     }
 
     /* MARK - : User Custom Method */
@@ -74,17 +78,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
         /* POINT - : Patient Information */
         final StringBuffer mStringBuffer = new StringBuffer("\n");
-        mStringBuffer.append("※ 혈액형: ");
+        mStringBuffer.append("* 혈액형: ");
         mStringBuffer.append(String.format("%s\n\n", mShared.getString("Patient_Blood", BasicData.EMPTY_TEXT)));
-        mStringBuffer.append("※ 신장: ");
-        mStringBuffer.append(String.format("%s㎝\n\n", mShared.getString("Patient_Height", BasicData.EMPTY_TEXT)));
-        mStringBuffer.append("※ 체중: ");
-        mStringBuffer.append(String.format("%s㎏\n\n", mShared.getString("Patient_Weight", BasicData.EMPTY_TEXT)));
-        mStringBuffer.append("※ 질병: ");
+        mStringBuffer.append("* 신장: ");
+        mStringBuffer.append(String.format("%scm\n\n", mShared.getString("Patient_Height", BasicData.EMPTY_TEXT)));
+        mStringBuffer.append("* 체중: ");
+        mStringBuffer.append(String.format("%skg\n\n", mShared.getString("Patient_Weight", BasicData.EMPTY_TEXT)));
+        mStringBuffer.append("* 질병: ");
         mStringBuffer.append(String.format("%s\n\n", mShared.getString("Patient_Disease", BasicData.EMPTY_TEXT)));
-        mStringBuffer.append("※ 복용중인 약: ");
+        mStringBuffer.append("* 복용중인 약: ");
         mStringBuffer.append(String.format("%s\n\n", mShared.getString("Patient_Medicine", BasicData.EMPTY_TEXT)));
-        mStringBuffer.append("※ 기타사항: ");
+        mStringBuffer.append("* 기타사항: ");
         mStringBuffer.append(String.format("%s\n", mShared.getString("Patient_Etc", BasicData.EMPTY_TEXT)));
         cTextViewMap.get("Patient_Information").setText(mStringBuffer.toString());
     }
@@ -112,8 +116,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
             case R.id.Main_Patient_SOS_Call: { startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:01064295758"))); break; }
 
-            case R.id.Main_Patient_SOS_MMS: {break;
-            }
+            case R.id.Main_Patient_SOS_MMS: { SmsManager.getDefault().sendTextMessage("01064295758", null, String.format("Lat: %f, Long: %f", mLocation.getLatitude(), mLocation.getLongitude()), null, null); break; }
         }
     }
 

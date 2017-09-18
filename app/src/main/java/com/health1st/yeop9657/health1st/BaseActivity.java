@@ -15,6 +15,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
+import com.health1st.yeop9657.health1st.Location.Location;
+import com.health1st.yeop9657.health1st.ResourceData.BasicData;
 import com.tsengvn.typekit.Typekit;
 import com.tsengvn.typekit.TypekitContextWrapper;
 
@@ -30,6 +32,9 @@ public class BaseActivity extends AppCompatActivity implements PermissionListene
     /* Preference */
     protected SharedPreferences mShared = null;
 
+    /* POINT - : Location */
+    protected Location mLocation = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,12 +45,15 @@ public class BaseActivity extends AppCompatActivity implements PermissionListene
         /* POINT - : SharedPreferences */
         if (mShared == null) { mShared = PreferenceManager.getDefaultSharedPreferences(this); }
 
+        /* POINT - : Location */
+        if (mLocation == null) { mLocation = new Location(this); }
+
         /* POINT - : FONT Open Source */
         Typekit.getInstance().addNormal(Typekit.createFromAsset(this, "BMHANNA_11yrs_ttf.ttf")).addBold(Typekit.createFromAsset(this, "BMHANNA_11yrs_ttf.ttf"));
 
         /* POINT - : Permission */
         TedPermission.with(this).setPermissionListener(this).setDeniedMessage(R.string.Basic_Permission_Information)
-                .setPermissions(Manifest.permission.CALL_PHONE, Manifest.permission.SEND_SMS, Manifest.permission.ACCESS_FINE_LOCATION).check();
+                .setPermissions(Manifest.permission.CALL_PHONE, Manifest.permission.SEND_SMS, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.READ_EXTERNAL_STORAGE).check();
     }
 
     /* MARK - : Typekit Method */
@@ -67,8 +75,10 @@ public class BaseActivity extends AppCompatActivity implements PermissionListene
 
     protected void setImageView(final Context mContext, final ImageView mImageView, final int mResourceID)
     {
+        final String mPhotoPath = mShared.getString("Helper_Image", BasicData.EMPTY_TEXT);
+
         /* POINT - : Glide Open Source */
-        Glide.with(mContext).load(mResourceID)
+        Glide.with(mContext).load( (mPhotoPath == BasicData.EMPTY_TEXT ? mResourceID : mPhotoPath) )
                 .apply(RequestOptions.bitmapTransform(new CropCircleTransformation())).into(mImageView);
     }
 
