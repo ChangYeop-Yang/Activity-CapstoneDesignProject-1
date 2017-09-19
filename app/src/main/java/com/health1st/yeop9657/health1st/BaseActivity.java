@@ -9,15 +9,21 @@ import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.android.gms.maps.model.LatLng;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 import com.health1st.yeop9657.health1st.ResourceData.BasicData;
 import com.tsengvn.typekit.Typekit;
 import com.tsengvn.typekit.TypekitContextWrapper;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -30,6 +36,7 @@ public class BaseActivity extends AppCompatActivity implements PermissionListene
 
     /* Preference */
     protected SharedPreferences mShared = null;
+    protected SharedPreferences.Editor mSharedWrite = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +46,10 @@ public class BaseActivity extends AppCompatActivity implements PermissionListene
         if (mVibrator == null) { mVibrator = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE); }
 
         /* POINT - : SharedPreferences */
-        if (mShared == null) { mShared = PreferenceManager.getDefaultSharedPreferences(this); }
+        if (mShared == null) {
+            mShared = PreferenceManager.getDefaultSharedPreferences(this);
+            mSharedWrite = mShared.edit();
+        }
 
         /* POINT - : FONT Open Source */
         Typekit.getInstance().addNormal(Typekit.createFromAsset(this, "BMHANNA_11yrs_ttf.ttf")).addBold(Typekit.createFromAsset(this, "BMHANNA_11yrs_ttf.ttf"));
@@ -73,6 +83,44 @@ public class BaseActivity extends AppCompatActivity implements PermissionListene
         /* POINT - : Glide Open Source */
         Glide.with(mContext).load( (mPhotoPath == BasicData.EMPTY_TEXT ? mResourceID : mPhotoPath) )
                 .apply(RequestOptions.bitmapTransform(new CropCircleTransformation())).into(mImageView);
+    }
+
+    /* MARK - : set ArrayList<String> Preference Method */
+    protected final void setArrayListPreference(final ArrayList<String> mLatLng, final String sKey)
+    {
+        if (mLatLng.isEmpty()) { mSharedWrite.putString(sKey, null); }
+        else
+        {
+            final JSONArray aJSON = new JSONArray();
+            for (final String mTemp : mLatLng) { aJSON.put(mTemp); }
+            mSharedWrite.putString(sKey, aJSON.toString());
+        }
+
+        mSharedWrite.apply();
+    }
+
+    /* MARK - : get ArrayList<String> Preference Method */
+    protected final ArrayList<LatLng> getArrayListPreference(final String sKey)
+    {
+        final String sJSON = mShared.getString(sKey, null);
+        final ArrayList<LatLng> aLatLng = new ArrayList<LatLng>();
+
+        if (sJSON.isEmpty()) { return null; }
+        else
+        {
+            try
+            {
+                final JSONArray asJSON = new JSONArray(sJSON);
+                for (int mCount = 0, mSize = asJSON.length(); mCount < mSize; mCount++)
+                {
+                    String Lat[] = asJSON.optString(mCount).split(",");
+                    aLatLng.add(new LatLng(Double.parseDouble(Lat[0]), Double.parseDouble(Lat[1])));
+                }
+            }
+            catch (Exception error) { Log.e("JSON Error!", error.getMessage()); error.printStackTrace(); }
+
+            return aLatLng;
+        }
     }
 
     /* MARK : - Permission Listener */

@@ -6,6 +6,7 @@ public class BasicData
 {
     /* MARK - : Integer */
     public final static int VIBRATE_VALUE = 300;
+    public final static int MAKER_POSITION_LOCATION_VALUE = 10;
 
     // PATIENT STATE IMAGE VALUE
     public final static int PATIENT_STATE_RED = R.drawable.ic_circle_red;

@@ -23,6 +23,9 @@ import com.health1st.yeop9657.health1st.Location.Location;
 import com.health1st.yeop9657.health1st.Preference.ParentActivity;
 import com.health1st.yeop9657.health1st.ResourceData.BasicData;
 
+import org.json.JSONException;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener, OnMapReadyCallback
@@ -76,6 +79,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
         getSharedText();
         setImageView(mContext, mHelperImage, BasicData.HELPER_IMAGE);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+
     }
 
     /* MARK - : User Custom Method */
