@@ -15,7 +15,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
-import com.health1st.yeop9657.health1st.Location.Location;
 import com.health1st.yeop9657.health1st.ResourceData.BasicData;
 import com.tsengvn.typekit.Typekit;
 import com.tsengvn.typekit.TypekitContextWrapper;
@@ -32,9 +31,6 @@ public class BaseActivity extends AppCompatActivity implements PermissionListene
     /* Preference */
     protected SharedPreferences mShared = null;
 
-    /* POINT - : Location */
-    protected Location mLocation = null;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,9 +40,6 @@ public class BaseActivity extends AppCompatActivity implements PermissionListene
 
         /* POINT - : SharedPreferences */
         if (mShared == null) { mShared = PreferenceManager.getDefaultSharedPreferences(this); }
-
-        /* POINT - : Location */
-        if (mLocation == null) { mLocation = new Location(this); }
 
         /* POINT - : FONT Open Source */
         Typekit.getInstance().addNormal(Typekit.createFromAsset(this, "BMHANNA_11yrs_ttf.ttf")).addBold(Typekit.createFromAsset(this, "BMHANNA_11yrs_ttf.ttf"));

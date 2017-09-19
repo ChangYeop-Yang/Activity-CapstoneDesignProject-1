@@ -207,11 +207,11 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <com.google.android.gms.maps.MapView
+                    <fragment
                         android:id="@+id/MainGoogleMap"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:minHeight="250dp" />
+                        android:layout_height="350dp"
+                        android:name="com.google.android.gms.maps.SupportMapFragment" />
 
                     <TextView
                         android:id="@+id/MainMapLocation"

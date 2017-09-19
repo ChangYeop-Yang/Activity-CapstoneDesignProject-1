@@ -14,12 +14,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.health1st.yeop9657.health1st.Location.Location;
 import com.health1st.yeop9657.health1st.Preference.ParentActivity;
 import com.health1st.yeop9657.health1st.ResourceData.BasicData;
 
 import java.util.HashMap;
 
-public class MainActivity extends BaseActivity implements View.OnClickListener
+public class MainActivity extends BaseActivity implements View.OnClickListener, OnMapReadyCallback
 {
     /* HashMap Collection */
     private HashMap<String, TextView> cTextViewMap = new HashMap<String, TextView>();
@@ -29,6 +35,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener
 
     /* POINT - : ImageView */
     private ImageView mHelperImage = null;
+
+    /* POINT - : Location */
+    protected Location mLocation = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +64,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener
         /* MARK - : ImageView */
         mHelperImage = (ImageView) findViewById(R.id.MainHelperImage);
         setImageView(mContext, mHelperImage, BasicData.HELPER_IMAGE);
+
+        /* MARK - : MapFragment */
+        SupportMapFragment mMapFragment = (SupportMapFragment)getSupportFragmentManager().findFragmentById(R.id.MainGoogleMap);
+        mMapFragment.getMapAsync(this);
     }
 
     @Override
@@ -116,7 +129,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener
 
             case R.id.Main_Patient_SOS_Call: { startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:01064295758"))); break; }
 
-            case R.id.Main_Patient_SOS_MMS: { SmsManager.getDefault().sendTextMessage("01064295758", null, String.format("Lat: %f, Long: %f", mLocation.getLatitude(), mLocation.getLongitude()), null, null); break; }
+            case R.id.Main_Patient_SOS_MMS: { SmsManager.getDefault().sendTextMessage("01064295758", null, String.format("Lat: %f, Long: %f, %s", mLocation.getLatitude(), mLocation.getLongitude(), cTextViewMap.get("Patient_Location").getText()), null, null); break; }
         }
     }
 
@@ -141,4 +154,23 @@ public class MainActivity extends BaseActivity implements View.OnClickListener
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     { getMenuInflater().inflate(R.menu.main, menu); return true; }
+
+    /* MARK - : Map Ready Listener */
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+
+        /* POINT - : Location */
+        if (mLocation == null) {
+            mLocation = new Location(mContext, googleMap);
+            mLocation.getGEOAddress(mLocation.getLatitude(), mLocation.getLongitude(), cTextViewMap.get("Patient_Location"));
+        }
+
+        /* POINT - : LatLng */
+        final LatLng sLatLng = new LatLng(mLocation.getLatitude(), mLocation.getLongitude());
+
+        googleMap.setMyLocationEnabled(true);
+        googleMap.getUiSettings().setCompassEnabled(true);
+        googleMap.getUiSettings().setZoomControlsEnabled(true);
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sLatLng, 15));
+    }
 }
