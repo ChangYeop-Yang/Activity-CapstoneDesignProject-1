@@ -40,6 +40,30 @@
 
         <!--  Patient EditText Preference -->
         <EditTextPreference
+            android:id="@+id/Preference_Patient_Name"
+            android:key="Patient_Name"
+            android:title="@string/Preference_Patient_Name"
+            android:summary="@string/Preference_Patient_Name_Text"/>
+
+        <EditTextPreference
+            android:id="@+id/Preference_Patient_Sex"
+            android:key="Patient_Sex"
+            android:title="@string/Preference_Patient_Sex"
+            android:summary="@string/Preference_Patient_Sex_Text"/>
+
+        <EditTextPreference
+            android:id="@+id/Preference_Patient_Age"
+            android:key="Patient_Age"
+            android:title="@string/Preference_Patient_Age"
+            android:summary="@string/Preference_Patient_Age_Text"/>
+
+        <EditTextPreference
+            android:id="@+id/Preference_Patient_Smoking"
+            android:key="Patient_Smoking"
+            android:title="@string/Preference_Patient_Smoking"
+            android:summary="@string/Preference_Patient_Smoking_Text"/>
+
+        <EditTextPreference
             android:id="@+id/Preference_Patient_Blood"
             android:key="Patient_Blood"
             android:title="@string/Preference_Patient_Blood"

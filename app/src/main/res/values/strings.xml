@@ -13,7 +13,6 @@
     <string name="Main_Patient_State_1">정상</string>
     <string name="Main_Patient_State_2">위험</string>
     <string name="Main_Patient_State_3">긴급</string>
-    <string name="Main_Patient_State">현재상태</string>
     <!-- Main Google Map String -->
     <string name="Main_Map_Location">현재위치</string>
     <!-- Main Medical History String -->
@@ -24,6 +23,7 @@
     <!-- Preference String -->
     <string name="Preference_Helper_Information">HELPER INFORMATION</string>
     <string name="Preference_Patient_Information">PATIENT INFORMATION</string>
+    <string name="Preference_Patient_State">PATIENT STATE</string>
     <string name="Preference_Developer_Information">DEVELOPER_INFORMATION</string>
     <string name="Preference_Helper_Name">- 보호자 이름 설정</string>
     <string name="Preference_Helper_Name_Text">보호자 이름을 설정합니다.</string>
@@ -45,6 +45,14 @@
     <string name="Preference_Patient_Disease_Text">환자 질병 설정을 합니다.</string>
     <string name="Preference_Patient_Etc">- 환자 기타사항 설정</string>
     <string name="Preference_Patient_Etc_Text">환자 기타사항 설정을 합니다.</string>
+    <string name="Preference_Patient_Name">환자 이름 설정</string>
+    <string name="Preference_Patient_Name_Text">환자 이름 설정을 합니다.</string>
+    <string name="Preference_Patient_Age">환자 나이 설정</string>
+    <string name="Preference_Patient_Age_Text">환자 나이 설정을 합니다.</string>
+    <string name="Preference_Patient_Sex">환자 성별 설정</string>
+    <string name="Preference_Patient_Sex_Text">환자 성별 설정을 합니다.</string>
+    <string name="Preference_Patient_Smoking">환자 흡연여부 설정</string>
+    <string name="Preference_Patient_Smoking_Text">환자 흡연여부 설정을 합니다.</string>
     <string name="Preference_Developer_State">- 개발자 정보</string>
     <string name="Preference_Developer_State_Text">개발자 정보를 확인합니다.</string>
     <string name="Preference_Developer_Email">- 개발자 이메일</string>

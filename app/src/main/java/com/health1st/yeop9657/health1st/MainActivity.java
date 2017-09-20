@@ -108,7 +108,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         }
 
         /* POINT - : Patient Information */
-        final StringBuffer mStringBuffer = new StringBuffer("\n");
+        final StringBuffer mStringBuffer = new StringBuffer();
+        mStringBuffer.append("* 이름: ");
+        mStringBuffer.append(String.format("%s\n\n", mShared.getString("Patient_Name", BasicData.EMPTY_TEXT)));
+        mStringBuffer.append("* 나이: ");
+        mStringBuffer.append(String.format("%s\n\n", mShared.getString("Patient_Age", BasicData.EMPTY_TEXT)));
+        mStringBuffer.append("* 성별: ");
+        mStringBuffer.append(String.format("%s\n\n", mShared.getString("Patient_Sex", BasicData.EMPTY_TEXT)));
+        mStringBuffer.append("* 흡연여부: ");
+        mStringBuffer.append(String.format("%s\n\n", mShared.getString("Patient_Smoking", BasicData.EMPTY_TEXT)));
         mStringBuffer.append("* 혈액형: ");
         mStringBuffer.append(String.format("%s\n\n", mShared.getString("Patient_Blood", BasicData.EMPTY_TEXT)));
         mStringBuffer.append("* 신장: ");

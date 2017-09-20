@@ -55,6 +55,14 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
+                        <!-- Patient Introduce TextView -->
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:text="@string/Preference_Helper_Information"
+                            android:textColor="@color/colorAccent"/>
+
                         <!-- Main Helper Name TextView -->
                         <TextView
                             android:id="@+id/MainHelperName"
@@ -120,6 +128,14 @@
                         android:orientation="vertical"
                         android:layout_weight="1">
 
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/Preference_Patient_State"
+                            android:textColor="@color/colorAccent" />
+
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
@@ -143,15 +159,6 @@
                                 android:textStyle="bold" />
 
                         </RelativeLayout>
-
-                        <TextView
-                            android:id="@+id/textView3"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="@string/Main_Patient_State"
-                            android:textColor="@color/colorBasicText"
-                            android:textSize="20sp" />
 
                     </LinearLayout>
 
@@ -211,6 +218,7 @@
                         android:id="@+id/MainGoogleMap"
                         android:layout_width="match_parent"
                         android:layout_height="350dp"
+                        class="com.google.android.gms.maps.SupportMapFragment"
                         android:name="com.google.android.gms.maps.SupportMapFragment" />
 
                     <TextView
@@ -232,13 +240,29 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp">
 
-                <TextView
-                    android:id="@+id/Main_Medical_History"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:text="@string/Main_Medical_History_Edit"
-                    android:textColor="@color/colorBasicText"/>
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/Preference_Patient_Information"
+                        android:textColor="@color/colorAccent"/>
+
+                    <TextView
+                        android:id="@+id/Main_Medical_History"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:text="@string/Main_Medical_History_Edit"
+                        android:textColor="@color/colorBasicText"/>
+
+                </LinearLayout>
 
             </android.support.v7.widget.CardView>
 
