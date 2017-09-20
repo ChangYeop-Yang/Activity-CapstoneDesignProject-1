@@ -105,7 +105,7 @@ public class BaseActivity extends AppCompatActivity implements PermissionListene
         final String sJSON = mShared.getString(sKey, null);
         final ArrayList<LatLng> aLatLng = new ArrayList<LatLng>();
 
-        if (sJSON.isEmpty()) { return null; }
+        if (sJSON == null) { return new ArrayList<LatLng>(); }
         else
         {
             try
@@ -113,8 +113,8 @@ public class BaseActivity extends AppCompatActivity implements PermissionListene
                 final JSONArray asJSON = new JSONArray(sJSON);
                 for (int mCount = 0, mSize = asJSON.length(); mCount < mSize; mCount++)
                 {
-                    String Lat[] = asJSON.optString(mCount).split(",");
-                    aLatLng.add(new LatLng(Double.parseDouble(Lat[0]), Double.parseDouble(Lat[1])));
+                    final String mLatLong[] = asJSON.optString(mCount).split(",");
+                    aLatLng.add(new LatLng(Double.parseDouble(mLatLong[0]), Double.parseDouble(mLatLong[1])));
                 }
             }
             catch (Exception error) { Log.e("JSON Error!", error.getMessage()); error.printStackTrace(); }

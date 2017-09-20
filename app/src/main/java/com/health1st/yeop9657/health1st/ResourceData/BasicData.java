@@ -17,5 +17,6 @@ public class BasicData
     public final static int HELPER_IMAGE = R.drawable.ic_customer_service;
 
     /* MARK - : String */
-    public final static  String EMPTY_TEXT = "정보없음";
+    public final static String EMPTY_TEXT = "정보없음";
+    public final static String MARKER_PREFERENCE_KEY = "MAKER";
 }

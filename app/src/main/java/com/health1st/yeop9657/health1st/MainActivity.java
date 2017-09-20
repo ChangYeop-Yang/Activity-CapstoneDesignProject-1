@@ -19,6 +19,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.health1st.yeop9657.health1st.Location.Location;
 import com.health1st.yeop9657.health1st.Preference.ParentActivity;
 import com.health1st.yeop9657.health1st.ResourceData.BasicData;
@@ -40,7 +41,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     private ImageView mHelperImage = null;
 
     /* POINT - : Location */
-    protected Location mLocation = null;
+    private Location mLocation = null;
+
+    /* POINT - : ArrayList<LatLng> */
+    private ArrayList<LatLng> acLatLngList = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +89,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     protected void onStop() {
         super.onStop();
 
+        final ArrayList<String> acLocationList = new ArrayList<String>();
+        acLatLngList.add(new LatLng(mLocation.getLatitude(), mLocation.getLongitude()));
 
+        for (final LatLng mLocation : acLatLngList) { acLocationList.add(String.format("%f,%f", mLocation.latitude, mLocation.longitude)); }
+        setArrayListPreference(acLocationList, BasicData.MARKER_PREFERENCE_KEY);
     }
 
     /* MARK - : User Custom Method */
@@ -114,6 +122,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         mStringBuffer.append("* 기타사항: ");
         mStringBuffer.append(String.format("%s\n", mShared.getString("Patient_Etc", BasicData.EMPTY_TEXT)));
         cTextViewMap.get("Patient_Information").setText(mStringBuffer.toString());
+    }
+
+    private MarkerOptions setMapMarker(final String mTitle, final String mSubText, final LatLng cLatLng)
+    {
+        final MarkerOptions mMakerOptions = new MarkerOptions();
+        if (mTitle != null) { mMakerOptions.title(mTitle); }
+        if (mSubText != null) { mMakerOptions.snippet(mSubText); }
+        mMakerOptions.position(cLatLng);
+
+        return mMakerOptions;
     }
 
     /* MARK - : One Click Event Listener */
@@ -170,17 +188,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     public void onMapReady(GoogleMap googleMap) {
 
         /* POINT - : Location */
-        if (mLocation == null) {
-            mLocation = new Location(mContext, googleMap);
-            mLocation.getGEOAddress(mLocation.getLatitude(), mLocation.getLongitude(), cTextViewMap.get("Patient_Location"));
-        }
+        if (mLocation == null) { mLocation = new Location(mContext, googleMap); }
+        mLocation.getGEOAddress(mLocation.getLatitude(), mLocation.getLongitude(), cTextViewMap.get("Patient_Location"));
 
         /* POINT - : LatLng */
         final LatLng sLatLng = new LatLng(mLocation.getLatitude(), mLocation.getLongitude());
-
         googleMap.setMyLocationEnabled(true);
         googleMap.getUiSettings().setCompassEnabled(true);
         googleMap.getUiSettings().setZoomControlsEnabled(true);
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sLatLng, 15));
+
+        /* MARK - : Import ArrayList Preference */
+        acLatLngList = getArrayListPreference(BasicData.MARKER_PREFERENCE_KEY);
+        for (final LatLng mTempLoc : acLatLngList) { googleMap.addMarker(setMapMarker(null, null, mTempLoc)); }
     }
 }
