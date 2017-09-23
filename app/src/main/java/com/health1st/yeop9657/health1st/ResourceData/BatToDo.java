@@ -1,7 +1,6 @@
 package com.health1st.yeop9657.health1st.ResourceData;
 
 import android.content.Context;
-import android.support.constraint.solver.Goal;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.widget.Toast;
@@ -17,6 +16,8 @@ import com.yalantis.beamazingtoday.ui.callback.BatCallback;
 import com.yalantis.beamazingtoday.ui.widget.BatRecyclerView;
 
 import java.util.ArrayList;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class BatToDo implements BatListener, OnOutsideClickedListener, OnItemClickListener
 {
@@ -54,12 +55,16 @@ public class BatToDo implements BatListener, OnOutsideClickedListener, OnItemCli
     /* TODO - : BatListener */
     @Override
     public void add(String string) {
+        new SweetAlertDialog(mContext).setTitleText(String.format("%s가 추가되었습니다.", string)).show();
+
         acBatModelList.add(0, new BatGoal(string));
         mBatAdapter.notify(AnimationType.ADD, 0);
     }
 
     @Override
     public void delete(int position) {
+        new SweetAlertDialog(mContext).setTitleText(String.format("%s가 삭제되었습니다.", acBatModelList.get(position).getText())).show();
+
         acBatModelList.remove(position);
         mBatAdapter.notify(AnimationType.REMOVE, position);
     }

@@ -235,6 +235,38 @@
 
             </android.support.v7.widget.CardView>
 
+            <!-- ToDo RecyclerView -->
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:textColor="@color/colorAccent"
+                        android:text="@string/Preference_Patient_ToDo" />
+
+                    <com.yalantis.beamazingtoday.ui.widget.BatRecyclerView
+                        android:id="@+id/MainBatRecyclerView"
+                        android:layout_width="fill_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        app:hint="@string/Main_Patient_ToDo_Hint"
+                        app:add_button_color="@drawable/selector_button_add"
+                        app:radio_button_res="@drawable/selector_radio_button"/>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
             <!-- Main Medical History CardView -->
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
@@ -262,38 +294,6 @@
                         android:layout_margin="10dp"
                         android:text="@string/Main_Medical_History_Edit"
                         android:textColor="@color/colorBasicText"/>
-
-                </LinearLayout>
-
-            </android.support.v7.widget.CardView>
-
-            <!-- ToDo RecyclerView -->
-            <android.support.v7.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="10dp">
-                
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-                    
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginLeft="10dp"
-                        android:textColor="@color/colorAccent"
-                        android:text="@string/Preference_Patient_ToDo" />
-
-                    <com.yalantis.beamazingtoday.ui.widget.BatRecyclerView
-                        android:id="@+id/MainBatRecyclerView"
-                        android:layout_width="fill_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        app:hint="@string/str_add_goal"
-                        app:add_button_color="@drawable/selector_button_add"
-                        app:radio_button_res="@drawable/selector_radio_button"/>
 
                 </LinearLayout>
 
