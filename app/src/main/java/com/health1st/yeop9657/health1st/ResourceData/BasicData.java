@@ -6,7 +6,7 @@ public class BasicData
 {
     /* MARK - : Integer */
     public final static int VIBRATE_VALUE = 300;
-    public final static int MAKER_POSITION_LOCATION_VALUE = 10;
+    public final static int ALLOCATE_BASIC_VALUE = 10;
 
     // PATIENT STATE IMAGE VALUE
     public final static int PATIENT_STATE_RED = R.drawable.ic_circle_red;
@@ -19,4 +19,5 @@ public class BasicData
     /* MARK - : String */
     public final static String EMPTY_TEXT = "정보없음";
     public final static String MARKER_PREFERENCE_KEY = "MAKER";
+    public final static String BAT_TODO_KEY = "TODO";
 }

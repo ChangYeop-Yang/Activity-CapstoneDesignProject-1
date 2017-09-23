@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.telephony.SmsManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,6 +24,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.health1st.yeop9657.health1st.Location.Location;
 import com.health1st.yeop9657.health1st.Preference.ParentActivity;
 import com.health1st.yeop9657.health1st.ResourceData.BasicData;
+import com.health1st.yeop9657.health1st.ResourceData.BatToDo;
+import com.yalantis.beamazingtoday.interfaces.BatModel;
+import com.yalantis.beamazingtoday.ui.widget.BatRecyclerView;
 
 import org.json.JSONException;
 
@@ -45,6 +49,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     /* POINT - : ArrayList<LatLng> */
     private ArrayList<LatLng> acLatLngList = null;
+
+    /* POINT - : BatToDo */
+    private BatToDo mBatToDo = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +82,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         /* MARK - : MapFragment */
         SupportMapFragment mMapFragment = (SupportMapFragment)getSupportFragmentManager().findFragmentById(R.id.MainGoogleMap);
         mMapFragment.getMapAsync(this);
+
+        /* MARK - : BatToDo */
+        try {
+            final ArrayList<BatModel> acBatModel = (ArrayList<BatModel>)getArrayListPreference(BasicData.BAT_TODO_KEY);
+            mBatToDo = new BatToDo(mContext, (BatRecyclerView)findViewById(R.id.MainBatRecyclerView), acBatModel);
+        } catch (JSONException error) { Log.e("JSON Error!", error.getMessage()); error.printStackTrace(); }
     }
 
     @Override
@@ -89,17 +102,22 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     protected void onStop() {
         super.onStop();
 
-        final ArrayList<String> acLocationList = new ArrayList<String>();
+        /* POINT - : LatLng List */
+        final ArrayList<String> acLocationList = new ArrayList<String>(BasicData.ALLOCATE_BASIC_VALUE);
         acLatLngList.add(new LatLng(mLocation.getLatitude(), mLocation.getLongitude()));
 
         for (final LatLng mLocation : acLatLngList) { acLocationList.add(String.format("%f,%f", mLocation.latitude, mLocation.longitude)); }
         setArrayListPreference(acLocationList, BasicData.MARKER_PREFERENCE_KEY);
+
+        /* POINT - : BatToDo List */
+        final  ArrayList<String> acBatList = new ArrayList<String>(BasicData.ALLOCATE_BASIC_VALUE);
+        for (final BatModel mBatModel : mBatToDo.getBatArrayList()) { acBatList.add(mBatModel.getText()); }
+        setArrayListPreference(acBatList, BasicData.BAT_TODO_KEY);
     }
 
     /* MARK - : User Custom Method */
     private void getSharedText() {
         final String asHelperHeader[] = {"Helper_Name", "Helper_Address", "Helper_Tel"};
-        final String asPatientHeader[] = {"Patient_State", "Patient_Information", "Patient_Location"};
 
         /* POINT - : Helper Information */
         final String asHelper[] = {mShared.getString("Helper_Name", BasicData.EMPTY_TEXT), mShared.getString("Helper_Address", BasicData.EMPTY_TEXT), mShared.getString("Helper_Tel", BasicData.EMPTY_TEXT)};
@@ -142,7 +160,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         return mMakerOptions;
     }
 
-    /* MARK - : One Click Event Listener */
+    /* TODO - : One Click Event Listener */
     @Override
     public void onClick(View view) {
 
@@ -169,7 +187,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         }
     }
 
-    /* MARK - : MenuItem Event Listener */
+    /* TODO - : MenuItem Event Listener */
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
@@ -191,7 +209,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     public boolean onCreateOptionsMenu(Menu menu)
     { getMenuInflater().inflate(R.menu.main, menu); return true; }
 
-    /* MARK - : Map Ready Listener */
+    /* TODO - : Map Ready Listener */
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
@@ -207,7 +225,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sLatLng, 15));
 
         /* MARK - : Import ArrayList Preference */
-        acLatLngList = getArrayListPreference(BasicData.MARKER_PREFERENCE_KEY);
+        try { acLatLngList = (ArrayList<LatLng>) getArrayListPreference(BasicData.MARKER_PREFERENCE_KEY); }
+        catch (JSONException error) { Log.e("JSON Error!", error.getMessage()); error.printStackTrace(); }
+
         for (final LatLng mTempLoc : acLatLngList) { googleMap.addMarker(setMapMarker(null, null, mTempLoc)); }
     }
 }

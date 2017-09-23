@@ -9,7 +9,6 @@ import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -18,12 +17,13 @@ import com.google.android.gms.maps.model.LatLng;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 import com.health1st.yeop9657.health1st.ResourceData.BasicData;
+import com.health1st.yeop9657.health1st.ResourceData.BatGoal;
 import com.tsengvn.typekit.Typekit;
 import com.tsengvn.typekit.TypekitContextWrapper;
+import com.yalantis.beamazingtoday.interfaces.BatModel;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -86,51 +86,54 @@ public class BaseActivity extends AppCompatActivity implements PermissionListene
     }
 
     /* MARK - : set ArrayList<String> Preference Method */
-    protected final void setArrayListPreference(final ArrayList<String> mLatLng, final String sKey)
+    protected final void setArrayListPreference(final ArrayList<String> mArrayList, final String sKey)
     {
-        if (mLatLng.isEmpty()) { mSharedWrite.putString(sKey, null); }
+        if (mArrayList.isEmpty()) { mSharedWrite.putString(sKey, null); }
         else
         {
             final JSONArray aJSON = new JSONArray();
-            for (final String mTemp : mLatLng) { aJSON.put(mTemp); }
+            for (final String mTemp : mArrayList) { aJSON.put(mTemp); }
             mSharedWrite.putString(sKey, aJSON.toString());
         }
 
         mSharedWrite.apply();
     }
 
-    /* MARK - : get ArrayList<String> Preference Method */
-    protected final ArrayList<LatLng> getArrayListPreference(final String sKey)
-    {
+    /* MARK - : get ArrayList<?> Preference Method */
+    protected final ArrayList<?> getArrayListPreference(final String sKey) throws JSONException {
         final String sJSON = mShared.getString(sKey, null);
-        final ArrayList<LatLng> aLatLng = new ArrayList<LatLng>();
 
-        if (sJSON == null) { return new ArrayList<LatLng>(); }
-        else
+        ArrayList<?> acBasicList = null;
+        if (sJSON == null) { return new ArrayList<>(BasicData.ALLOCATE_BASIC_VALUE); }
+
+        final JSONArray asJSON = new JSONArray(sJSON);
+        switch (sKey)
         {
-            try
-            {
-                final JSONArray asJSON = new JSONArray(sJSON);
-                for (int mCount = 0, mSize = asJSON.length(); mCount < mSize; mCount++)
-                {
-                    final String mLatLong[] = asJSON.optString(mCount).split(",");
-                    aLatLng.add(new LatLng(Double.parseDouble(mLatLong[0]), Double.parseDouble(mLatLong[1])));
-                }
-            }
-            catch (Exception error) { Log.e("JSON Error!", error.getMessage()); error.printStackTrace(); }
+            case (BasicData.MARKER_PREFERENCE_KEY) : {
+                final ArrayList<LatLng> acLatLng = new ArrayList<LatLng>(BasicData.ALLOCATE_BASIC_VALUE);
 
-            return aLatLng;
+                    for (int mCount = 0, mSize = asJSON.length(); mCount < mSize; mCount++) {
+                        final String mLatLong[] = asJSON.optString(mCount).split(",");
+                        acLatLng.add(new LatLng(Double.parseDouble(mLatLong[0]), Double.parseDouble(mLatLong[1])));
+                    } acBasicList = acLatLng; break;
+            }
+
+            case (BasicData.BAT_TODO_KEY) : {
+                final ArrayList<BatModel> acBatModel = new ArrayList<BatModel>(BasicData.ALLOCATE_BASIC_VALUE);
+
+                    for (int mCount = 0, mSize = asJSON.length(); mCount < mSize; mCount++) {
+                        acBatModel.add(new BatGoal(asJSON.optString(mCount)));
+                    } acBasicList = acBatModel; break;
+            }
         }
+
+        return acBasicList;
     }
 
     /* MARK : - Permission Listener */
     @Override
-    public void onPermissionGranted() {
-
-    }
+    public void onPermissionGranted() {}
 
     @Override
-    public void onPermissionDenied(ArrayList<String> arrayList) {
-
-    }
+    public void onPermissionDenied(ArrayList<String> arrayList) {}
 }

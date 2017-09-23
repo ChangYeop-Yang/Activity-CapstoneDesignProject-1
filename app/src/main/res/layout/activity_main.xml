@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -110,6 +111,38 @@
 
             </android.support.v7.widget.CardView>
 
+            <!-- Main Google Google Map CardView -->
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp">
+
+                <!-- Main Google Map Layout -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <fragment
+                        android:id="@+id/MainGoogleMap"
+                        android:layout_width="match_parent"
+                        android:layout_height="350dp"
+                        class="com.google.android.gms.maps.SupportMapFragment"
+                        android:name="com.google.android.gms.maps.SupportMapFragment" />
+
+                    <TextView
+                        android:id="@+id/MainMapLocation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#C5CAE9"
+                        android:gravity="center"
+                        android:text="@string/Main_Map_Location"
+                        android:textColor="@color/colorBasicText" />
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
             <!-- Main Patient Information Layout -->
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
@@ -202,38 +235,6 @@
 
             </android.support.v7.widget.CardView>
 
-            <!-- Main Google Google Map CardView -->
-            <android.support.v7.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp">
-
-                <!-- Main Google Map Layout -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <fragment
-                        android:id="@+id/MainGoogleMap"
-                        android:layout_width="match_parent"
-                        android:layout_height="350dp"
-                        class="com.google.android.gms.maps.SupportMapFragment"
-                        android:name="com.google.android.gms.maps.SupportMapFragment" />
-
-                    <TextView
-                        android:id="@+id/MainMapLocation"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="#C5CAE9"
-                        android:gravity="center"
-                        android:text="@string/Main_Map_Location"
-                        android:textColor="@color/colorBasicText" />
-
-                </LinearLayout>
-
-            </android.support.v7.widget.CardView>
-
             <!-- Main Medical History CardView -->
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
@@ -261,6 +262,38 @@
                         android:layout_margin="10dp"
                         android:text="@string/Main_Medical_History_Edit"
                         android:textColor="@color/colorBasicText"/>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <!-- ToDo RecyclerView -->
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp">
+                
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                    
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:textColor="@color/colorAccent"
+                        android:text="@string/Preference_Patient_ToDo" />
+
+                    <com.yalantis.beamazingtoday.ui.widget.BatRecyclerView
+                        android:id="@+id/MainBatRecyclerView"
+                        android:layout_width="fill_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        app:hint="@string/str_add_goal"
+                        app:add_button_color="@drawable/selector_button_add"
+                        app:radio_button_res="@drawable/selector_radio_button"/>
 
                 </LinearLayout>
 

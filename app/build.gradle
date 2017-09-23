@@ -35,4 +35,5 @@ dependencies {
     compile 'com.tsengvn:typekit:1.0.1'
     compile 'gun0912.ted:tedpermission:2.0.0'
     compile 'com.github.yalantis:todolist:v1.0.1'
+    compile 'cn.pedant.sweetalert:library:1.3'
 }
