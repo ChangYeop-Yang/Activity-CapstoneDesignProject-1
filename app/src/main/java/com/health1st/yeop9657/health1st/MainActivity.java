@@ -195,8 +195,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 /* POINT - : TextInputEditText */
                 final TextInputEditText mToDoEdit = (TextInputEditText)findViewById(R.id.MainToDoEdit);
 
-                if (mToDoEdit.getText().toString() != "") {
-
+                if (mToDoEdit.getText().toString().isEmpty()) { new SweetAlertDialog(mContext, SweetAlertDialog.ERROR_TYPE).setTitleText("ToDo를 입력해주세요.").show(); }
+                else {
                     /* POINT - : Simple Date Format */
                     final SimpleDateFormat mSimple = new SimpleDateFormat("MM-dd hh:mm");
 

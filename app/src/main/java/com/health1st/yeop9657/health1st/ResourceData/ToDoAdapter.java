@@ -48,17 +48,17 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
             @Override
             public void onClick(View view) {
 
-                new SweetAlertDialog(mContext, SweetAlertDialog.WARNING_TYPE).setTitleText("ToDo 삭제")
-                        .setContentText(String.format("%s을 삭제하시겠습니까?\n*삭제 된 내용은 복구 되지 않습니다.", mToDoList.get(position).getMainTitle()))
-                        .setConfirmText("삭제").setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                    @Override
-                    public void onClick(SweetAlertDialog sweetAlertDialog) {
-
-                        /* Success Alert Dialog */
-                        sweetAlertDialog.setTitleText("삭제완료").setContentText(String.format("%s가 삭제되었습니다.", mToDoList.get(position).getMainTitle()))
-                                .setConfirmText("확인").setConfirmClickListener(null).showCancelButton(false).changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
-                    }
-                }).setCancelText("취소").show();
+                new SweetAlertDialog(mContext, SweetAlertDialog.SUCCESS_TYPE).setTitleText("ToDo 삭제")
+                        .setContentText(String.format("%s가 삭제되었습니다.\n*복구 된 내용은 삭제되지 않습니다.", mToDoList.get(position).getMainTitle()))
+                        .setConfirmText("확인").setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                mToDoList.remove(position);
+                                mToDoAdapter.notifyItemRemoved(position);
+                                mToDoAdapter.notifyDataSetChanged();
+                                sweetAlertDialog.cancel();
+                            }
+                        }).show();
             }
         });
     }
