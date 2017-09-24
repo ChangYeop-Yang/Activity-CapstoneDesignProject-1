@@ -23,6 +23,7 @@
         <EditTextPreference
             android:id="@+id/Preference_Helper_Tel"
             android:key="Helper_Tel"
+            android:numeric="integer"
             android:title="@string/Preference_Helper_Tel"
             android:summary="@string/Preference_Helper_Tel_Text"/>
 
@@ -54,8 +55,9 @@
         <EditTextPreference
             android:id="@+id/Preference_Patient_Age"
             android:key="Patient_Age"
+            android:numeric="integer"
             android:title="@string/Preference_Patient_Age"
-            android:summary="@string/Preference_Patient_Age_Text"/>
+            android:summary="@string/Preference_Patient_Age_Text" />
 
         <EditTextPreference
             android:id="@+id/Preference_Patient_Smoking"
@@ -72,12 +74,14 @@
         <EditTextPreference
             android:id="@+id/Preference_Patient_Height"
             android:key="Patient_Height"
+            android:numeric="integer"
             android:title="@string/Preference_Patient_Height"
             android:summary="@string/Preference_Patient_Height_Text"/>
 
         <EditTextPreference
             android:id="@+id/Preference_Patient_Weight"
             android:key="Patient_Weight"
+            android:numeric="integer"
             android:title="@string/Preference_Patient_Weight"
             android:summary="@string/Preference_Patient_Weight_Text"/>
 

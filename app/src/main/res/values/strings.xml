@@ -14,6 +14,7 @@
     <string name="Main_Patient_State_2">위험</string>
     <string name="Main_Patient_State_3">긴급</string>
     <string name="Main_Patient_ToDo_Hint">할일을 입력해주세요.</string>
+    <string name="Main_Patient_ToDo_Add">추가</string>
     <!-- Main Google Map String -->
     <string name="Main_Map_Location">현재위치</string>
     <!-- Main Medical History String -->
@@ -61,4 +62,6 @@
     <string name="Preference_Developer_Email_Text">개발자에게 이메일을 보냅니다.</string>
     <string name="Preference_Developer_OpenSource">- 오픈소스 정보</string>
     <string name="Preference_Developer_OpenSource_Text">오픈소스 정보를 확인합니다.</string>
+    <!-- Layout ToDo Layout -->
+    <string name="LayoutToDoDelete">삭제하기</string>
 </resources>

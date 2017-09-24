@@ -17,10 +17,9 @@ import com.google.android.gms.maps.model.LatLng;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 import com.health1st.yeop9657.health1st.ResourceData.BasicData;
-import com.health1st.yeop9657.health1st.ResourceData.BatGoal;
+import com.health1st.yeop9657.health1st.ResourceData.BasicToDoData;
 import com.tsengvn.typekit.Typekit;
 import com.tsengvn.typekit.TypekitContextWrapper;
-import com.yalantis.beamazingtoday.interfaces.BatModel;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,6 +41,10 @@ public class BaseActivity extends AppCompatActivity implements PermissionListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        /* POINT - : Permission */
+        TedPermission.with(this).setPermissionListener(this).setDeniedMessage(R.string.Basic_Permission_Information)
+                .setPermissions(Manifest.permission.CALL_PHONE, Manifest.permission.SEND_SMS, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.READ_EXTERNAL_STORAGE).check();
+
         /* POINT - : Vibrator */
         if (mVibrator == null) { mVibrator = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE); }
 
@@ -53,10 +56,6 @@ public class BaseActivity extends AppCompatActivity implements PermissionListene
 
         /* POINT - : FONT Open Source */
         Typekit.getInstance().addNormal(Typekit.createFromAsset(this, "BMHANNA_11yrs_ttf.ttf")).addBold(Typekit.createFromAsset(this, "BMHANNA_11yrs_ttf.ttf"));
-
-        /* POINT - : Permission */
-        TedPermission.with(this).setPermissionListener(this).setDeniedMessage(R.string.Basic_Permission_Information)
-                .setPermissions(Manifest.permission.CALL_PHONE, Manifest.permission.SEND_SMS, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.READ_EXTERNAL_STORAGE).check();
     }
 
     /* MARK - : Typekit Method */
@@ -119,11 +118,12 @@ public class BaseActivity extends AppCompatActivity implements PermissionListene
             }
 
             case (BasicData.BAT_TODO_KEY) : {
-                final ArrayList<BatModel> acBatModel = new ArrayList<BatModel>(BasicData.ALLOCATE_BASIC_VALUE);
+                final ArrayList<BasicToDoData> acToDo = new ArrayList<BasicToDoData>(BasicData.ALLOCATE_BASIC_VALUE);
 
-                    for (int mCount = 0, mSize = asJSON.length(); mCount < mSize; mCount++) {
-                        acBatModel.add(new BatGoal(asJSON.optString(mCount)));
-                    } acBasicList = acBatModel; break;
+                for (int mCount = 0, mSize = asJSON.length(); mCount < mSize; mCount++) {
+                    final String mToDoData[] = asJSON.optString(mCount).split(",");
+                    acToDo.add(new BasicToDoData(mToDoData[0], mToDoData[1], mToDoData[2]));
+                } acBasicList = acToDo; break;
             }
         }
 

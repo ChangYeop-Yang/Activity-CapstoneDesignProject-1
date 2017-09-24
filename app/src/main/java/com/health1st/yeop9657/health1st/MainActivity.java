@@ -4,6 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.TextInputEditText;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.telephony.SmsManager;
 import android.util.Log;
@@ -11,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,21 +29,24 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.health1st.yeop9657.health1st.Location.Location;
 import com.health1st.yeop9657.health1st.Preference.ParentActivity;
 import com.health1st.yeop9657.health1st.ResourceData.BasicData;
-import com.health1st.yeop9657.health1st.ResourceData.BatToDo;
-import com.yalantis.beamazingtoday.interfaces.BatModel;
-import com.yalantis.beamazingtoday.ui.widget.BatRecyclerView;
+import com.health1st.yeop9657.health1st.ResourceData.BasicToDoData;
+import com.health1st.yeop9657.health1st.ResourceData.ToDoAdapter;
 
 import org.json.JSONException;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener, OnMapReadyCallback
 {
     /* HashMap Collection */
     private HashMap<String, TextView> cTextViewMap = new HashMap<String, TextView>();
 
-    /* Context */
+    /* POINT - : Context */
     private Context mContext = MainActivity.this;
 
     /* POINT - : ImageView */
@@ -49,9 +57,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     /* POINT - : ArrayList<LatLng> */
     private ArrayList<LatLng> acLatLngList = null;
+    private ArrayList<BasicToDoData> acToDoList = null;
 
-    /* POINT - : BatToDo */
-    private BatToDo mBatToDo = null;
+    /* POINT - : RecyclerView */
+    private RecyclerView mToDoRecyclerView = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,11 +92,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         SupportMapFragment mMapFragment = (SupportMapFragment)getSupportFragmentManager().findFragmentById(R.id.MainGoogleMap);
         mMapFragment.getMapAsync(this);
 
-        /* MARK - : BatToDo */
-        try {
-            final ArrayList<BatModel> acBatModel = (ArrayList<BatModel>)getArrayListPreference(BasicData.BAT_TODO_KEY);
-            mBatToDo = new BatToDo(mContext, (BatRecyclerView)findViewById(R.id.MainBatRecyclerView), acBatModel);
-        } catch (JSONException error) { Log.e("JSON Error!", error.getMessage()); error.printStackTrace(); }
+        /* MARK - : ToDo */
+        try { acToDoList = (ArrayList<BasicToDoData>) getArrayListPreference(BasicData.BAT_TODO_KEY); }
+        catch (JSONException error) { Log.e("JSON Error!", error.getMessage()); error.printStackTrace(); }
+        mToDoRecyclerView = (RecyclerView)findViewById(R.id.Main_Patient_ToDo_Recycler);
+        setRecyclerView(mToDoRecyclerView);
+
+        /* MARK - : ImageButton */
+        final ImageButton mAddButton = (ImageButton)findViewById(R.id.MainToDoAdd);
+        mAddButton.setOnClickListener(this);
     }
 
     @Override
@@ -96,23 +109,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
         getSharedText();
         setImageView(mContext, mHelperImage, BasicData.HELPER_IMAGE);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-
-        /* POINT - : LatLng List */
-        final ArrayList<String> acLocationList = new ArrayList<String>(BasicData.ALLOCATE_BASIC_VALUE);
-        acLatLngList.add(new LatLng(mLocation.getLatitude(), mLocation.getLongitude()));
-
-        for (final LatLng mLocation : acLatLngList) { acLocationList.add(String.format("%f,%f", mLocation.latitude, mLocation.longitude)); }
-        setArrayListPreference(acLocationList, BasicData.MARKER_PREFERENCE_KEY);
-
-        /* POINT - : BatToDo List */
-        final  ArrayList<String> acBatList = new ArrayList<String>(BasicData.ALLOCATE_BASIC_VALUE);
-        for (final BatModel mBatModel : mBatToDo.getBatArrayList()) { acBatList.add(mBatModel.getText()); }
-        setArrayListPreference(acBatList, BasicData.BAT_TODO_KEY);
     }
 
     /* MARK - : User Custom Method */
@@ -160,13 +156,22 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         return mMakerOptions;
     }
 
+    private void setRecyclerView(final RecyclerView mRecyclerView)
+    {
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        mRecyclerView.setAdapter(new ToDoAdapter(mContext, acToDoList));
+    }
+
     /* TODO - : One Click Event Listener */
     @Override
     public void onClick(View view) {
 
         /* #POINT : Action Vibrate and Toast */
         mVibrator.vibrate(BasicData.VIBRATE_VALUE);
-        Toast.makeText(mContext, ((Button) view).getText(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(mContext, ((Button) view).getText(), Toast.LENGTH_SHORT).show();
 
         /* View OneClick Action */
         switch (view.getId()) {
@@ -184,6 +189,28 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             case R.id.Main_Patient_SOS_Call: { startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:01064295758"))); break; }
 
             case R.id.Main_Patient_SOS_MMS: { SmsManager.getDefault().sendTextMessage("01064295758", null, String.format("Lat: %f, Long: %f, %s", mLocation.getLatitude(), mLocation.getLongitude(), cTextViewMap.get("Patient_Location").getText()), null, null); break; }
+
+            case R.id.MainToDoAdd : {
+
+                /* POINT - : TextInputEditText */
+                final TextInputEditText mToDoEdit = (TextInputEditText)findViewById(R.id.MainToDoEdit);
+
+                if (mToDoEdit.getText().toString() != "") {
+
+                    /* POINT - : Simple Date Format */
+                    final SimpleDateFormat mSimple = new SimpleDateFormat("MM-dd hh:mm");
+
+                    /* POINT - : String */
+                    final String mDate = mSimple.format(new Date(System.currentTimeMillis()));
+                    final String mMainTitle = mToDoEdit.getText().toString();
+
+                    acToDoList.add(new BasicToDoData(mMainTitle, BasicData.TODO_INPUT_PATIENT, mDate));
+                    mToDoRecyclerView.setAdapter(new ToDoAdapter(mContext, acToDoList));
+
+                    new SweetAlertDialog(mContext, SweetAlertDialog.SUCCESS_TYPE).setTitleText(String.format("%s가 생성되었습니다.", mToDoEdit.getText().toString())).show();
+                    mToDoEdit.setText(null);
+                } break;
+            }
         }
     }
 
@@ -229,5 +256,31 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         catch (JSONException error) { Log.e("JSON Error!", error.getMessage()); error.printStackTrace(); }
 
         for (final LatLng mTempLoc : acLatLngList) { googleMap.addMarker(setMapMarker(null, null, mTempLoc)); }
+    }
+
+    /* TODO - : BackPressed Listener */
+    @Override
+    public void onBackPressed() {
+
+        new SweetAlertDialog(mContext, SweetAlertDialog.WARNING_TYPE)
+                .setTitleText("프로그램 종료").setContentText("Health 1st Street 프로그램을 종료하시겠습니까?")
+                .setConfirmText("확인").setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+            @Override
+            public void onClick(SweetAlertDialog sweetAlertDialog) {
+
+                /* POINT - : LatLng List */
+                final ArrayList<String> acLocationList = new ArrayList<String>(BasicData.ALLOCATE_BASIC_VALUE);
+                acLatLngList.add(new LatLng(mLocation.getLatitude(), mLocation.getLongitude()));
+
+                for (final LatLng mLocation : acLatLngList) { acLocationList.add(String.format("%f,%f", mLocation.latitude, mLocation.longitude)); }
+                setArrayListPreference(acLocationList, BasicData.MARKER_PREFERENCE_KEY);
+
+                final ArrayList<String> acToDo = new ArrayList<String>(BasicData.ALLOCATE_BASIC_VALUE);
+                for (final BasicToDoData mToDo : acToDoList) { acToDo.add(String.format("%s,%s,%s", mToDo.getNumberDate(), mToDo.getMainTitle(), mToDo.getSummary())); }
+                setArrayListPreference(acToDo, BasicData.BAT_TODO_KEY);
+
+                finish();
+            }
+        }).setCancelText("취소").show();
     }
 }
