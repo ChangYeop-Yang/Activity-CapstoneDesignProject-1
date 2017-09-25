@@ -39,7 +39,7 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
     public void onBindViewHolder(ViewHolder holder, final int position) {
 
         /* POINT - : TextView */
-        holder.mNumberDateText.setText(mToDoList.get(position).getNumberDate());
+        holder.mNumberDateText.setText(String.format("#%d     %s", position + 1, mToDoList.get(position).getNumberDate()));
         holder.mMainTitleText.setText(mToDoList.get(position).getMainTitle());
         holder.mSummaryText.setText(mToDoList.get(position).getSummary());
 
@@ -49,7 +49,7 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
             public void onClick(View view) {
 
                 new SweetAlertDialog(mContext, SweetAlertDialog.SUCCESS_TYPE).setTitleText("ToDo 삭제")
-                        .setContentText(String.format("%s가 삭제되었습니다.\n*복구 된 내용은 삭제되지 않습니다.", mToDoList.get(position).getMainTitle()))
+                        .setContentText(String.format("%s가 삭제되었습니다.\n*삭제 된 내용은 복구되지 않습니다.", mToDoList.get(position).getMainTitle()))
                         .setConfirmText("확인").setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                             @Override
                             public void onClick(SweetAlertDialog sweetAlertDialog) {

@@ -188,7 +188,19 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
             case R.id.Main_Patient_SOS_Call: { startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:01064295758"))); break; }
 
-            case R.id.Main_Patient_SOS_MMS: { SmsManager.getDefault().sendTextMessage("01064295758", null, String.format("Lat: %f, Long: %f, %s", mLocation.getLatitude(), mLocation.getLongitude(), cTextViewMap.get("Patient_Location").getText()), null, null); break; }
+            case R.id.Main_Patient_SOS_MMS: {
+
+                try {
+                    SmsManager.getDefault().sendTextMessage("01064295758", null, String.format("Lat: %f, Long: %f, %s", mLocation.getLatitude(), mLocation.getLongitude(), cTextViewMap.get("Patient_Location").getText()), null, null);
+                    new SweetAlertDialog(mContext, SweetAlertDialog.SUCCESS_TYPE).setTitleText("SMS 전송 성공")
+                            .setContentText("응급기관으로 SMS 전송을 성공하였습니다.").show();
+                }
+                catch (Exception error) {
+                    Log.e("Send Message Error!", error.getMessage()); error.printStackTrace();
+                    new SweetAlertDialog(mContext, SweetAlertDialog.ERROR_TYPE).setTitleText("SMS 전송 실패")
+                            .setContentText("응급기관으로 SMS 전송을 실패하였습니다.").show();
+                } break;
+            }
 
             case R.id.MainToDoAdd : {
 
@@ -276,7 +288,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 setArrayListPreference(acLocationList, BasicData.MARKER_PREFERENCE_KEY);
 
                 final ArrayList<String> acToDo = new ArrayList<String>(BasicData.ALLOCATE_BASIC_VALUE);
-                for (final BasicToDoData mToDo : acToDoList) { acToDo.add(String.format("%s,%s,%s", mToDo.getNumberDate(), mToDo.getMainTitle(), mToDo.getSummary())); }
+                for (final BasicToDoData mToDo : acToDoList) { acToDo.add(String.format("%s,%s,%s", mToDo.getMainTitle(), mToDo.getSummary(), mToDo.getNumberDate())); }
                 setArrayListPreference(acToDo, BasicData.BAT_TODO_KEY);
 
                 finish();

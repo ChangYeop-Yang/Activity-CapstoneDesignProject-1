@@ -17,9 +17,6 @@ public class ChildActivity extends PreferenceFragment implements Preference.OnPr
     /* POINT - : Integer */
     private final static int PICK_CONTACT_REQUEST = 1;
 
-    /*  POINT - : Preference*/
-    private Preference mPhotoPreference = null;
-
     /* POINT - : Context */
     private Context mContext = null;
 
@@ -31,19 +28,29 @@ public class ChildActivity extends PreferenceFragment implements Preference.OnPr
         mContext = getPreferenceScreen().getContext();
         getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
 
-        mPhotoPreference = findPreference("Helper_Image");
-        mPhotoPreference.setOnPreferenceClickListener(this);
+        getPreferenceManager().findPreference("Helper_Image").setOnPreferenceClickListener(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
     }
 
     /* TODO - : Preference Click Listener */
     @Override
     public boolean onPreferenceClick(Preference preference)
     {
-        final Intent mIntent = new Intent(Intent.ACTION_PICK);
-        mIntent.setType("image/*");
-        startActivityForResult(mIntent, PICK_CONTACT_REQUEST);
+        switch (preference.getTitleRes())
+        {
+            case R.string.Preference_Helper_Image : {
 
-        return true;
+                final Intent mIntent = new Intent(Intent.ACTION_PICK);
+                mIntent.setType("image/*");
+                startActivityForResult(mIntent, PICK_CONTACT_REQUEST);
+                return true;
+            }
+        } return false;
     }
 
     @Override
@@ -53,20 +60,24 @@ public class ChildActivity extends PreferenceFragment implements Preference.OnPr
         if (requestCode == PICK_CONTACT_REQUEST)
         {
             /* POINT - : SharedPreference */
-            final SharedPreferences mReadShared = PreferenceManager.getDefaultSharedPreferences(mPhotoPreference.getContext());
+            final SharedPreferences mReadShared = PreferenceManager.getDefaultSharedPreferences(mContext);
             final SharedPreferences.Editor mWriteShared = mReadShared.edit();
 
             mWriteShared.putString("Helper_Image", data.getDataString());
             mWriteShared.commit();
 
-            new SweetAlertDialog(mContext, SweetAlertDialog.SUCCESS_TYPE).setTitleText("사진 설정이 완료되었습니다.").show();
+            new SweetAlertDialog(mContext, SweetAlertDialog.SUCCESS_TYPE)
+                    .setTitleText(getPreferenceManager().findPreference("Helper_Image").getTitle().toString())
+                    .setContentText("선택 된 사진으로 설정되었습니다.").show();
         }
     }
 
     /* TODO - : Preference Changed Listener */
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
+
         new SweetAlertDialog(mContext, SweetAlertDialog.SUCCESS_TYPE)
-                .setTitleText(String.format("%s으로 설정되었습니다.", sharedPreferences.getString(s, "기본값"))).show();
+                .setTitleText(getPreferenceManager().findPreference(s).getTitle().toString())
+                .setContentText(String.format("%s으로 설정되었습니다.", sharedPreferences.getString(s, "기본값"))).show();
     }
 }
