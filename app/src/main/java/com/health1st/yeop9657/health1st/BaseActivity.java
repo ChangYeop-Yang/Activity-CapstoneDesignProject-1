@@ -2,13 +2,17 @@ package com.health1st.yeop9657.health1st;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -16,16 +20,20 @@ import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
+import com.health1st.yeop9657.health1st.Preference.ParentActivity;
 import com.health1st.yeop9657.health1st.ResourceData.BasicData;
 import com.health1st.yeop9657.health1st.ResourceData.BasicToDoData;
+import com.scottyab.aescrypt.AESCrypt;
 import com.tsengvn.typekit.Typekit;
 import com.tsengvn.typekit.TypekitContextWrapper;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 public class BaseActivity extends AppCompatActivity implements PermissionListener
@@ -36,6 +44,9 @@ public class BaseActivity extends AppCompatActivity implements PermissionListene
     /* Preference */
     protected SharedPreferences mShared = null;
     protected SharedPreferences.Editor mSharedWrite = null;
+
+    /* String */
+    private String sSecurityPassword = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +63,22 @@ public class BaseActivity extends AppCompatActivity implements PermissionListene
         if (mShared == null) {
             mShared = PreferenceManager.getDefaultSharedPreferences(this);
             mSharedWrite = mShared.edit();
+
+            sSecurityPassword = mShared.getString("Application_Eny_Key", null);
+            if (sSecurityPassword == null) {
+                final EditText mPasswordEdit = new EditText(this);
+                final AlertDialog.Builder mPasswdAlert = new AlertDialog.Builder(this);
+                mPasswdAlert.setView(mPasswordEdit).setIcon(R.drawable.ic_padlock);
+                mPasswdAlert.setTitle("⌘ 생체 정보 암호화키 설정").setMessage("생체 정보 암호화키를 설정하기 위해 임의의 값을 입력해주세요.");
+                mPasswdAlert.setPositiveButton("적용", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        sSecurityPassword = mPasswordEdit.getText().toString();
+                        mSharedWrite.putString("Application_Eny_Key", sSecurityPassword).apply();
+                    }
+                }).show();
+            }
         }
 
         /* POINT - : FONT Open Source */
@@ -85,27 +112,27 @@ public class BaseActivity extends AppCompatActivity implements PermissionListene
     }
 
     /* MARK - : set ArrayList<String> Preference Method */
-    protected final void setArrayListPreference(final ArrayList<String> mArrayList, final String sKey)
-    {
+    protected final void setArrayListPreference(final ArrayList<String> mArrayList, final String sKey) throws GeneralSecurityException {
         if (mArrayList.isEmpty()) { mSharedWrite.putString(sKey, null); }
         else
         {
             final JSONArray aJSON = new JSONArray();
             for (final String mTemp : mArrayList) { aJSON.put(mTemp); }
-            mSharedWrite.putString(sKey, aJSON.toString());
+            mSharedWrite.putString(sKey, AESCrypt.encrypt(sSecurityPassword, aJSON.toString()));
         }
 
         mSharedWrite.apply();
     }
 
     /* MARK - : get ArrayList<?> Preference Method */
-    protected final ArrayList<?> getArrayListPreference(final String sKey) throws JSONException {
-        final String sJSON = mShared.getString(sKey, null);
+    protected final ArrayList<?> getArrayListPreference(final String sKey) throws JSONException, GeneralSecurityException {
+
+        String sJSON = mShared.getString(sKey, null);
 
         ArrayList<?> acBasicList = null;
         if (sJSON == null) { return new ArrayList<>(BasicData.ALLOCATE_BASIC_VALUE); }
 
-        final JSONArray asJSON = new JSONArray(sJSON);
+        final JSONArray asJSON = new JSONArray(AESCrypt.decrypt(sSecurityPassword, sJSON));
         switch (sKey)
         {
             case (BasicData.MARKER_PREFERENCE_KEY) : {

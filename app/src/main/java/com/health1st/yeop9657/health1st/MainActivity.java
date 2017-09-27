@@ -34,6 +34,7 @@ import com.health1st.yeop9657.health1st.ResourceData.ToDoAdapter;
 
 import org.json.JSONException;
 
+import java.security.GeneralSecurityException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -94,7 +95,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
         /* MARK - : ToDo */
         try { acToDoList = (ArrayList<BasicToDoData>) getArrayListPreference(BasicData.BAT_TODO_KEY); }
-        catch (JSONException error) { Log.e("JSON Error!", error.getMessage()); error.printStackTrace(); }
+        catch (JSONException error) { Log.e("ToDo JSON Error!", error.getMessage()); error.printStackTrace(); }
+        catch (GeneralSecurityException e) { Log.e("ToDo Decrypt Error!", e.getMessage()); e.printStackTrace(); }
+
         mToDoRecyclerView = (RecyclerView)findViewById(R.id.Main_Patient_ToDo_Recycler);
         setRecyclerView(mToDoRecyclerView);
 
@@ -265,7 +268,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
         /* MARK - : Import ArrayList Preference */
         try { acLatLngList = (ArrayList<LatLng>) getArrayListPreference(BasicData.MARKER_PREFERENCE_KEY); }
-        catch (JSONException error) { Log.e("JSON Error!", error.getMessage()); error.printStackTrace(); }
+        catch (JSONException error) { Log.e("LatLng JSON Error!", error.getMessage()); error.printStackTrace(); }
+        catch (GeneralSecurityException e) { Log.e("LatLng Decrypt Error!", e.getMessage()); e.printStackTrace(); }
 
         for (final LatLng mTempLoc : acLatLngList) { googleMap.addMarker(setMapMarker(null, null, mTempLoc)); }
     }
@@ -284,14 +288,19 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 final ArrayList<String> acLocationList = new ArrayList<String>(BasicData.ALLOCATE_BASIC_VALUE);
                 acLatLngList.add(new LatLng(mLocation.getLatitude(), mLocation.getLongitude()));
 
-                for (final LatLng mLocation : acLatLngList) { acLocationList.add(String.format("%f,%f", mLocation.latitude, mLocation.longitude)); }
-                setArrayListPreference(acLocationList, BasicData.MARKER_PREFERENCE_KEY);
+                for (final LatLng mLocation : acLatLngList)
+                { acLocationList.add(String.format("%f,%f", mLocation.latitude, mLocation.longitude)); }
+
+                try { setArrayListPreference(acLocationList, BasicData.MARKER_PREFERENCE_KEY); }
+                catch (GeneralSecurityException e) { Log.e("LatLng Encrypt Error!", e.getMessage()); e.printStackTrace(); }
 
                 final ArrayList<String> acToDo = new ArrayList<String>(BasicData.ALLOCATE_BASIC_VALUE);
                 for (final BasicToDoData mToDo : acToDoList) { acToDo.add(String.format("%s,%s,%s", mToDo.getMainTitle(), mToDo.getSummary(), mToDo.getNumberDate())); }
-                setArrayListPreference(acToDo, BasicData.BAT_TODO_KEY);
 
-                finish();
+                try { setArrayListPreference(acToDo, BasicData.BAT_TODO_KEY); }
+                catch (GeneralSecurityException e) { Log.e("ToDo Encrypt Error!", e.getMessage()); e.printStackTrace(); }
+
+                sweetAlertDialog.cancel(); finish();
             }
         }).setCancelText("취소").show();
     }
