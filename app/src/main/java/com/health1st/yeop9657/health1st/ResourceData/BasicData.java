@@ -20,6 +20,7 @@ public class BasicData
     public final static String EMPTY_TEXT = "정보없음";
     public final static String MARKER_PREFERENCE_KEY = "MAKER";
     public final static String BAT_TODO_KEY = "TODO";
+    public final static String ENCRYPT_DECRYPT_KEY = "ENY_DEC_KEY";
     public final static String TODO_INPUT_PATIENT = "- Patient";
     public final static String TODO_INPUT_HELPER = "- Helper";
 }

@@ -2,17 +2,13 @@ package com.health1st.yeop9657.health1st;
 
 import android.Manifest;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -20,7 +16,6 @@ import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
-import com.health1st.yeop9657.health1st.Preference.ParentActivity;
 import com.health1st.yeop9657.health1st.ResourceData.BasicData;
 import com.health1st.yeop9657.health1st.ResourceData.BasicToDoData;
 import com.scottyab.aescrypt.AESCrypt;
@@ -32,6 +27,7 @@ import org.json.JSONException;
 
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
+import java.util.Random;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
@@ -64,20 +60,15 @@ public class BaseActivity extends AppCompatActivity implements PermissionListene
             mShared = PreferenceManager.getDefaultSharedPreferences(this);
             mSharedWrite = mShared.edit();
 
-            sSecurityPassword = mShared.getString("Application_Eny_Key", null);
+            sSecurityPassword = mShared.getString(BasicData.ENCRYPT_DECRYPT_KEY, null);
             if (sSecurityPassword == null) {
-                final EditText mPasswordEdit = new EditText(this);
-                final AlertDialog.Builder mPasswdAlert = new AlertDialog.Builder(this);
-                mPasswdAlert.setView(mPasswordEdit).setIcon(R.drawable.ic_padlock);
-                mPasswdAlert.setTitle("⌘ 생체 정보 암호화키 설정").setMessage("생체 정보 암호화키를 설정하기 위해 임의의 값을 입력해주세요.");
-                mPasswdAlert.setPositiveButton("적용", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
 
-                        sSecurityPassword = mPasswordEdit.getText().toString();
-                        mSharedWrite.putString("Application_Eny_Key", sSecurityPassword).apply();
-                    }
-                }).show();
+                /* TODO - : Random Generator */
+                final Random mRandom = new Random();
+                mRandom.setSeed(System.currentTimeMillis());
+
+                sSecurityPassword = String.valueOf(mRandom.nextLong() + Integer.MAX_VALUE);
+                mSharedWrite.putString(BasicData.ENCRYPT_DECRYPT_KEY, sSecurityPassword).apply();
             }
         }
 
@@ -159,8 +150,32 @@ public class BaseActivity extends AppCompatActivity implements PermissionListene
 
     /* MARK : - Permission Listener */
     @Override
-    public void onPermissionGranted() {}
+    public void onPermissionGranted() {/* POINT - : Vibrator */
+        if (mVibrator == null) { mVibrator = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE); }
+
+        /* POINT - : SharedPreferences */
+        if (mShared == null) {
+            mShared = PreferenceManager.getDefaultSharedPreferences(this);
+            mSharedWrite = mShared.edit();
+
+            sSecurityPassword = mShared.getString(BasicData.ENCRYPT_DECRYPT_KEY, null);
+            if (sSecurityPassword == null) {
+
+                /* TODO - : Random Generator */
+                final Random mRandom = new Random();
+                mRandom.setSeed(System.currentTimeMillis());
+
+                sSecurityPassword = String.valueOf(mRandom.nextLong() + Integer.MAX_VALUE);
+                mSharedWrite.putString(BasicData.ENCRYPT_DECRYPT_KEY, sSecurityPassword).apply();
+            }
+        }
+
+        /* POINT - : FONT Open Source */
+        Typekit.getInstance().addNormal(Typekit.createFromAsset(this, "BMHANNA_11yrs_ttf.ttf")).addBold(Typekit.createFromAsset(this, "BMHANNA_11yrs_ttf.ttf"));}
 
     @Override
-    public void onPermissionDenied(ArrayList<String> arrayList) {}
+    public void onPermissionDenied(ArrayList<String> arrayList) {
+        new SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE).setTitleText("APP 권한 설정 거부").setContentText("해당 APP을 구동하기 위해서는 시스템 권한이 필요합니다.\n설정을 통해서 권한을 허용해주세요.")
+                .setConfirmText("확인").show();
+    }
 }
