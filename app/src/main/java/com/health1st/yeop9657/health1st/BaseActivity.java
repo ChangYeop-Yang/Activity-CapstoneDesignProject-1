@@ -1,6 +1,5 @@
 package com.health1st.yeop9657.health1st;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -14,8 +13,6 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.maps.model.LatLng;
-import com.gun0912.tedpermission.PermissionListener;
-import com.gun0912.tedpermission.TedPermission;
 import com.health1st.yeop9657.health1st.ResourceData.BasicData;
 import com.health1st.yeop9657.health1st.ResourceData.BasicToDoData;
 import com.scottyab.aescrypt.AESCrypt;
@@ -29,10 +26,9 @@ import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.Random;
 
-import cn.pedant.SweetAlert.SweetAlertDialog;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
-public class BaseActivity extends AppCompatActivity implements PermissionListener
+public class BaseActivity extends AppCompatActivity
 {
     /* Vibrator */
     protected Vibrator mVibrator = null;
@@ -47,10 +43,6 @@ public class BaseActivity extends AppCompatActivity implements PermissionListene
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        /* POINT - : Permission */
-        TedPermission.with(this).setPermissionListener(this).setDeniedMessage(R.string.Basic_Permission_Information)
-                .setPermissions(Manifest.permission.CALL_PHONE, Manifest.permission.SEND_SMS, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.READ_EXTERNAL_STORAGE).check();
 
         /* POINT - : Vibrator */
         if (mVibrator == null) { mVibrator = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE); }
@@ -146,36 +138,5 @@ public class BaseActivity extends AppCompatActivity implements PermissionListene
         }
 
         return acBasicList;
-    }
-
-    /* MARK : - Permission Listener */
-    @Override
-    public void onPermissionGranted() {/* POINT - : Vibrator */
-        if (mVibrator == null) { mVibrator = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE); }
-
-        /* POINT - : SharedPreferences */
-        if (mShared == null) {
-            mShared = PreferenceManager.getDefaultSharedPreferences(this);
-            mSharedWrite = mShared.edit();
-
-            sSecurityPassword = mShared.getString(BasicData.ENCRYPT_DECRYPT_KEY, null);
-            if (sSecurityPassword == null) {
-
-                /* TODO - : Random Generator */
-                final Random mRandom = new Random();
-                mRandom.setSeed(System.currentTimeMillis());
-
-                sSecurityPassword = String.valueOf(mRandom.nextLong() + Integer.MAX_VALUE);
-                mSharedWrite.putString(BasicData.ENCRYPT_DECRYPT_KEY, sSecurityPassword).apply();
-            }
-        }
-
-        /* POINT - : FONT Open Source */
-        Typekit.getInstance().addNormal(Typekit.createFromAsset(this, "BMHANNA_11yrs_ttf.ttf")).addBold(Typekit.createFromAsset(this, "BMHANNA_11yrs_ttf.ttf"));}
-
-    @Override
-    public void onPermissionDenied(ArrayList<String> arrayList) {
-        new SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE).setTitleText("APP 권한 설정 거부").setContentText("해당 APP을 구동하기 위해서는 시스템 권한이 필요합니다.\n설정을 통해서 권한을 허용해주세요.")
-                .setConfirmText("확인").show();
     }
 }

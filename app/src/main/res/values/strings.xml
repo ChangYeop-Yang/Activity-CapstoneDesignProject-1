@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Health1st</string>
+    <string name="app_name">HEALTH 1ST</string>
     <!-- Basic Permission String -->
     <string name="Basic_Permission_Information">어플리케이션에 필요한 권한을 승인하지 않는다면 해당 어플리케이션을 정상적으로 이용하실 수 없습니다. "설정" 화면을 통해서 필요한 권한을 승인해주세요.</string>
     <!-- Main Helper String -->
@@ -62,6 +62,6 @@
     <string name="Preference_Developer_Email_Text">개발자에게 이메일을 보냅니다.</string>
     <string name="Preference_Developer_OpenSource">- 오픈소스 정보</string>
     <string name="Preference_Developer_OpenSource_Text">오픈소스 정보를 확인합니다.</string>
-    <!-- Layout ToDo Layout -->
-    <string name="LayoutToDoDelete">삭제하기</string>
+    <!-- First Activity String -->
+    <string name="First_Right_Text">Copyright ⓒ Mr.Yang. All Right Reserved</string>
 </resources>

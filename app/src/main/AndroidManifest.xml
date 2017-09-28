@@ -18,7 +18,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyC6m7lIXfcKVufNR9JQllB1rl0othH2YVM" />
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".FirstActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,6 +27,7 @@
         </activity>
 
         <!-- Activity -->
+        <activity android:name=".MainActivity" android:label="MainActivity"/>
         <activity android:name=".Preference.ParentActivity" android:label="ParentActivity"/>
 
     </application>
