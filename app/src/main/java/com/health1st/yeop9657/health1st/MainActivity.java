@@ -210,7 +210,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 /* POINT - : TextInputEditText */
                 final TextInputEditText mToDoEdit = (TextInputEditText)findViewById(R.id.MainToDoEdit);
 
-                if (mToDoEdit.getText().toString().isEmpty()) { new SweetAlertDialog(mContext, SweetAlertDialog.ERROR_TYPE).setTitleText("ToDo를 입력해주세요.").show(); }
+                if (mToDoEdit.getText().toString().isEmpty()) { new SweetAlertDialog(mContext, SweetAlertDialog.ERROR_TYPE).setTitleText("ToDo 생성실패").setContentText("ToDo를 입력해주세요.").show(); }
                 else {
                     /* POINT - : Simple Date Format */
                     final SimpleDateFormat mSimple = new SimpleDateFormat("MM-dd hh:mm");
@@ -222,7 +222,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                     acToDoList.add(new BasicToDoData(mMainTitle, BasicData.TODO_INPUT_PATIENT, mDate));
                     mToDoRecyclerView.setAdapter(new ToDoAdapter(mContext, acToDoList));
 
-                    new SweetAlertDialog(mContext, SweetAlertDialog.SUCCESS_TYPE).setTitleText(String.format("%s가 생성되었습니다.", mToDoEdit.getText().toString())).show();
+                    new SweetAlertDialog(mContext, SweetAlertDialog.SUCCESS_TYPE).setTitleText("ToDo 생성완료")
+                            .setContentText(String.format("%s가 생성되었습니다.", mToDoEdit.getText().toString())).show();
                     mToDoEdit.setText(null);
                 } break;
             }

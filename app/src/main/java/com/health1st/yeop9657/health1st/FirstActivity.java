@@ -4,8 +4,11 @@ import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 
@@ -29,6 +32,12 @@ public class FirstActivity extends BaseActivity implements PermissionListener
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first);
+
+        /* TODO - : ImageView and Integer */
+        final int amImagePath[] = {R.drawable.bg_indego_1, R.drawable.bg_indego_2, R.drawable.bg_indego_3};
+        final ImageView mBgImage = (ImageView)findViewById(R.id.First_Information_ImageView);
+        mBgImage.setScaleType(ImageView.ScaleType.FIT_XY);
+        mBgImage.setImageResource(amImagePath[((int)(Math.random() * 3))]);
 
         /* TODO - : Rooting Check */
         try {
@@ -63,7 +72,7 @@ public class FirstActivity extends BaseActivity implements PermissionListener
     public void onPermissionGranted() {
 
         /* TODO - : String and TextView */
-        final String asInformation[] = {"루팅 확인중.", "권한 확인중.", "AES 암호화."};
+        final String asInformation[] = {"루팅 확인중", "권한 확인중", "복호화중"};
         final TextView mInforText = (TextView)findViewById(R.id.First_Information_TextView);
 
             /* TODO - : Background Wait Timer Task */

@@ -6,10 +6,10 @@
     android:background="@color/colorPrimary">
 
     <ImageView
+        android:id="@+id/First_Information_ImageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/bg_first_display"
-        android:layout_centerInParent="true"/>
+        android:layout_centerInParent="true" />
 
     <ProgressBar
         android:layout_width="wrap_content"
