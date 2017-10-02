@@ -9,6 +9,10 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 
 import com.health1st.yeop9657.health1st.R;
+import com.health1st.yeop9657.health1st.ResourceData.BasicData;
+import com.scottyab.aescrypt.AESCrypt;
+
+import java.security.GeneralSecurityException;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
@@ -74,10 +78,13 @@ public class ChildActivity extends PreferenceFragment implements Preference.OnPr
 
     /* TODO - : Preference Changed Listener */
     @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+
+        final String sSharedValue = sharedPreferences.getString(key, "기본값");
+        final CharSequence sSharedTitle = getPreferenceManager().findPreference(key).getTitle();
 
         new SweetAlertDialog(mContext, SweetAlertDialog.SUCCESS_TYPE)
-                .setTitleText(getPreferenceManager().findPreference(s).getTitle().toString())
-                .setContentText(String.format("%s으로 설정되었습니다.", sharedPreferences.getString(s, "기본값"))).show();
+                .setTitleText(sSharedTitle.subSequence(2, sSharedTitle.length()).toString())
+                .setContentText(String.format("%s으로 설정되었습니다.", sSharedValue)).show();
     }
 }
