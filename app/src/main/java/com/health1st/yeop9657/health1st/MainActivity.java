@@ -1,5 +1,6 @@
 package com.health1st.yeop9657.health1st;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -40,6 +41,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
+import app.akexorcist.bluetotohspp.library.BluetoothSPP;
+import app.akexorcist.bluetotohspp.library.BluetoothState;
+import app.akexorcist.bluetotohspp.library.DeviceList;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener, OnMapReadyCallback
@@ -62,6 +66,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     /* POINT - : RecyclerView */
     private RecyclerView mToDoRecyclerView = null;
+
+    private BluetoothSPP mSPP = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +110,32 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         /* MARK - : ImageButton */
         final ImageButton mAddButton = (ImageButton)findViewById(R.id.MainToDoAdd);
         mAddButton.setOnClickListener(this);
+
+        mSPP = new BluetoothSPP(this);
+        mSPP.setupService();
+        startActivityForResult(new Intent(this, DeviceList.class), BluetoothState.REQUEST_CONNECT_DEVICE);
+        mSPP.setOnDataReceivedListener(new BluetoothSPP.OnDataReceivedListener() {
+            @Override
+            public void onDataReceived(byte[] data, String message) {
+                Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
+            }
+        });
+        mSPP.setBluetoothConnectionListener(new BluetoothSPP.BluetoothConnectionListener() {
+            @Override
+            public void onDeviceConnected(String name, String address) {
+                Toast.makeText(mContext, name, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onDeviceDisconnected() {
+                Toast.makeText(mContext, "Dis", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onDeviceConnectionFailed() {
+                Toast.makeText(mContext, "Fail", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
@@ -172,7 +204,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     @Override
     public void onClick(View view) {
 
-        /* #POINT : Action Vibrate and Toast */
+        /* POINT : Action Vibrate and Toast */
         mVibrator.vibrate(BasicData.VIBRATE_VALUE);
         //Toast.makeText(mContext, ((Button) view).getText(), Toast.LENGTH_SHORT).show();
 
@@ -304,5 +336,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 sweetAlertDialog.cancel(); finish();
             }
         }).setCancelText("취소").show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == BluetoothState.REQUEST_CONNECT_DEVICE) {
+            if (requestCode == Activity.RESULT_OK) { mSPP.connect(data); }
+        }
     }
 }
