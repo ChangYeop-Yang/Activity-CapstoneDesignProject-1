@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.telephony.SmsManager;
 import android.util.Log;
+import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,6 +31,7 @@ import com.health1st.yeop9657.health1st.Location.Location;
 import com.health1st.yeop9657.health1st.Preference.ParentActivity;
 import com.health1st.yeop9657.health1st.ResourceData.BasicData;
 import com.health1st.yeop9657.health1st.ResourceData.BasicToDoData;
+import com.health1st.yeop9657.health1st.ResourceData.FHIRAdapter;
 import com.health1st.yeop9657.health1st.ResourceData.ToDoAdapter;
 
 import org.json.JSONException;
@@ -104,6 +106,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         /* MARK - : ImageButton */
         final ImageButton mAddButton = (ImageButton)findViewById(R.id.MainToDoAdd);
         mAddButton.setOnClickListener(this);
+
+        FHIRAdapter mAdapter = new FHIRAdapter(mContext, mShared);
     }
 
     @Override
@@ -126,26 +130,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
         /* POINT - : Patient Information */
         final StringBuffer mStringBuffer = new StringBuffer();
-        mStringBuffer.append("* 이름: ");
-        mStringBuffer.append(String.format("%s\n\n", mShared.getString("Patient_Name", BasicData.EMPTY_TEXT)));
-        mStringBuffer.append("* 나이: ");
-        mStringBuffer.append(String.format("%s\n\n", mShared.getString("Patient_Age", BasicData.EMPTY_TEXT)));
-        mStringBuffer.append("* 성별: ");
-        mStringBuffer.append(String.format("%s\n\n", mShared.getString("Patient_Sex", BasicData.EMPTY_TEXT)));
-        mStringBuffer.append("* 흡연여부: ");
-        mStringBuffer.append(String.format("%s\n\n", mShared.getString("Patient_Smoking", BasicData.EMPTY_TEXT)));
-        mStringBuffer.append("* 혈액형: ");
-        mStringBuffer.append(String.format("%s\n\n", mShared.getString("Patient_Blood", BasicData.EMPTY_TEXT)));
-        mStringBuffer.append("* 신장: ");
-        mStringBuffer.append(String.format("%scm\n\n", mShared.getString("Patient_Height", BasicData.EMPTY_TEXT)));
-        mStringBuffer.append("* 체중: ");
-        mStringBuffer.append(String.format("%skg\n\n", mShared.getString("Patient_Weight", BasicData.EMPTY_TEXT)));
-        mStringBuffer.append("* 질병: ");
-        mStringBuffer.append(String.format("%s\n\n", mShared.getString("Patient_Disease", BasicData.EMPTY_TEXT)));
-        mStringBuffer.append("* 복용중인 약: ");
-        mStringBuffer.append(String.format("%s\n\n", mShared.getString("Patient_Medicine", BasicData.EMPTY_TEXT)));
-        mStringBuffer.append("* 기타사항: ");
-        mStringBuffer.append(String.format("%s\n", mShared.getString("Patient_Etc", BasicData.EMPTY_TEXT)));
+
+        final Pair[] apPatientPairs = {new Pair("* 이름: ", mShared.getString(BasicData.SHARED_PATIENT_NAME, BasicData.EMPTY_TEXT)), new Pair("* 나이: ", mShared.getString(BasicData.SHARED_PATIENT_AGE, BasicData.EMPTY_TEXT)),
+                new Pair("* 성별: ", mShared.getString(BasicData.SHARED_PATIENT_SEX, BasicData.EMPTY_TEXT)), new Pair("* 흡연여부: ", mShared.getString(BasicData.SHARED_PATIENT_SMOKE, BasicData.EMPTY_TEXT)),
+                new Pair("* 혈액형: ", mShared.getString(BasicData.SHARED_PATIENT_BLOOD, BasicData.EMPTY_TEXT)), new Pair("* 신장: ", mShared.getString(BasicData.SHARED_PATIENT_HEIGHT, BasicData.EMPTY_TEXT)),
+                new Pair("* 체중: ", mShared.getString(BasicData.SHARED_PATIENT_WEIGHT, BasicData.EMPTY_TEXT)), new Pair("* 질병: ", mShared.getString(BasicData.SHARED_PATIENT_DISEASE, BasicData.EMPTY_TEXT)),
+                new Pair("* 복용중인 약: ", mShared.getString(BasicData.SHARED_PATIENT_MEDICINE, BasicData.EMPTY_TEXT)), new Pair("* 기타사항: ", mShared.getString(BasicData.SHARED_PATIENT_ETC, BasicData.EMPTY_TEXT))};
+
+        for (final Pair<String, String> mPair : apPatientPairs) {
+            mStringBuffer.append(mPair.first);
+            mStringBuffer.append(String.format("%s\n\n", mPair.second));
+        }
+
         cTextViewMap.get("Patient_Information").setText(mStringBuffer.toString());
     }
 

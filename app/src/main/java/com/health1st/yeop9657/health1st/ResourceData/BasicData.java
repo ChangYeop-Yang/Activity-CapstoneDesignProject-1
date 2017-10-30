@@ -23,4 +23,16 @@ public class BasicData
     public final static String ENCRYPT_DECRYPT_KEY = "ENY_DEC_KEY";
     public final static String TODO_INPUT_PATIENT = "- Patient";
     public final static String TODO_INPUT_HELPER = "- Helper";
+
+    /* TODO Shared Preference VALUE  */
+    public final static String SHARED_PATIENT_NAME = "Patient_Name";
+    public final static String SHARED_PATIENT_WEIGHT = "Patient_Weight";
+    public final static String SHARED_PATIENT_HEIGHT = "Patient_Height";
+    public final static String SHARED_PATIENT_BLOOD = "Patient_Blood";
+    public final static String SHARED_PATIENT_AGE = "Patient_Age";
+    public final static String SHARED_PATIENT_SMOKE = "Patient_Smoking";
+    public final static String SHARED_PATIENT_DISEASE = "Patient_Disease";
+    public final static String SHARED_PATIENT_MEDICINE = "Patient_Medicine";
+    public final static String SHARED_PATIENT_ETC = "Patient_Etc";
+    public final static String SHARED_PATIENT_SEX = "Patient_Sex";
 }
