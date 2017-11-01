@@ -2,6 +2,7 @@ package com.health1st.yeop9657.health1st;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
@@ -21,17 +22,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.mikephil.charting.charts.LineChart;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.health1st.yeop9657.health1st.Accessory.BluetoothManager;
 import com.health1st.yeop9657.health1st.Location.Location;
 import com.health1st.yeop9657.health1st.Preference.ParentActivity;
 import com.health1st.yeop9657.health1st.ResourceData.BasicData;
 import com.health1st.yeop9657.health1st.ResourceData.BasicToDoData;
 import com.health1st.yeop9657.health1st.ResourceData.FHIRAdapter;
+import com.health1st.yeop9657.health1st.ResourceData.GraphAdapter;
 import com.health1st.yeop9657.health1st.ResourceData.ToDoAdapter;
 
 import org.json.JSONException;
@@ -107,7 +111,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         final ImageButton mAddButton = (ImageButton)findViewById(R.id.MainToDoAdd);
         mAddButton.setOnClickListener(this);
 
-        FHIRAdapter mAdapter = new FHIRAdapter(mContext, mShared);
+        //FHIRAdapter mAdapter = new FHIRAdapter(mContext, mShared);
+
+        ArrayList<Float> mHeartRandom = new ArrayList<Float>(10);
+        ArrayList<Float> mSpO2Random = new ArrayList<Float>(10);
+        for (int ii = 0; ii < 10; ii++) { mHeartRandom.add((float)(Math.random() * 10) + 3); mSpO2Random.add((float)(Math.random() * 10) + 3); }
+
+        GraphAdapter mGraphAdapter = new GraphAdapter(mContext);
+        mGraphAdapter.drawHealthLinerGraph((LineChart)findViewById(R.id.Main_Health_Chart), mHeartRandom, mSpO2Random);
     }
 
     @Override

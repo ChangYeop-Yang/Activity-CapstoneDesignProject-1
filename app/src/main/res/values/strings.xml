@@ -28,6 +28,7 @@
     <string name="Preference_Patient_State">PATIENT STATE</string>
     <string name="Preference_Developer_Information">DEVELOPER_INFORMATION</string>
     <string name="Preference_Patient_ToDo">PATIENT TODO INFORMATION</string>
+    <string name="Preference_Patient_Health">PATIENT HEALTH GRAPH</string>
     <string name="Preference_Helper_Name">- 보호자 이름 설정</string>
     <string name="Preference_Helper_Name_Text">보호자 이름을 설정합니다.</string>
     <string name="Preference_Helper_Address">- 보호자 주소 설정</string>

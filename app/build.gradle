@@ -36,6 +36,8 @@ dependencies {
     compile 'gun0912.ted:tedpermission:2.0.0'
     compile 'cn.pedant.sweetalert:library:1.3'
     compile 'com.scottyab:aescrypt:0.0.1'
-    compile 'com.akexorcist:bluetoothspp:1.0.0'
+    /* HL7 FHIR HAPI API */
     compile "ca.uhn.hapi.fhir:hapi-fhir-android:2.2:dstu2@jar"
+    /* CHART API */
+    compile 'com.github.PhilJay:MPAndroidChart:v3.0.2'
 }

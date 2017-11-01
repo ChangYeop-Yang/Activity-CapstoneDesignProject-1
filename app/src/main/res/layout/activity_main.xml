@@ -235,6 +235,37 @@
 
             </android.support.v7.widget.CardView>
 
+            <!-- Health Information Chart CardView -->
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/Preference_Patient_Health"
+                        android:textColor="@color/colorAccent"/>
+
+                    <com.github.mikephil.charting.charts.LineChart
+                        android:id="@+id/Main_Health_Chart"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:minHeight="300dp"
+                        android:layout_margin="10dp"/>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
             <!-- ToDo RecyclerView -->
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
