@@ -1,8 +1,8 @@
 package com.health1st.yeop9657.health1st;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
@@ -29,12 +29,10 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.health1st.yeop9657.health1st.Accessory.BluetoothManager;
 import com.health1st.yeop9657.health1st.Location.Location;
 import com.health1st.yeop9657.health1st.Preference.ParentActivity;
 import com.health1st.yeop9657.health1st.ResourceData.BasicData;
 import com.health1st.yeop9657.health1st.ResourceData.BasicToDoData;
-import com.health1st.yeop9657.health1st.ResourceData.FHIRAdapter;
 import com.health1st.yeop9657.health1st.ResourceData.GraphAdapter;
 import com.health1st.yeop9657.health1st.ResourceData.ToDoAdapter;
 
@@ -176,6 +174,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     }
 
     /* TODO - : One Click Event Listener */
+    @SuppressLint("MissingPermission")
     @Override
     public void onClick(View view) {
 
@@ -259,6 +258,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     { getMenuInflater().inflate(R.menu.main, menu); return true; }
 
     /* TODO - : Map Ready Listener */
+    @SuppressLint("MissingPermission")
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
