@@ -2,9 +2,7 @@ package com.health1st.yeop9657.health1st.ResourceData;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 import android.util.Pair;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.UUID;

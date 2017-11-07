@@ -1,13 +1,11 @@
 package com.health1st.yeop9657.health1st.Location;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.TextView;
 
@@ -15,10 +13,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 
-import org.json.JSONArray;
-
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**

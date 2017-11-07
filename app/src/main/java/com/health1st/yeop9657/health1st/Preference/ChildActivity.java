@@ -9,10 +9,6 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 
 import com.health1st.yeop9657.health1st.R;
-import com.health1st.yeop9657.health1st.ResourceData.BasicData;
-import com.scottyab.aescrypt.AESCrypt;
-
-import java.security.GeneralSecurityException;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 

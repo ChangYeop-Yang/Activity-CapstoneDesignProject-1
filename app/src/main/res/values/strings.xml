@@ -22,6 +22,11 @@
     <!-- Main Menu String -->
     <string name="Main_Menu_Setting">설정</string>
     <string name="Main_Menu_Sync">동기화</string>
+    <!-- Main Device String -->
+    <string name="Main_Device_Heart">심장박동수</string>
+    <string name="Main_Device_Battery">남은 배터리</string>
+    <string name="Main_Device_Connection">연결상태</string>
+    <string name="Main_Device_Find">디바이스 찾기</string>
     <!-- Preference String -->
     <string name="Preference_Helper_Information">HELPER INFORMATION</string>
     <string name="Preference_Patient_Information">PATIENT INFORMATION</string>
@@ -29,6 +34,7 @@
     <string name="Preference_Developer_Information">DEVELOPER_INFORMATION</string>
     <string name="Preference_Patient_ToDo">PATIENT TODO INFORMATION</string>
     <string name="Preference_Patient_Health">PATIENT HEALTH GRAPH</string>
+    <string name="Preference_Device_Information">DEVICE INFORMATION</string>
     <string name="Preference_Helper_Name">- 보호자 이름 설정</string>
     <string name="Preference_Helper_Name_Text">보호자 이름을 설정합니다.</string>
     <string name="Preference_Helper_Address">- 보호자 주소 설정</string>

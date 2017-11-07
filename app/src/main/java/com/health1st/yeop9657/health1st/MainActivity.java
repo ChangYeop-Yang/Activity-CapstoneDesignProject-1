@@ -29,6 +29,8 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.health1st.yeop9657.health1st.Accessory.BluetoothManager;
+import com.health1st.yeop9657.health1st.Accessory.MiBandManager;
 import com.health1st.yeop9657.health1st.Location.Location;
 import com.health1st.yeop9657.health1st.Preference.ParentActivity;
 import com.health1st.yeop9657.health1st.ResourceData.BasicData;
@@ -66,6 +68,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     /* POINT - : RecyclerView */
     private RecyclerView mToDoRecyclerView = null;
+
+    private MiBandManager mMiBand = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -247,7 +251,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         switch (item.getItemId())
         {
             case R.id.Main_Setting : { startActivity(new Intent(mContext, ParentActivity.class)); return true; }
-            case R.id.Main_Sync : { return true; }
+            case R.id.Main_Sync :
+            {
+                mMiBand = new MiBandManager(mContext, findViewById(android.R.id.content));
+                mMiBand.start();
+                return true;
+            }
         }
 
         return super.onOptionsItemSelected(item);
