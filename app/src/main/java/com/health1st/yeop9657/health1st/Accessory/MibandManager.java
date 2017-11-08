@@ -255,7 +255,7 @@ public class MiBandManager extends BluetoothManager implements View.OnClickListe
 
         switch (view.getId())
         {
-            case (R.id.Device_SPO2_But) : { showAlertDialog(SweetAlertDialog.ERROR_TYPE, 0, "Unsupported SPO2", "Xiaomi Mi-Band는 SPO2를 지원하지 않습니다."); }
+            case (R.id.Device_SPO2_But) : { showAlertDialog(SweetAlertDialog.ERROR_TYPE, 0, "Unsupported SPO2", "Xiaomi Mi-Band는 SPO2를 지원하지 않습니다."); break; }
             case (R.id.Device_Find_But) : { isVibrate = isVibrate ? stopBandVibrate(mButton) : startBandVibrate(mButton); break; }
             case (R.id.Device_Battery_But) :
             {
