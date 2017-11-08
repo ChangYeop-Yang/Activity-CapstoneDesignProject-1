@@ -20,7 +20,6 @@ import com.health1st.yeop9657.health1st.R;
 import com.health1st.yeop9657.health1st.ResourceData.BasicData;
 
 import java.util.Set;
-import java.util.UUID;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
@@ -57,9 +56,8 @@ public class MiBandManager extends BluetoothManager implements View.OnClickListe
     private SweetAlertDialog mSweetAlertDialog = null;
 
     /* MARK - : Mi-Band Manager Creator */
-    public MiBandManager(final Context mContext, final Button[] aButtonList, final Activity mActivity, final CardView mCardView) {
+    public MiBandManager(final Context mContext, final Activity mActivity, final CardView mCardView) {
         this.mContext = mContext;
-        this.aButtonList = aButtonList;
         this.mActivity = mActivity;
         this.mCardView = mCardView;
     }
@@ -81,6 +79,7 @@ public class MiBandManager extends BluetoothManager implements View.OnClickListe
         }
 
         /* POINT - : Setting Button Listener */
+        aButtonList = new Button[]{(Button) mActivity.findViewById(R.id.Device_Heart_But), (Button) mActivity.findViewById(R.id.Device_Battery_But), (Button) mActivity.findViewById(R.id.Device_Find_But), (Button)mActivity.findViewById(R.id.Device_SPO2_But)};
         for (final Button mButton : aButtonList) { mButton.setOnClickListener(this); }
     }
 
@@ -176,12 +175,18 @@ public class MiBandManager extends BluetoothManager implements View.OnClickListe
         }
 
         @Override
-        public void onServicesDiscovered(BluetoothGatt gatt, int status) {
+        public void onServicesDiscovered(final BluetoothGatt gatt, int status) {
             super.onServicesDiscovered(gatt, status);
             Log.v(TAG, "onServicesDiscovered");
 
-            Snackbar.make(mActivity.findViewById(android.R.id.content), "The Xiaomi Mi-Band Service is Enabled.", Snackbar.LENGTH_SHORT).show();
-            mCardView.setVisibility(View.VISIBLE);
+            mActivity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    mCardView.setVisibility(View.VISIBLE);
+                    Snackbar.make(mActivity.findViewById(android.R.id.content), "The Xiaomi Mi-Band Service is Enabled.", Snackbar.LENGTH_SHORT).show();
+                }
+            });
+
             listenHeartRate();
         }
 
@@ -194,6 +199,8 @@ public class MiBandManager extends BluetoothManager implements View.OnClickListe
             if (mUUID.equals(Xiaomi.BASIC_BATTERY_CHARACTERISTIC.toString())) {
                 final int mBatteryRate = (int)characteristic.getValue()[1];
                 setButtonText(aButtonList[1], String.format("남은 배터리 : %d %%", mBatteryRate));
+
+                if (mSweetAlertDialog != null) { mSweetAlertDialog.cancel(); }
             }
         }
 
@@ -229,8 +236,11 @@ public class MiBandManager extends BluetoothManager implements View.OnClickListe
         mSweetAlertDialog.setTitleText(mTitle);
         mSweetAlertDialog.setContentText(mContent);
 
-        if (mType == BasicData.BLUETOOTH_DEVICE_HEART_BEAT_RATE) { mSweetAlertDialog.setCancelable(false); }
-        else { mSweetAlertDialog.setConfirmText("확인"); }
+        switch (mType)
+        {
+            case (BasicData.BLUETOOTH_DEVICE_HEART_BEAT_RATE) : { mSweetAlertDialog.setCancelable(false); break; }
+            case (BasicData.BLUETOOTH_DEVICE_BATTERY_RATE) : { mSweetAlertDialog.setCancelable(false); break; }
+        }
 
         mSweetAlertDialog.show();
     }
@@ -245,8 +255,15 @@ public class MiBandManager extends BluetoothManager implements View.OnClickListe
 
         switch (view.getId())
         {
-            case (R.id.Device_Battery_But) : { getBatteryStatus(); break; }
+            case (R.id.Device_SPO2_But) : { showAlertDialog(SweetAlertDialog.ERROR_TYPE, 0, "Unsupported SPO2", "Xiaomi Mi-Band는 SPO2를 지원하지 않습니다."); }
             case (R.id.Device_Find_But) : { isVibrate = isVibrate ? stopBandVibrate(mButton) : startBandVibrate(mButton); break; }
+            case (R.id.Device_Battery_But) :
+            {
+                final String mName = "베터리정보 가져오기";
+                final String mContent = "Battery Capacity을 측정하고 있습니다.\n잠시만 기다려주세요.";
+                showAlertDialog(SweetAlertDialog.PROGRESS_TYPE, BasicData.BLUETOOTH_DEVICE_BATTERY_RATE, mName, mContent);
+                getBatteryStatus(); break;
+            }
             case (R.id.Device_Heart_But) :
             {
                 /* POINT - : Check Heart Beat Rate */

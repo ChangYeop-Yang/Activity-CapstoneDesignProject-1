@@ -110,7 +110,7 @@ public class BaseActivity extends AppCompatActivity
     /* MARK - : get ArrayList<?> Preference Method */
     protected final ArrayList<?> getArrayListPreference(final String sKey) throws JSONException, GeneralSecurityException {
 
-        String sJSON = mShared.getString(sKey, null);
+        final String sJSON = mShared.getString(sKey, null);
 
         ArrayList<?> acBasicList = null;
         if (sJSON == null) { return new ArrayList<>(BasicData.ALLOCATE_BASIC_VALUE); }

@@ -249,14 +249,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         switch (item.getItemId())
         {
             case R.id.Main_Setting : { startActivity(new Intent(mContext, ParentActivity.class)); return true; }
-            case R.id.Main_Sync :
-            {
-                final Button[] aButton = {(Button)findViewById(R.id.Device_Heart_But), (Button)findViewById(R.id.Device_Battery_But), (Button)findViewById(R.id.Device_Find_But)};
-                final MiBandManager mMiBandManager = new MiBandManager(mContext, aButton, this, (CardView) findViewById(R.id.Main_Device_CardView));
-                mMiBandManager.start();
-
-                return true;
-            }
+            case R.id.Main_Sync : { new MiBandManager(mContext, this, (CardView) findViewById(R.id.Main_Device_CardView)).start(); return true; }
         }
 
         return super.onOptionsItemSelected(item);

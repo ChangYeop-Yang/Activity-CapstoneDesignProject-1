@@ -321,6 +321,19 @@
                             android:orientation="vertical">
 
                             <Button
+                                android:id="@+id/Device_SPO2_But"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@color/colorPrimaryDark"
+                                android:layout_marginBottom="5dp"
+                                android:drawableLeft="@drawable/ic_oxygen"
+                                android:text="@string/Main_Device_SPO2"
+                                android:textSize="18sp"
+                                android:textStyle="bold"
+                                android:textColor="@android:color/white"/>
+
+                            <Button
                                 android:id="@+id/Device_Battery_But"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
