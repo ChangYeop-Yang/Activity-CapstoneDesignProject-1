@@ -1,5 +1,6 @@
 package com.health1st.yeop9657.health1st.Accessory;
 
+import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
@@ -9,39 +10,25 @@ import android.bluetooth.BluetoothGattDescriptor;
 import android.bluetooth.BluetoothProfile;
 import android.content.Context;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
-import java.util.Arrays;
+import com.health1st.yeop9657.health1st.R;
+import com.health1st.yeop9657.health1st.ResourceData.BasicData;
+
 import java.util.Set;
 import java.util.UUID;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 /**
  * Created by yeop on 2017. 11. 7..
  */
 
-public class MiBandManager extends Thread {
-
-    /* TODO - : Basic UUID */
-    public static class Basic {
-        public static UUID service = UUID.fromString("0000fee0-0000-1000-8000-00805f9b34fb");
-        public static UUID batteryCharacteristic = UUID.fromString("00000006-0000-3512-2118-0009af100700");
-    }
-
-    /* TODO - : Alert UUID */
-    public static class AlertNotification {
-        public static UUID service = UUID.fromString("00001802-0000-1000-8000-00805f9b34fb");
-        public static UUID alertCharacteristic = UUID.fromString("00002a06-0000-1000-8000-00805f9b34fb");
-    }
-
-    /* TODO - : HeartRate UUID */
-    public static class HeartRate {
-        public static UUID service = UUID.fromString("0000180d-0000-1000-8000-00805f9b34fb");
-        public static UUID measurementCharacteristic = UUID.fromString("00002a37-0000-1000-8000-00805f9b34fb");
-        public static UUID descriptor = UUID.fromString("00002902-0000-1000-8000-00805f9b34fb");
-        public static UUID controlCharacteristic = UUID.fromString("00002a39-0000-1000-8000-00805f9b34fb");
-    }
+public class MiBandManager extends BluetoothManager implements View.OnClickListener {
 
     /* MARK - : String */
     private final static String TAG = MiBandManager.class.getSimpleName();
@@ -50,18 +37,31 @@ public class MiBandManager extends Thread {
     /* MARK - : Context */
     private Context mContext = null;
 
+    /* MARK - : Activity */
+    private Activity mActivity = null;
+
     /* MARK - : View */
-    private View mView = null;
+    private CardView mCardView = null;
 
     /* MARK - : Bluetooth Instance */
     private BluetoothGatt mDeviceBluetoothGatt = null;
 
-    Boolean isListeningHeartRate = false;
+    /* MARK - : Button */
+    private Button aButtonList[] = null;
+
+    /* MARK - : Boolean */
+    private Boolean isVibrate = false;
+    private Boolean isListeningHeartRate = false;
+
+    /* MARK - : SweetAlertDialog */
+    private SweetAlertDialog mSweetAlertDialog = null;
 
     /* MARK - : Mi-Band Manager Creator */
-    public MiBandManager(final Context mContext, final View mView) {
+    public MiBandManager(final Context mContext, final Button[] aButtonList, final Activity mActivity, final CardView mCardView) {
         this.mContext = mContext;
-        this.mView = mView;
+        this.aButtonList = aButtonList;
+        this.mActivity = mActivity;
+        this.mCardView = mCardView;
     }
 
     @Override
@@ -79,13 +79,16 @@ public class MiBandManager extends Thread {
                 Log.e(TAG, String.format("%s %s", mBluetooth.getAddress(), mBluetooth.getName()));
             }
         }
+
+        /* POINT - : Setting Button Listener */
+        for (final Button mButton : aButtonList) { mButton.setOnClickListener(this); }
     }
 
     /* MARK - : Start Heart Beat Rate Method */
     public void startScanHeartRate() {
 
-        final BluetoothGattCharacteristic bchar = mDeviceBluetoothGatt.getService(HeartRate.service)
-                .getCharacteristic(HeartRate.controlCharacteristic);
+        final BluetoothGattCharacteristic bchar = mDeviceBluetoothGatt.getService(Xiaomi.HEART_SERVICE)
+                .getCharacteristic(Xiaomi.HEART_CONTROL_CHARACTERISTIC);
         bchar.setValue(new byte[]{21, 2, 1});
 
         mDeviceBluetoothGatt.writeCharacteristic(bchar);
@@ -93,20 +96,25 @@ public class MiBandManager extends Thread {
 
     /* MARK - : Set Listen Heart Rate Method */
     public void listenHeartRate() {
-        BluetoothGattCharacteristic bchar = mDeviceBluetoothGatt.getService(HeartRate.service)
-                .getCharacteristic(HeartRate.measurementCharacteristic);
+
+        final BluetoothGattCharacteristic bchar = mDeviceBluetoothGatt.getService(Xiaomi.HEART_SERVICE)
+                .getCharacteristic(Xiaomi.HEART_MEASUREMENT_CHARACTERISTIC);
+
         mDeviceBluetoothGatt.setCharacteristicNotification(bchar, true);
-        BluetoothGattDescriptor descriptor = bchar.getDescriptor(HeartRate.descriptor);
+
+        final BluetoothGattDescriptor descriptor = bchar.getDescriptor(Xiaomi.HEART_DESCRIPTOR);
         descriptor.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
+
         mDeviceBluetoothGatt.writeDescriptor(descriptor);
+
         isListeningHeartRate = true;
     }
 
     /* MARK - : Get Mi-Band Battery Method */
     public void getBatteryStatus() {
 
-        final BluetoothGattCharacteristic bchar = mDeviceBluetoothGatt.getService(Basic.service)
-                .getCharacteristic(Basic.batteryCharacteristic);
+        final BluetoothGattCharacteristic bchar = mDeviceBluetoothGatt.getService(Xiaomi.BASIC_SERVICE)
+                .getCharacteristic(Xiaomi.BASIC_BATTERY_CHARACTERISTIC);
 
         if (!mDeviceBluetoothGatt.readCharacteristic(bchar)) {
             Toast.makeText(mContext, "Failed get battery info", Toast.LENGTH_SHORT).show();
@@ -114,29 +122,33 @@ public class MiBandManager extends Thread {
     }
 
     /* MARK - : Start Mi-Band Vibrate Method */
-    public void startBandVibrate() {
+    public Boolean startBandVibrate(final Button mButton) {
 
-        final BluetoothGattCharacteristic bchar = mDeviceBluetoothGatt.getService(AlertNotification.service)
-                .getCharacteristic(AlertNotification.alertCharacteristic);
+        final BluetoothGattCharacteristic bchar = mDeviceBluetoothGatt.getService(Xiaomi.ALERT_NOTIFICATION_SERVICE)
+                .getCharacteristic(Xiaomi.ALERT_NOTIFICATION_CHARACTERISTIC);
 
         bchar.setValue(new byte[]{2});
 
-        if (!mDeviceBluetoothGatt.writeCharacteristic(bchar)) {
-            Toast.makeText(mContext, "Failed start vibrate", Toast.LENGTH_SHORT).show();
-        }
+        if (!mDeviceBluetoothGatt.writeCharacteristic(bchar))
+        { Toast.makeText(mContext, "Failed start vibrate", Toast.LENGTH_SHORT).show(); return false; }
+
+        mButton.setText(R.string.Main_Device_Finding);
+        return true;
     }
 
     /* MARK - : Stop Mi-Band Vibrate Method */
-    public void stopBandVibrate() {
+    public Boolean stopBandVibrate(final Button mButton) {
 
-        final BluetoothGattCharacteristic bchar = mDeviceBluetoothGatt.getService(AlertNotification.service)
-                .getCharacteristic(AlertNotification.alertCharacteristic);
+        final BluetoothGattCharacteristic bchar = mDeviceBluetoothGatt.getService(Xiaomi.ALERT_NOTIFICATION_SERVICE)
+                .getCharacteristic(Xiaomi.ALERT_NOTIFICATION_CHARACTERISTIC);
 
         bchar.setValue(new byte[]{0});
 
-        if (!mDeviceBluetoothGatt.writeCharacteristic(bchar)) {
-            Toast.makeText(mContext, "Failed stop vibrate", Toast.LENGTH_SHORT).show();
-        }
+        if (!mDeviceBluetoothGatt.writeCharacteristic(bchar))
+        { Toast.makeText(mContext, "Failed stop vibrate", Toast.LENGTH_SHORT).show(); return true; }
+
+        mButton.setText(R.string.Main_Device_Find);
+        return false;
     }
 
     /* TODO - : BluetoothGattCallback Method */
@@ -151,13 +163,13 @@ public class MiBandManager extends Thread {
                 case (BluetoothProfile.STATE_CONNECTED) :
                 {
                     mDeviceBluetoothGatt.discoverServices();
-                    Snackbar.make(mView, "Connect Xiaomi Mi-Band.", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(mActivity.findViewById(android.R.id.content), "Connect Xiaomi Mi-Band.", Snackbar.LENGTH_SHORT).show();
                     break;
                 }
                 case (BluetoothProfile.STATE_DISCONNECTED) :
                 {
                     mDeviceBluetoothGatt.disconnect();
-                    Snackbar.make(mView, "Disconnect Xiaomi Mi-Band.", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(mActivity.findViewById(android.R.id.content), "Disconnect Xiaomi Mi-Band.", Snackbar.LENGTH_SHORT).show();
                     break;
                 }
             }
@@ -166,24 +178,86 @@ public class MiBandManager extends Thread {
         @Override
         public void onServicesDiscovered(BluetoothGatt gatt, int status) {
             super.onServicesDiscovered(gatt, status);
-            Log.v("test", "onServicesDiscovered");
+            Log.v(TAG, "onServicesDiscovered");
+
+            Snackbar.make(mActivity.findViewById(android.R.id.content), "The Xiaomi Mi-Band Service is Enabled.", Snackbar.LENGTH_SHORT).show();
+            mCardView.setVisibility(View.VISIBLE);
             listenHeartRate();
         }
 
         @Override
         public void onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
             super.onCharacteristicRead(gatt, characteristic, status);
-            Log.v("test", "onCharacteristicRead");
-            byte[] data = characteristic.getValue();
-            Log.e(TAG, Arrays.toString(data));
+
+            /* Using Battery Percent */
+            final String mUUID = characteristic.getUuid().toString();
+            if (mUUID.equals(Xiaomi.BASIC_BATTERY_CHARACTERISTIC.toString())) {
+                final int mBatteryRate = (int)characteristic.getValue()[1];
+                setButtonText(aButtonList[1], String.format("남은 배터리 : %d %%", mBatteryRate));
+            }
         }
 
         @Override
         public void onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
             super.onCharacteristicChanged(gatt, characteristic);
-            Log.v("test", "onCharacteristicChanged");
-            byte[] data = characteristic.getValue();
-            Log.e(TAG, Arrays.toString(data));
+
+            /* Heart Beat Rate */
+            final String mUUID = characteristic.getUuid().toString();
+            if (mUUID.equals(Xiaomi.HEART_MEASUREMENT_CHARACTERISTIC.toString())) {
+                final int mHeartBeatRate = convertByteToInt(characteristic.getValue());
+                setButtonText(aButtonList[0], String.format("%d BPM", mHeartBeatRate));
+
+                if (mSweetAlertDialog != null) { mSweetAlertDialog.cancel(); }
+            }
         }
     };
+
+    /* TODO - : Setting Button Text Method */
+    private void setButtonText(final Button mButton, final String mSting) {
+
+        mActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() { mButton.setText(mSting); }
+        });
+    }
+
+    /* TODO - : Show SweetAlertDialog Method */
+    private void showAlertDialog(final int mAlertType, final int mType, final String mTitle, final String mContent) {
+
+        /* POINT - : SweetAlertDialog */
+        mSweetAlertDialog = new SweetAlertDialog(mContext, mAlertType);
+        mSweetAlertDialog.setTitleText(mTitle);
+        mSweetAlertDialog.setContentText(mContent);
+
+        if (mType == BasicData.BLUETOOTH_DEVICE_HEART_BEAT_RATE) { mSweetAlertDialog.setCancelable(false); }
+        else { mSweetAlertDialog.setConfirmText("확인"); }
+
+        mSweetAlertDialog.show();
+    }
+
+    /* TODO - : OnClick Listener Method */
+    @Override
+    public void onClick(View view) {
+
+        /* POINT - : Button */
+        final Button mButton = (Button)view;
+        startDeviceVibrate(view.getContext());
+
+        switch (view.getId())
+        {
+            case (R.id.Device_Battery_But) : { getBatteryStatus(); break; }
+            case (R.id.Device_Find_But) : { isVibrate = isVibrate ? stopBandVibrate(mButton) : startBandVibrate(mButton); break; }
+            case (R.id.Device_Heart_But) :
+            {
+                /* POINT - : Check Heart Beat Rate */
+                if (!isListeningHeartRate)
+                { showAlertDialog(SweetAlertDialog.ERROR_TYPE, BasicData.BLUETOOTH_DEVICE_HEART_BEAT_RATE, "ERROR SCAN HRM", "Heart Beat Rate(=HRM)을 측정할 수 없습니다."); break; }
+
+                final String mName = "심장박동수 측정";
+                final String mContent = "Heart Beat Rate(=HRM)을 측정하고 있습니다.\n잠시만 기다려주세요.";
+                showAlertDialog(SweetAlertDialog.PROGRESS_TYPE, BasicData.BLUETOOTH_DEVICE_HEART_BEAT_RATE, mName, mContent);
+                startScanHeartRate(); break;
+            }
+        }
+    }
 }

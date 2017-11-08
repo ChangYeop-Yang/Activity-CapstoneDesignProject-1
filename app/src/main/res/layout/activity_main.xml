@@ -268,9 +268,10 @@
 
             <!-- Device Information CardView -->
             <android.support.v7.widget.CardView
-                android:id="@+id/Main_Deivce_CardView"
+                android:id="@+id/Main_Device_CardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:layout_margin="10dp">
 
                 <LinearLayout
@@ -296,7 +297,7 @@
                         <!-- Main Heart Beat Rate Layout -->
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center"
                             android:orientation="vertical">
@@ -306,6 +307,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:drawableTop="@drawable/ic_cardiogram"
+                                android:drawablePadding="10dp"
                                 android:text="@string/Main_Device_Heart"
                                 android:textSize="20sp"
                                 android:background="#00FFFFFF" />
@@ -320,12 +322,28 @@
 
                             <Button
                                 android:id="@+id/Device_Battery_But"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:background="#00FFFFFF"
-                                android:drawableLeft="@drawable/ic_battery"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="#9F8530"
+                                android:layout_marginBottom="5dp"
+                                android:drawableLeft="@drawable/ic_battery_full_white_36dp"
                                 android:text="@string/Main_Device_Battery"
-                                android:textSize="20sp"/>
+                                android:textSize="18sp"
+                                android:textStyle="bold"
+                                android:textColor="@android:color/white"/>
+
+                            <Button
+                                android:id="@+id/Device_Find_But"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="#5F72EB"
+                                android:text="@string/Main_Device_Find"
+                                android:textSize="18sp"
+                                android:textStyle="bold"
+                                android:textColor="@android:color/white"
+                                android:drawableLeft="@drawable/ic_search_white_36dp" />
                         </LinearLayout>
 
                     </LinearLayout>

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -29,7 +30,6 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.health1st.yeop9657.health1st.Accessory.BluetoothManager;
 import com.health1st.yeop9657.health1st.Accessory.MiBandManager;
 import com.health1st.yeop9657.health1st.Location.Location;
 import com.health1st.yeop9657.health1st.Preference.ParentActivity;
@@ -68,8 +68,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     /* POINT - : RecyclerView */
     private RecyclerView mToDoRecyclerView = null;
-
-    private MiBandManager mMiBand = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -253,8 +251,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             case R.id.Main_Setting : { startActivity(new Intent(mContext, ParentActivity.class)); return true; }
             case R.id.Main_Sync :
             {
-                mMiBand = new MiBandManager(mContext, findViewById(android.R.id.content));
-                mMiBand.start();
+                final Button[] aButton = {(Button)findViewById(R.id.Device_Heart_But), (Button)findViewById(R.id.Device_Battery_But), (Button)findViewById(R.id.Device_Find_But)};
+                final MiBandManager mMiBandManager = new MiBandManager(mContext, aButton, this, (CardView) findViewById(R.id.Main_Device_CardView));
+                mMiBandManager.start();
+
                 return true;
             }
         }

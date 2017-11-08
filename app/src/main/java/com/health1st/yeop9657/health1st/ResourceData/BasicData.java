@@ -35,4 +35,9 @@ public class BasicData
     public final static String SHARED_PATIENT_MEDICINE = "Patient_Medicine";
     public final static String SHARED_PATIENT_ETC = "Patient_Etc";
     public final static String SHARED_PATIENT_SEX = "Patient_Sex";
+
+    /* TODO BLUETOOTH VALUE */
+    public final static int BLUETOOTH_DEVICE_HEART_BEAT_RATE = 50;
+    public final static int BLUETOOTH_DEVICE_BATTERY_RATE = 51;
+    public final static int BLUETOOTH_DEVICE_FIND = 52;
 }
