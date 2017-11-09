@@ -31,6 +31,8 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.health1st.yeop9657.health1st.Accessory.MiBandManager;
+import com.health1st.yeop9657.health1st.Database.HealthAdapter;
+import com.health1st.yeop9657.health1st.Database.HealthDatabase;
 import com.health1st.yeop9657.health1st.Location.Location;
 import com.health1st.yeop9657.health1st.Preference.ParentActivity;
 import com.health1st.yeop9657.health1st.ResourceData.BasicData;
@@ -113,12 +115,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
         //FHIRAdapter mAdapter = new FHIRAdapter(mContext, mShared);
 
-        ArrayList<Float> mHeartRandom = new ArrayList<Float>(10);
-        ArrayList<Float> mSpO2Random = new ArrayList<Float>(10);
-        for (int ii = 0; ii < 10; ii++) { mHeartRandom.add((float)(Math.random() * 10) + 3); mSpO2Random.add((float)(Math.random() * 10) + 3); }
-
-        GraphAdapter mGraphAdapter = new GraphAdapter(mContext);
-        mGraphAdapter.drawHealthLinerGraph((LineChart)findViewById(R.id.Main_Health_Chart), mHeartRandom, mSpO2Random);
+        /* POINT - : Health Information Graph */
+        setGraph((LineChart)findViewById(R.id.Main_Health_Chart));
     }
 
     @Override
@@ -127,6 +125,30 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
         getSharedText();
         setImageView(mContext, mHelperImage, BasicData.HELPER_IMAGE);
+    }
+
+    /* MARK - : Setting Graph Method */
+    private void setGraph(final LineChart mLineChart) {
+
+        /* MARK - : ArrayList */
+        final ArrayList<Float> mHeartList = new ArrayList<Float>(10);
+        final ArrayList<Float> mSpO2List = new ArrayList<Float>(10);
+
+        /* MARK - : HealthDatabase */
+        final HealthDatabase mHealthDatabase = new HealthDatabase(mContext);
+        final ArrayList<HealthAdapter> mHealthAdapterList = mHealthDatabase.selectHealthData(mHealthDatabase.getReadableDatabase(), mContext);
+
+        if (mHealthAdapterList != null && mHealthAdapterList.size() != 0) {
+
+            /* POINT - : Graph Adapter */
+            final GraphAdapter mGraphAdapter = new GraphAdapter(mContext);
+            for (final HealthAdapter mAdapter : mHealthAdapterList) {
+                mHeartList.add((float) mAdapter.getHeartBeatRate());
+                mSpO2List.add((float) mAdapter.getSPO2Rate());
+            }
+
+            mGraphAdapter.drawHealthLinerGraph(mLineChart, mHeartList, mSpO2List);
+        }
     }
 
     /* MARK - : User Custom Method */

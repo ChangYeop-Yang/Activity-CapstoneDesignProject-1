@@ -34,11 +34,6 @@ public class BluetoothManager extends Thread {
         public static final UUID HEART_CONTROL_CHARACTERISTIC = UUID.fromString("00002a39-0000-1000-8000-00805f9b34fb");
     }
 
-    @Override
-    public void run() {
-        super.run();
-    }
-
     /* TODO - : Vibrate Method */
     protected void startDeviceVibrate(final Context mContext) {
         if (mVibrator == null) { mVibrator = (Vibrator)mContext.getSystemService(Context.VIBRATOR_SERVICE); }

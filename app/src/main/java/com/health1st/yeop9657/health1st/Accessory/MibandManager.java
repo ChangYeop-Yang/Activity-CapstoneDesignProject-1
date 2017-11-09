@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.health1st.yeop9657.health1st.Database.HealthDatabase;
 import com.health1st.yeop9657.health1st.R;
 import com.health1st.yeop9657.health1st.ResourceData.BasicData;
 
@@ -211,8 +212,13 @@ public class MiBandManager extends BluetoothManager implements View.OnClickListe
             /* Heart Beat Rate */
             final String mUUID = characteristic.getUuid().toString();
             if (mUUID.equals(Xiaomi.HEART_MEASUREMENT_CHARACTERISTIC.toString())) {
+
                 final int mHeartBeatRate = convertByteToInt(characteristic.getValue());
                 setButtonText(aButtonList[0], String.format("%d BPM", mHeartBeatRate));
+
+                /* POINT - : HealthDatabase */
+                final HealthDatabase mHealthDatabase = new HealthDatabase(mContext);
+                mHealthDatabase.insertHealthData(mHealthDatabase.getWritableDatabase(), mContext, mHeartBeatRate, 0, gatt.getDevice().getName());
 
                 if (mSweetAlertDialog != null) { mSweetAlertDialog.cancel(); }
             }
