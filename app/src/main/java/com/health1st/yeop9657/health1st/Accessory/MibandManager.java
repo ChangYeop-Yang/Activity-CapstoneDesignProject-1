@@ -28,10 +28,10 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
  * Created by yeop on 2017. 11. 7..
  */
 
-public class MiBandManager extends BluetoothManager implements View.OnClickListener {
+public class MibandManager extends BluetoothManager implements View.OnClickListener {
 
     /* MARK - : String */
-    private final static String TAG = MiBandManager.class.getSimpleName();
+    private final static String TAG = MibandManager.class.getSimpleName();
     private final static String MI_NAME = "MI Band 2";
 
     /* MARK - : Context */
@@ -57,7 +57,7 @@ public class MiBandManager extends BluetoothManager implements View.OnClickListe
     private SweetAlertDialog mSweetAlertDialog = null;
 
     /* MARK - : Mi-Band Manager Creator */
-    public MiBandManager(final Context mContext, final Activity mActivity, final CardView mCardView) {
+    public MibandManager(final Context mContext, final Activity mActivity, final CardView mCardView) {
         this.mContext = mContext;
         this.mActivity = mActivity;
         this.mCardView = mCardView;

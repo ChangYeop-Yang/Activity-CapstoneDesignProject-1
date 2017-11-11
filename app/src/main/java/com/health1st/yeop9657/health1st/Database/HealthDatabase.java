@@ -25,26 +25,41 @@ public class HealthDatabase extends SQLiteOpenHelper {
     /* TODO - : Database Information */
     private static final class DATABASE_INFORMATION {
         private static final int DATABASE_VERSION = 1;
-        private static final String DATABASE_NAME = "HealthInfo";
+        /* MARK - : Health Value */
+        private static final String DATABASE_HEALTH_NAME = "HealthInfo";
         private static final String DATABASE_COLUMN_HRM = "HRM";
         private static final String DATABASE_COLUMN_SPO2 = "SPO";
         private static final String DATABASE_COLUMN_DEVICE = "DEVICE";
+        /* MARK - : Location Value */
+        private static final String DATABASE_LOCATION_NAME = "LocationInfo";
+        private static final String DATABASE_LOCATION_LATITUDE = "LATITUDE";
+        private static final String DATABASE_LOCATION_LONGITUDE = "LONGITUDE";
+        private static final String DATABASE_LOCATION_TIME = "TIME";
+        /* MARK - : ToDo Value */
+        private static final String DATABASE_TODO_NAME = "TodoInfo";
+        private static final String DATABASE_TODO_MAIN_TITLE = "MAIN";
+        private static final String DATABASE_TODO_SUB_TITLE = "SUB";
+        private static final String DATABASE_TODO_TIME = "TIME";
     }
 
     /* MARK - : String */
     private static final String TAG = HealthDatabase.class.getSimpleName();
 
-    public HealthDatabase(final Context context) {
-        super(context, DATABASE_INFORMATION.DATABASE_NAME, null, DATABASE_INFORMATION.DATABASE_VERSION);
+    public HealthDatabase(final Context context)
+    { super(context, DATABASE_INFORMATION.DATABASE_HEALTH_NAME, null, DATABASE_INFORMATION.DATABASE_VERSION); }
+
+    @Override
+    public void onCreate(SQLiteDatabase sqLiteDatabase) {
+        sqLiteDatabase.execSQL("CREATE TABLE " + DATABASE_INFORMATION.DATABASE_HEALTH_NAME + " (_id INTEGER PRIMARY KEY AUTOINCREMENT, HRM TEXT, SPO TEXT, DEVICE TEXT);");
+        sqLiteDatabase.execSQL("CREATE TABLE " + DATABASE_INFORMATION.DATABASE_LOCATION_NAME + " (_id INTEGER PRIMARY KEY AUTOINCREMENT, LATITUDE DOUBLE, LONGITUDE DOUBLE, TIME TEXT);");
+        sqLiteDatabase.execSQL("CREATE TABLE " + DATABASE_INFORMATION.DATABASE_TODO_NAME + " (_id INTEGER PRIMARY KEY AUTOINCREMENT, MAIN TEXT, SUB TEXT, TIME TEXT);");
     }
 
     @Override
-    public void onCreate(SQLiteDatabase sqLiteDatabase)
-    { sqLiteDatabase.execSQL("CREATE TABLE " + DATABASE_INFORMATION.DATABASE_NAME + " (_id INTEGER PRIMARY KEY AUTOINCREMENT, HRM TEXT, SPO TEXT, DEVICE TEXT);"); }
-
-    @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + DATABASE_INFORMATION.DATABASE_NAME + ";");
+        sqLiteDatabase.execSQL("DROP TABLE " + DATABASE_INFORMATION.DATABASE_HEALTH_NAME + ";");
+        sqLiteDatabase.execSQL("DROP TABLE " + DATABASE_INFORMATION.DATABASE_LOCATION_NAME + ";");
+        sqLiteDatabase.execSQL("DROP TABLE " + DATABASE_INFORMATION.DATABASE_TODO_NAME + ";");
         onCreate(sqLiteDatabase);
     }
 
@@ -76,11 +91,52 @@ public class HealthDatabase extends SQLiteOpenHelper {
             mContentValues.put(DATABASE_INFORMATION.DATABASE_COLUMN_SPO2, AESCrypt.encrypt(mPasswdKey, String.valueOf(mSPO2)));
             mContentValues.put(DATABASE_INFORMATION.DATABASE_COLUMN_DEVICE, AESCrypt.encrypt(mPasswdKey, mDeviceName));
 
-            mSQLite.insert(DATABASE_INFORMATION.DATABASE_NAME, null, mContentValues);
+            mSQLite.insert(DATABASE_INFORMATION.DATABASE_HEALTH_NAME, null, mContentValues);
             return true;
         }
         catch (SQLiteException error) { Log.e(TAG, error.getMessage()); error.printStackTrace(); return false; }
         catch (GeneralSecurityException error) { Log.e(TAG, error.getMessage()); error.printStackTrace(); return false; }
+        finally { mSQLite.close(); }
+    }
+
+    /* TODO - : Location Insert Database Method */
+    public final boolean insertLocationData(final SQLiteDatabase mSQLite, final Context mContext, final double dLatitude, final double dLongitude, final String sDate) {
+
+        final String mPasswdKey = getHealthEncryptKey(mContext);
+
+        try {
+            /* POINT - : ContentValue */
+            final ContentValues mContentValues = new ContentValues();
+            mContentValues.put(DATABASE_INFORMATION.DATABASE_LOCATION_LATITUDE, AESCrypt.encrypt(mPasswdKey, String.valueOf(dLatitude)));
+            mContentValues.put(DATABASE_INFORMATION.DATABASE_LOCATION_LONGITUDE, AESCrypt.encrypt(mPasswdKey, String.valueOf(dLongitude)));
+            mContentValues.put(DATABASE_INFORMATION.DATABASE_LOCATION_TIME, AESCrypt.encrypt(mPasswdKey, sDate));
+
+            mSQLite.insert(DATABASE_INFORMATION.DATABASE_LOCATION_NAME, null, mContentValues);
+            return true;
+        }
+        catch (SQLiteException error) { Log.e(TAG, error.getMessage()); error.printStackTrace(); return false; }
+        catch (GeneralSecurityException error) { Log.e(TAG, error.getMessage()); error.printStackTrace(); return false; }
+        finally { mSQLite.close(); }
+    }
+
+    /* TODO - : Todo Insert Database Method */
+    public final boolean insertTodoData(final SQLiteDatabase mSQLite, final Context mContext, final String sMainTitle, final String sSubTitle, final String sTime) {
+
+        final String mPasswdKey = getHealthEncryptKey(mContext);
+
+        try {
+            /* POINT - : ContentValue */
+            final ContentValues mContentValues = new ContentValues();
+            mContentValues.put(DATABASE_INFORMATION.DATABASE_TODO_MAIN_TITLE, AESCrypt.encrypt(mPasswdKey, sMainTitle));
+            mContentValues.put(DATABASE_INFORMATION.DATABASE_TODO_SUB_TITLE, AESCrypt.encrypt(mPasswdKey, sSubTitle));
+            mContentValues.put(DATABASE_INFORMATION.DATABASE_TODO_TIME, AESCrypt.encrypt(mPasswdKey, sTime));
+
+            mSQLite.insert(DATABASE_INFORMATION.DATABASE_TODO_NAME, null, mContentValues);
+            return true;
+        }
+        catch (SQLiteException error) { Log.e(TAG, error.getMessage()); error.printStackTrace(); return false; }
+        catch (GeneralSecurityException error) { Log.e(TAG, error.getMessage()); error.printStackTrace(); return false; }
+        finally { mSQLite.close(); }
     }
 
     /* TODO - : Health Select Database Method */
@@ -94,7 +150,7 @@ public class HealthDatabase extends SQLiteOpenHelper {
         Cursor mCursor = null;
         try {
 
-            mCursor = mSQLite.rawQuery("SELECT * FROM " + DATABASE_INFORMATION.DATABASE_NAME + ";", null);
+            mCursor = mSQLite.rawQuery("SELECT * FROM " + DATABASE_INFORMATION.DATABASE_HEALTH_NAME + ";", null);
 
             while (mCursor.moveToNext()) {
 
@@ -109,13 +165,71 @@ public class HealthDatabase extends SQLiteOpenHelper {
         }
         catch (SQLiteException error) { Log.e(TAG, error.getMessage()); error.printStackTrace(); return null; }
         catch (GeneralSecurityException error) { Log.e(TAG, error.getMessage()); error.printStackTrace(); return null; }
-        finally { mCursor.close(); }
+        finally { mCursor.close(); mSQLite.close(); }
     }
 
-    /* TODO - : Health Delete Database Method */
-    public final boolean deleteHealthData(final SQLiteDatabase mSQLite, final String mDeviceName) {
+    /* TODO - : Location Select Database Method */
+    public final ArrayList<LocationAdapter> selectLocationData(final SQLiteDatabase mSQLite, final Context mContext) {
 
-        try { mSQLite.delete(DATABASE_INFORMATION.DATABASE_NAME, String.format("%s = %s", DATABASE_INFORMATION.DATABASE_COLUMN_DEVICE, mDeviceName), null); return true; }
-        catch (SQLiteException error) { Log.e(TAG, error.getMessage()); error.printStackTrace(); return false; }
+        final String mPasswdKey = getHealthEncryptKey(mContext);
+
+        /* MARK - : ArrayList<LocationAdapter> */
+        final ArrayList<LocationAdapter> mLocationList = new ArrayList<>(BasicData.ALLOCATE_BASIC_VALUE);
+
+        Cursor mCursor = null;
+        try {
+
+            mCursor = mSQLite.rawQuery("SELECT * FROM " + DATABASE_INFORMATION.DATABASE_LOCATION_NAME + ";", null);
+
+            while (mCursor.moveToNext()) {
+
+                final double dLatitude = Double.valueOf(AESCrypt.decrypt(mPasswdKey, mCursor.getString(1)));
+                final double dLongitude = Double.valueOf(AESCrypt.decrypt(mPasswdKey, mCursor.getString(2)));
+                final String sDate = AESCrypt.decrypt(mPasswdKey, mCursor.getString(3));
+
+                mLocationList.add(new LocationAdapter(sDate, dLatitude, dLongitude));
+            }
+
+            return mLocationList;
+        }
+        catch (SQLiteException error) { Log.e(TAG, error.getMessage()); error.printStackTrace(); return null; }
+        catch (GeneralSecurityException error) { Log.e(TAG, error.getMessage()); error.printStackTrace(); return null; }
+        finally { mCursor.close(); mSQLite.close(); }
+    }
+
+    /* TODO - : Todo Select Database Method */
+    public final ArrayList<TodoAdapter> selectTodoData(final SQLiteDatabase mSQLite, final Context mContext) {
+
+        final String mPasswdKey = getHealthEncryptKey(mContext);
+
+        /* MARK - : ArrayList<TodoAdapter> */
+        final ArrayList<TodoAdapter> mTodoAdapterList = new ArrayList<>(BasicData.ALLOCATE_BASIC_VALUE);
+
+        Cursor mCursor = null;
+        try {
+
+            mCursor = mSQLite.rawQuery("SELECT * FROM " + DATABASE_INFORMATION.DATABASE_TODO_NAME + ";", null);
+
+            while (mCursor.moveToNext()) {
+
+                final String sTitle = AESCrypt.decrypt(mPasswdKey, mCursor.getString(1));
+                final String sSubTitle = AESCrypt.decrypt(mPasswdKey, mCursor.getString(2));
+                final String sDate = AESCrypt.decrypt(mPasswdKey, mCursor.getString(3));
+
+                mTodoAdapterList.add(new TodoAdapter(sTitle, sSubTitle, sDate));
+            }
+
+            return mTodoAdapterList;
+        }
+        catch (SQLiteException error) { Log.e(TAG, error.getMessage()); error.printStackTrace(); return null; }
+        catch (GeneralSecurityException error) { Log.e(TAG, error.getMessage()); error.printStackTrace(); return null; }
+        finally { mCursor.close(); mSQLite.close(); }
+    }
+
+    /* TODO - : Todo Delete Database Method */
+    public final boolean deleteTodoData(final SQLiteDatabase mSQLite, final String sTitle) {
+        try { mSQLite.delete(DATABASE_INFORMATION.DATABASE_TODO_NAME, null, null); return true; }
+        catch (SQLiteException error) {  Log.e(TAG, error.getMessage()); error.printStackTrace(); return false; }
+        finally { mSQLite.close(); }
     }
 }

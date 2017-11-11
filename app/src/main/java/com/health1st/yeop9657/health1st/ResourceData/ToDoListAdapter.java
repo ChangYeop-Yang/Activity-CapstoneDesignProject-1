@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.health1st.yeop9657.health1st.Database.HealthDatabase;
+import com.health1st.yeop9657.health1st.Database.TodoAdapter;
 import com.health1st.yeop9657.health1st.R;
 
 import java.util.ArrayList;
@@ -18,19 +20,19 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
  * Created by yeop on 2017. 9. 24..
  */
 
-public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
+public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.ViewHolder> {
 
     /* Context */
     private Context mContext = null;
 
     /* ArrayList */
-    private ArrayList<BasicToDoData> mToDoList = null;
+    private ArrayList<TodoAdapter> mToDoList = null;
 
     /* KidsAdapter */
-    private ToDoAdapter mToDoAdapter = this;
+    private ToDoListAdapter mToDoAdapter = this;
 
     /* TODO - : Creator ToDoAdapter */
-    public ToDoAdapter(final Context mContext, ArrayList<BasicToDoData> mToDoList) {
+    public ToDoListAdapter(final Context mContext, ArrayList<TodoAdapter> mToDoList) {
         this.mContext = mContext;
         this.mToDoList = mToDoList;
     }
@@ -53,9 +55,15 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
                         .setConfirmText("확인").setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                             @Override
                             public void onClick(SweetAlertDialog sweetAlertDialog) {
+
+                                /* POINT - : Delete Database */
+                                final HealthDatabase mHealthDatabase = new HealthDatabase(mContext);
+                                mHealthDatabase.deleteTodoData(mHealthDatabase.getWritableDatabase(), mToDoList.get(position).getMainTitle());
+
                                 mToDoList.remove(position);
                                 mToDoAdapter.notifyItemRemoved(position);
                                 mToDoAdapter.notifyDataSetChanged();
+
                                 sweetAlertDialog.cancel();
                             }
                         }).show();

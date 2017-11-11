@@ -12,18 +12,10 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.google.android.gms.maps.model.LatLng;
 import com.health1st.yeop9657.health1st.ResourceData.BasicData;
-import com.health1st.yeop9657.health1st.ResourceData.BasicToDoData;
-import com.scottyab.aescrypt.AESCrypt;
 import com.tsengvn.typekit.Typekit;
 import com.tsengvn.typekit.TypekitContextWrapper;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-
-import java.security.GeneralSecurityException;
-import java.util.ArrayList;
 import java.util.Random;
 
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
@@ -92,51 +84,5 @@ public class BaseActivity extends AppCompatActivity
         /* POINT - : Glide Open Source */
         Glide.with(mContext).load( (mPhotoPath == BasicData.EMPTY_TEXT ? mResourceID : mPhotoPath) )
                 .apply(RequestOptions.bitmapTransform(new CropCircleTransformation())).into(mImageView);
-    }
-
-    /* MARK - : set ArrayList<String> Preference Method */
-    protected final void setArrayListPreference(final ArrayList<String> mArrayList, final String sKey) throws GeneralSecurityException {
-        if (mArrayList.isEmpty()) { mSharedWrite.putString(sKey, null); }
-        else
-        {
-            final JSONArray aJSON = new JSONArray();
-            for (final String mTemp : mArrayList) { aJSON.put(mTemp); }
-            mSharedWrite.putString(sKey, AESCrypt.encrypt(sSecurityPassword, aJSON.toString()));
-        }
-
-        mSharedWrite.apply();
-    }
-
-    /* MARK - : get ArrayList<?> Preference Method */
-    protected final ArrayList<?> getArrayListPreference(final String sKey) throws JSONException, GeneralSecurityException {
-
-        final String sJSON = mShared.getString(sKey, null);
-
-        ArrayList<?> acBasicList = null;
-        if (sJSON == null) { return new ArrayList<>(BasicData.ALLOCATE_BASIC_VALUE); }
-
-        final JSONArray asJSON = new JSONArray(AESCrypt.decrypt(sSecurityPassword, sJSON));
-        switch (sKey)
-        {
-            case (BasicData.MARKER_PREFERENCE_KEY) : {
-                final ArrayList<LatLng> acLatLng = new ArrayList<LatLng>(BasicData.ALLOCATE_BASIC_VALUE);
-
-                    for (int mCount = 0, mSize = asJSON.length(); mCount < mSize; mCount++) {
-                        final String mLatLong[] = asJSON.optString(mCount).split(",");
-                        acLatLng.add(new LatLng(Double.parseDouble(mLatLong[0]), Double.parseDouble(mLatLong[1])));
-                    } acBasicList = acLatLng; break;
-            }
-
-            case (BasicData.BAT_TODO_KEY) : {
-                final ArrayList<BasicToDoData> acToDo = new ArrayList<BasicToDoData>(BasicData.ALLOCATE_BASIC_VALUE);
-
-                for (int mCount = 0, mSize = asJSON.length(); mCount < mSize; mCount++) {
-                    final String mToDoData[] = asJSON.optString(mCount).split(",");
-                    acToDo.add(new BasicToDoData(mToDoData[0], mToDoData[1], mToDoData[2]));
-                } acBasicList = acToDo; break;
-            }
-        }
-
-        return acBasicList;
     }
 }

@@ -1,18 +1,17 @@
-package com.health1st.yeop9657.health1st.ResourceData;
+package com.health1st.yeop9657.health1st.Database;
 
 /**
- * Created by yeop on 2017. 9. 24..
+ * Created by 양창엽 on 2017-11-11.
  */
 
-public class BasicToDoData {
-
+public class TodoAdapter {
     /* POINT - : String */
     private String sNumberDate = null;
     private String sMainTitle = null;
     private String sSummary = null;
 
     /* TODO - : Creator BasicToDoData */
-    public BasicToDoData(final String sMainTitle, final String sSummary, final String sNumberDate)
+    public TodoAdapter(final String sMainTitle, final String sSummary, final String sNumberDate)
     { this.sMainTitle = sMainTitle; this.sSummary = sSummary; this.sNumberDate = sNumberDate; }
 
     /* TODO - : User Custom Method */

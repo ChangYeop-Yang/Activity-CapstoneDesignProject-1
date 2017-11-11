@@ -1,17 +1,22 @@
 package com.health1st.yeop9657.health1st.Location;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
+import com.health1st.yeop9657.health1st.ResourceData.BasicData;
 
 import java.io.IOException;
 import java.util.List;
@@ -28,6 +33,8 @@ public class Location implements LocationListener
     /* POINT - : Double */
     private double dLatitude = 0.0;
     private double dLongitude = 0.0;
+    private double rangeLatitude = 0.0;
+    private double rangeLongitude = 0.0;
 
     /* POINT - : Boolean */
     private Boolean bGPSEnabled = false;
@@ -48,9 +55,15 @@ public class Location implements LocationListener
         this.mContext = mContext;
         this.mGoogle = mGoogle;
         setLocationManager();
+
+        /* POINT - : Shared Preference */
+        final SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+        final String rangeLatLng = mSharedPreferences.getString(BasicData.LOCATION_PATIENT_KEY, null);
+        if (rangeLatLng != null) { rangeLatitude = Double.valueOf(rangeLatLng.split(",")[0]); rangeLongitude = Double.valueOf(rangeLatLng.split(",")[1]); }
     }
 
     /* MARK - : User Custom Method */
+    @SuppressLint("MissingPermission")
     private void setLocationManager()
     {
         try
@@ -153,5 +166,21 @@ public class Location implements LocationListener
     @Override
     public void onProviderDisabled(String s) {
 
+    }
+
+    /* TODO - : Distance Calculation Method */
+    private final double distanceFrom(double lat1, double lng1, double lat2, double lng2)
+    {
+        final double EARTH_RADIOUS = 3958.75; // Earth radius;
+        final int METER_CONVERSION = 1609;
+
+        // Return distance between 2 points, stored as 2 pair location;
+        double dLat = Math.toRadians(lat2 - lat1);
+        double dLng = Math.toRadians(lng2 - lng1);
+        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(Math.toRadians(lat1))
+                * Math.cos(Math.toRadians(lat2)) * Math.sin(dLng / 2) * Math.sin(dLng / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        double dist = EARTH_RADIOUS * c;
+        return new Double(dist * METER_CONVERSION).floatValue();
     }
 }
