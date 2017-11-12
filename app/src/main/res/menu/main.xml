@@ -11,9 +11,16 @@
         app:showAsAction="always"/>
 
     <item
+        android:id="@+id/Main_Add_Hardware"
+        android:title="@string/Main_Menu_Device"
+        android:icon="@drawable/ic_devices_other_white_24dp"
+        android:orderInCategory="2"
+        app:showAsAction="always" />
+
+    <item
         android:id="@+id/Main_Setting"
         android:title="@string/Main_Menu_Setting"
         android:icon="@drawable/ic_settings_white_24dp"
-        android:orderInCategory="2"
+        android:orderInCategory="3"
         app:showAsAction="always" />
 </menu>

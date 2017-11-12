@@ -39,6 +39,7 @@ import com.health1st.yeop9657.health1st.Database.TodoAdapter;
 import com.health1st.yeop9657.health1st.Location.Location;
 import com.health1st.yeop9657.health1st.Preference.ParentActivity;
 import com.health1st.yeop9657.health1st.ResourceData.BasicData;
+import com.health1st.yeop9657.health1st.ResourceData.FHIRAdapter;
 import com.health1st.yeop9657.health1st.ResourceData.GraphAdapter;
 import com.health1st.yeop9657.health1st.ResourceData.ToDoListAdapter;
 
@@ -110,8 +111,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         final ImageButton mAddButton = (ImageButton)findViewById(R.id.MainToDoAdd);
         mAddButton.setOnClickListener(this);
 
-        //FHIRAdapter mAdapter = new FHIRAdapter(mContext, mShared);
-
         /* POINT - : Health Information Graph */
         setGraph((LineChart)findViewById(R.id.Main_Health_Chart));
     }
@@ -150,7 +149,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     /* MARK - : User Custom Method */
     private void getSharedText() {
-        final String asHelperHeader[] = {"Helper_Name", "Helper_Address", "Helper_Tel"};
+        final String asHelperHeader[] = {"Helper_Name", "Helper_Address", BasicData.SHARED_HELPER_TEL};
 
         /* POINT - : Helper Information */
         final String asHelper[] = {mShared.getString("Helper_Name", BasicData.EMPTY_TEXT), mShared.getString("Helper_Address", BasicData.EMPTY_TEXT), mShared.getString("Helper_Tel", BasicData.EMPTY_TEXT)};
@@ -269,7 +268,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         switch (item.getItemId())
         {
             case R.id.Main_Setting : { startActivity(new Intent(mContext, ParentActivity.class)); return true; }
-            case R.id.Main_Sync : { new MibandManager(mContext, this, (CardView) findViewById(R.id.Main_Device_CardView)).start(); return true; }
+            case R.id.Main_Sync : { new FHIRAdapter(mContext, mShared, new LatLng(mLocation.getLatitude(), mLocation.getLongitude())).execute(); return true; }
+            case R.id.Main_Add_Hardware : { new MibandManager(mContext, this, (CardView) findViewById(R.id.Main_Device_CardView)).start(); return true; }
         }
 
         return super.onOptionsItemSelected(item);
@@ -285,7 +285,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     public void onMapReady(GoogleMap googleMap) {
 
         /* POINT - : Location */
-        if (mLocation == null) { mLocation = new Location(mContext, googleMap); }
+        if (mLocation == null) { mLocation = new Location(mContext, googleMap, mShared); }
         mLocation.getGEOAddress(mLocation.getLatitude(), mLocation.getLongitude(), cTextViewMap.get("Patient_Location"));
 
         /* POINT - : LatLng */
