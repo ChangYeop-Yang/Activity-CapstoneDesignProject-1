@@ -8,10 +8,11 @@ import android.location.Geocoder;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.preference.PreferenceManager;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -20,6 +21,8 @@ import com.health1st.yeop9657.health1st.ResourceData.BasicData;
 
 import java.io.IOException;
 import java.util.List;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 /**
  * Created by yeop on 2017. 9. 18..
@@ -39,9 +42,13 @@ public class Location implements LocationListener
     /* POINT - : Boolean */
     private Boolean bGPSEnabled = false;
     private Boolean bNetworkEnabled = false;
+    private Boolean isLocationStated = true;
 
     /* POINT - : LocationManager */
     private LocationManager mLocationManager = null;
+
+    /* POINT - : SweetAlertDialog */
+    private SweetAlertDialog mSweetAlertDialog = null;
 
     /* POINT - : Long */
     private final static long MIN_DISTANCE_UPDATE = 10;
@@ -59,7 +66,7 @@ public class Location implements LocationListener
         /* POINT - : Shared Preference */
         final SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
         final String rangeLatLng = mSharedPreferences.getString(BasicData.LOCATION_PATIENT_KEY, null);
-        if (rangeLatLng != null) { rangeLatitude = Double.valueOf(rangeLatLng.split(",")[0]); rangeLongitude = Double.valueOf(rangeLatLng.split(",")[1]); }
+        if (rangeLatLng != null) { rangeLatitude = Double.valueOf(rangeLatLng.split(",")[0]); rangeLongitude = Double.valueOf(rangeLatLng.split(",")[1]); isLocationStated = false; }
     }
 
     /* MARK - : User Custom Method */
@@ -143,30 +150,44 @@ public class Location implements LocationListener
         else { mTextView.setText("Not Found Address."); }
     }
 
-    /* MARK - : Location Listener */
+    /* TODO - : Location Listener */
     @Override
     public void onLocationChanged(android.location.Location location) {
         if (mLocationManager != null) {
             dLatitude = location.getLatitude();
             dLongitude = location.getLongitude();
             mGoogle.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(getLatitude(), getLongitude()), 15));
+
+            /* POINT - : Check Lat/Long Range */
+            final int mRange = (int) distanceFrom(dLatitude, dLongitude, rangeLatitude, rangeLongitude);
+            if (mRange > BasicData.PATIENT_RANGE_VALUE && !isLocationStated) {
+
+                /* POINT - : Vibrate */
+                final Vibrator mVibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
+                mVibrator.vibrate(BasicData.VIBRATE_VALUE);
+
+                /* POINT - : SMS Manager */
+                //SmsManager.getDefault().sendTextMessage("010", null, String.format("[PATIENT] 위치 이탈 Lat: %f, Long: %f.", dLatitude, dLongitude), null, null);
+
+                /* POINT - : SweetAlertDialog */
+                mSweetAlertDialog = new SweetAlertDialog(mContext, SweetAlertDialog.WARNING_TYPE);
+                mSweetAlertDialog.setTitleText("Excess Location Range").setContentText("지정 된 위치에서 벗어났습니다.\n보호자에게 문자를 전송하였습니다.");
+                mSweetAlertDialog.setConfirmText("통화").setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+
+                        sweetAlertDialog.cancel();
+                    }
+                }).show();
+
+                isLocationStated = true;
+            }
         }
     }
 
-    @Override
-    public void onStatusChanged(String s, int i, Bundle bundle) {
-
-    }
-
-    @Override
-    public void onProviderEnabled(String s) {
-
-    }
-
-    @Override
-    public void onProviderDisabled(String s) {
-
-    }
+    @Override public void onStatusChanged(String s, int i, Bundle bundle) {}
+    @Override public void onProviderEnabled(String s) {}
+    @Override public void onProviderDisabled(String s) {}
 
     /* TODO - : Distance Calculation Method */
     private final double distanceFrom(double lat1, double lng1, double lat2, double lng2)

@@ -7,6 +7,7 @@ public class BasicData
     /* MARK - : Integer */
     public final static int VIBRATE_VALUE = 100;
     public final static int ALLOCATE_BASIC_VALUE = 10;
+    public final static int PATIENT_RANGE_VALUE = 1000;
 
     /* TODO PATIENT STATE IMAGE VALUE */
     public final static int PATIENT_STATE_RED = R.drawable.ic_circle_red;
