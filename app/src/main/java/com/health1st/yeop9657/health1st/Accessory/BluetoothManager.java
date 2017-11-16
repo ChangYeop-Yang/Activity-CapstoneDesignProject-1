@@ -22,6 +22,7 @@ public class BluetoothManager extends Thread {
         /* MARK - : Xiaomi Mi-Band Basic UUID */
         public static final UUID BASIC_SERVICE = UUID.fromString("0000fee0-0000-1000-8000-00805f9b34fb");
         public static final UUID BASIC_BATTERY_CHARACTERISTIC = UUID.fromString("00000006-0000-3512-2118-0009af100700");
+        public static final UUID BASIC_STEP_CHARACTERISTIC = UUID.fromString("00000007-0000-3512-2118-0009af100700");
 
         /* MARK - : Xiaomi Mi-Band AlertNotification UUID */
         public static final UUID ALERT_NOTIFICATION_SERVICE = UUID.fromString("00001802-0000-1000-8000-00805f9b34fb");

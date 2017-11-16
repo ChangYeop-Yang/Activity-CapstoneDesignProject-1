@@ -220,7 +220,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             case R.id.Main_Patient_SOS_MMS: {
 
                 try {
-                    SmsManager.getDefault().sendTextMessage("01064295758", null, String.format("Lat: %f, Long: %f, %s", mLocation.getLatitude(), mLocation.getLongitude(), cTextViewMap.get("Patient_Location").getText()), null, null);
+                    SmsManager.getDefault().sendTextMessage("01043359311", null, String.format("Lat: %f, Long: %f, %s", mLocation.getLatitude(), mLocation.getLongitude(), cTextViewMap.get("Patient_Location").getText()), null, null);
                     new SweetAlertDialog(mContext, SweetAlertDialog.SUCCESS_TYPE).setTitleText("SMS 전송 성공")
                             .setContentText("응급기관으로 SMS 전송을 성공하였습니다.").show();
                 }

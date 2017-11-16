@@ -6,7 +6,6 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.util.Pair;
 
-import com.bumptech.glide.load.HttpException;
 import com.google.android.gms.maps.model.LatLng;
 import com.health1st.yeop9657.health1st.Database.HealthAdapter;
 import com.health1st.yeop9657.health1st.Database.HealthDatabase;
@@ -126,7 +125,7 @@ public class FHIRAdapter extends AsyncTask<Void, Void, Boolean> {
         final ArrayList<CodingDt> mBodyList = new ArrayList<>(BasicData.ALLOCATE_BASIC_VALUE);
         for (final Pair<String, String> mPair : apBodyCodingDts) { mBodyList.add(new CodingDt().setCode(mPair.first).setDisplay(mSharedPreferences.getString(mPair.second, null))); }
 
-        final int mPosition = mBodyList.size();
+        final int mPosition = mHealthAdapterList.size() - 1;
         mBodyList.add(new CodingDt().setCode(BasicData.BLUETOOTH_DEVICE_HEART_BEAT_RATE_STR).setDisplay(String.valueOf(mHealthAdapterList.get(mPosition).getHeartBeatRate())));
         mBodyList.add(new CodingDt().setCode(BasicData.BLUETOOTH_DEVICE_SPO2_STR).setDisplay(String.valueOf(mHealthAdapterList.get(mPosition).getSPO2Rate())));
 
