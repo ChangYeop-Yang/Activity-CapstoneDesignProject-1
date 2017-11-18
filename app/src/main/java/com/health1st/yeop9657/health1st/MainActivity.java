@@ -268,7 +268,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         switch (item.getItemId())
         {
             case R.id.Main_Setting : { startActivity(new Intent(mContext, ParentActivity.class)); return true; }
-            case R.id.Main_Sync : { new FHIRAdapter(mContext, mShared, new LatLng(mLocation.getLatitude(), mLocation.getLongitude())).execute(); return true; }
+            case R.id.Main_Sync : {
+
+                /* POINT - : Sweet Dialog */
+                final SweetAlertDialog mSweetAlertDialog = new SweetAlertDialog(mContext, SweetAlertDialog.PROGRESS_TYPE);
+                mSweetAlertDialog.setTitleText("Send FHIR Server").setContentText("FHIR 생체 정보를 서버로 전송 중 입니다.\n잠시만 기다려주세요.").setCancelable(false);
+                mSweetAlertDialog.show();
+
+                new FHIRAdapter(mContext, mShared, new LatLng(mLocation.getLatitude(), mLocation.getLongitude()), mSweetAlertDialog).execute();
+                return true;
+            }
             case R.id.Main_Add_Hardware : { new MibandManager(mContext, this, (CardView) findViewById(R.id.Main_Device_CardView)).start(); return true; }
         }
 

@@ -1,8 +1,10 @@
 package com.health1st.yeop9657.health1st.ResourceData;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.util.Pair;
 
@@ -43,41 +45,49 @@ public class FHIRAdapter extends AsyncTask<Void, Void, Boolean> {
 
     /* MARK - : String */
     private final static String TAG = FHIRAdapter.class.getSimpleName();
+    private String mPatientTel = null;
 
     /* MARK - : SharedPreferences */
     private SharedPreferences mSharedPreferences = null;
 
+    /* MARK - : Sweet Alert Dialog  */
+    private SweetAlertDialog mSweetAlertDialog = null;
+
     /* MARK - : FHIR Adapter Creator */
-    public FHIRAdapter(final Context mContext, final SharedPreferences mSharedPreferences, final LatLng mLatLng) {
+    public FHIRAdapter(final Context mContext, final SharedPreferences mSharedPreferences, final LatLng mLatLng, final SweetAlertDialog mSweetAlertDialog) {
         this.mContext = mContext;
         this.mLatLng = mLatLng;
         this.mSharedPreferences = mSharedPreferences;
+        this.mSweetAlertDialog = mSweetAlertDialog;
     }
 
     @Override
+    @SuppressLint("MissingPermission")
     protected void onPreExecute() {
         super.onPreExecute();
+
+        @SuppressLint("ServiceCast")
+        final TelephonyManager mTelephonyManager = (TelephonyManager)mContext.getSystemService(Context.TELEPHONY_SERVICE);
+        mPatientTel = mTelephonyManager.getLine1Number().replace("+82", "0");
 
         /* POINT - : Create FHIR Document */
         createFHIR(mSharedPreferences);
     }
 
     @Override
-    protected Boolean doInBackground(Void... voids) {
 
-        /* POINT - : String */
-        final String mTelNumber = mSharedPreferences.getString(BasicData.SHARED_HELPER_TEL, null);
+    protected Boolean doInBackground(Void... voids) {
 
         /* POINT - : IGenericClient */
         final IGenericClient mClient = FhirContext.forDstu2().newRestfulGenericClient("http://fhirtest.uhn.ca/baseDstu2");
 
         /* POINT - :  */
-        final Bundle mResponse = mClient.search().byUrl(String.format("http://fhirtest.uhn.ca/baseDstu2/Patient/_search?telecom=%s", mTelNumber))
+        final Bundle mResponse = mClient.search().byUrl(String.format("http://fhirtest.uhn.ca/baseDstu2/Patient/_search?telecom=%s", mPatientTel))
                 .returnBundle(Bundle.class).execute();
 
         if (mResponse.getTotal() == 0) { return mClient.create().resource(mPatient).prettyPrint().encodedJson().execute().getCreated(); }
         else {
-            try { mClient.update().resource(mPatient).conditional().where(Patient.TELECOM.exactly().identifier(mTelNumber)).execute(); return true; }
+            try { mClient.update().resource(mPatient).conditional().where(Patient.TELECOM.exactly().identifier(mPatientTel)).execute(); return true; }
             catch (Exception error) { Log.e(TAG, error.getMessage()); error.printStackTrace(); return false; }
         }
     }
@@ -85,6 +95,9 @@ public class FHIRAdapter extends AsyncTask<Void, Void, Boolean> {
     @Override
     protected void onPostExecute(Boolean isChecked) {
         super.onPostExecute(isChecked);
+
+        /* POINT - : Progress Alert Dialog Dismiss */
+        this.mSweetAlertDialog.cancel();
 
         /* POINT - : SweetAlertDialog */
         SweetAlertDialog mSweetAlertDialog = null;
@@ -113,7 +126,7 @@ public class FHIRAdapter extends AsyncTask<Void, Void, Boolean> {
         mPatient.addName().setText(mSharedPreferences.getString(BasicData.SHARED_PATIENT_NAME, null));
         mPatient.setGender(AdministrativeGenderEnum.MALE);
         mPatient.setLanguage((CodeDt) new CodeDt().setValue("Ko-kr"));
-        mPatient.addTelecom().setSystem(ContactPointSystemEnum.PHONE).setValue(mSharedPreferences.getString(BasicData.SHARED_HELPER_TEL, null)).setUse(ContactPointUseEnum.MOBILE);
+        mPatient.addTelecom().setSystem(ContactPointSystemEnum.PHONE).setValue(mPatientTel).setUse(ContactPointUseEnum.MOBILE);
 
         /* POINT - : Observation Instance */
         final Observation mHelathObservation = new Observation();

@@ -14,8 +14,11 @@ import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.health1st.yeop9657.health1st.Database.HealthDatabase;
 import com.health1st.yeop9657.health1st.R;
 import com.health1st.yeop9657.health1st.ResourceData.BasicData;
@@ -215,6 +218,22 @@ public class MibandManager extends BluetoothManager implements View.OnClickListe
 
                 final int mHeartBeatRate = convertByteToInt(characteristic.getValue());
                 setButtonText(aButtonList[0], String.format("%d BPM", mHeartBeatRate));
+
+                /* POINT - : Send Health Data Message */
+                sendHealthData(mContext, mHeartBeatRate, 0);
+
+                mActivity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        /* POINT - : Heart Beat Rate */
+                        final TextView mStateText = (TextView)mActivity.findViewById(R.id.Patient_State_Text);
+                        final ImageView mStateImage = (ImageView)mActivity.findViewById(R.id.Patient_State_Image);
+                        if (mHeartBeatRate > 50 && mHeartBeatRate < 80) { { Glide.with(mContext).load(R.drawable.ic_circle_green).into(mStateImage); mStateText.setText("정상"); } }
+                        else if (mHeartBeatRate > 100 && mHeartBeatRate < 120) { Glide.with(mContext).load(R.drawable.ic_circle_orange).into(mStateImage); mStateText.setText("위험"); }
+                        else if (mHeartBeatRate > 120) { Glide.with(mContext).load(R.drawable.ic_circle_red).into(mStateImage); mStateText.setText("긴급"); }
+                    }
+                });
 
                 /* POINT - : HealthDatabase */
                 final HealthDatabase mHealthDatabase = new HealthDatabase(mContext);

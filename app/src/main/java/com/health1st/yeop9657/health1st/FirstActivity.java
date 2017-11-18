@@ -55,7 +55,7 @@ public class FirstActivity extends BaseActivity implements PermissionListener
 
             /* TODO - : Check Permission */
             TedPermission.with(this).setPermissionListener(this).setDeniedMessage(R.string.Basic_Permission_Information)
-                    .setPermissions(Manifest.permission.CALL_PHONE, Manifest.permission.SEND_SMS, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.READ_EXTERNAL_STORAGE).check();
+                    .setPermissions(Manifest.permission.CALL_PHONE, Manifest.permission.SEND_SMS, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.READ_PHONE_STATE).check();
         }
     }
 

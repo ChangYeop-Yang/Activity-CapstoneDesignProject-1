@@ -1,11 +1,18 @@
 package com.health1st.yeop9657.health1st.Accessory;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Vibrator;
+import android.preference.PreferenceManager;
+import android.telephony.SmsManager;
+import android.util.Log;
 
 import com.health1st.yeop9657.health1st.ResourceData.BasicData;
 
 import java.util.UUID;
+
+import ca.uhn.fhir.model.api.Tag;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 /**
  * Created by yeop on 2017. 11. 1..
@@ -39,6 +46,16 @@ public class BluetoothManager extends Thread {
     protected void startDeviceVibrate(final Context mContext) {
         if (mVibrator == null) { mVibrator = (Vibrator)mContext.getSystemService(Context.VIBRATOR_SERVICE); }
         mVibrator.vibrate(BasicData.VIBRATE_VALUE);
+    }
+
+    /* TODO - : SMS Health HRM & SPO2 Method */
+    protected void sendHealthData(final Context mContext, final int mHRM, final int mSPO2) {
+
+        /* POINT - : String */
+        final String sHelperTel = PreferenceManager.getDefaultSharedPreferences(mContext).getString(BasicData.SHARED_HELPER_TEL, null);
+
+        try { SmsManager.getDefault().sendTextMessage(sHelperTel, null, String.format("[PATIENT] HRM: %d, SPO2: %d - 주기적으로 확인해주세요.", mHRM, mSPO2), null, null); }
+        catch (Exception error) { error.printStackTrace(); Log.e(BluetoothManager.class.getSimpleName(), error.getMessage()); }
     }
 
     /* TODO - : Byte Convert Method */
