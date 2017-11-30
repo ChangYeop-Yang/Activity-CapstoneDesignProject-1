@@ -19,13 +19,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.health1st.yeop9657.health1st.Database.HealthDatabase;
+import com.health1st.yeop9657.health1st.Database.HealthRealmAdapter;
 import com.health1st.yeop9657.health1st.R;
 import com.health1st.yeop9657.health1st.ResourceData.BasicData;
 
+import java.util.Date;
 import java.util.Set;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
+import io.realm.Realm;
 
 /**
  * Created by yeop on 2017. 11. 7..
@@ -209,7 +211,7 @@ public class MibandManager extends BluetoothManager implements View.OnClickListe
         }
 
         @Override
-        public void onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
+        public void onCharacteristicChanged(final BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
             super.onCharacteristicChanged(gatt, characteristic);
 
             /* Heart Beat Rate */
@@ -236,8 +238,16 @@ public class MibandManager extends BluetoothManager implements View.OnClickListe
                 });
 
                 /* POINT - : HealthDatabase */
-                final HealthDatabase mHealthDatabase = new HealthDatabase(mContext);
-                mHealthDatabase.insertHealthData(mHealthDatabase.getWritableDatabase(), mContext, mHeartBeatRate, 0, gatt.getDevice().getName());
+                Realm.getDefaultInstance().executeTransaction(new Realm.Transaction() {
+                    @Override
+                    public void execute(Realm realm) {
+                        final HealthRealmAdapter mAdapter = realm.createObject(HealthRealmAdapter.class);
+                        mAdapter.setHRM(mHeartBeatRate);
+                        mAdapter.setSPO2(0);
+                        mAdapter.setDate(new Date());
+                        mAdapter.setDeviceName(gatt.getDevice().getName());
+                    }
+                });
 
                 if (mSweetAlertDialog != null) { mSweetAlertDialog.cancel(); }
             }

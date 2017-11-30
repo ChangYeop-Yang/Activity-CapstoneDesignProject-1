@@ -9,8 +9,7 @@ import android.util.Log;
 import android.util.Pair;
 
 import com.google.android.gms.maps.model.LatLng;
-import com.health1st.yeop9657.health1st.Database.HealthAdapter;
-import com.health1st.yeop9657.health1st.Database.HealthDatabase;
+import com.health1st.yeop9657.health1st.Database.HealthRealmAdapter;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -27,6 +26,8 @@ import ca.uhn.fhir.model.dstu2.valueset.ContactPointUseEnum;
 import ca.uhn.fhir.model.primitive.CodeDt;
 import ca.uhn.fhir.rest.client.IGenericClient;
 import cn.pedant.SweetAlert.SweetAlertDialog;
+import io.realm.Realm;
+import io.realm.RealmResults;
 
 /**
  * Created by yeop on 2017. 10. 29..
@@ -115,8 +116,7 @@ public class FHIRAdapter extends AsyncTask<Void, Void, Boolean> {
     private final void createFHIR(final SharedPreferences mSharedPreferences) {
 
         /* POINT - : SQLite */
-        final HealthDatabase mHealthDatabase = new HealthDatabase(mContext);
-        final ArrayList<HealthAdapter> mHealthAdapterList = mHealthDatabase.selectHealthData(mHealthDatabase.getReadableDatabase(), mContext);
+        final RealmResults<HealthRealmAdapter> mHealthAdapterList = Realm.getDefaultInstance().where(HealthRealmAdapter.class).findAll();
 
         /* POINT - : Patient Instance */
         mPatient = new Patient();
@@ -139,8 +139,8 @@ public class FHIRAdapter extends AsyncTask<Void, Void, Boolean> {
         for (final Pair<String, String> mPair : apBodyCodingDts) { mBodyList.add(new CodingDt().setCode(mPair.first).setDisplay(mSharedPreferences.getString(mPair.second, null))); }
 
         final int mPosition = mHealthAdapterList.size() - 1;
-        mBodyList.add(new CodingDt().setCode(BasicData.BLUETOOTH_DEVICE_HEART_BEAT_RATE_STR).setDisplay(String.valueOf(mHealthAdapterList.get(mPosition).getHeartBeatRate())));
-        mBodyList.add(new CodingDt().setCode(BasicData.BLUETOOTH_DEVICE_SPO2_STR).setDisplay(String.valueOf(mHealthAdapterList.get(mPosition).getSPO2Rate())));
+        mBodyList.add(new CodingDt().setCode(BasicData.BLUETOOTH_DEVICE_HEART_BEAT_RATE_STR).setDisplay(String.valueOf(mHealthAdapterList.get(mPosition).getHRM())));
+        mBodyList.add(new CodingDt().setCode(BasicData.BLUETOOTH_DEVICE_SPO2_STR).setDisplay(String.valueOf(mHealthAdapterList.get(mPosition).getSPO2())));
 
 
         mHelathObservation.setBodySite(new CodeableConceptDt().setCoding(mBodyList));

@@ -8,13 +8,12 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.health1st.yeop9657.health1st.Database.HealthDatabase;
-import com.health1st.yeop9657.health1st.Database.TodoAdapter;
+import com.health1st.yeop9657.health1st.Database.TodoRealmAdapter;
 import com.health1st.yeop9657.health1st.R;
 
-import java.util.ArrayList;
-
 import cn.pedant.SweetAlert.SweetAlertDialog;
+import io.realm.Realm;
+import io.realm.RealmResults;
 
 /**
  * Created by yeop on 2017. 9. 24..
@@ -26,13 +25,13 @@ public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.ViewHo
     private Context mContext = null;
 
     /* ArrayList */
-    private ArrayList<TodoAdapter> mToDoList = null;
+    private RealmResults<TodoRealmAdapter> mToDoList = null;
 
     /* KidsAdapter */
     private ToDoListAdapter mToDoAdapter = this;
 
     /* TODO - : Creator ToDoAdapter */
-    public ToDoListAdapter(final Context mContext, ArrayList<TodoAdapter> mToDoList) {
+    public ToDoListAdapter(final Context mContext, RealmResults<TodoRealmAdapter> mToDoList) {
         this.mContext = mContext;
         this.mToDoList = mToDoList;
     }
@@ -41,7 +40,7 @@ public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, final int position) {
 
         /* POINT - : TextView */
-        holder.mNumberDateText.setText(String.format("#%d     %s", position + 1, mToDoList.get(position).getNumberDate()));
+        holder.mNumberDateText.setText(String.format("#%d     %s", position + 1, mToDoList.get(position).getDate()));
         holder.mMainTitleText.setText(mToDoList.get(position).getMainTitle());
         holder.mSummaryText.setText(mToDoList.get(position).getSummary());
 
@@ -56,11 +55,10 @@ public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.ViewHo
                             @Override
                             public void onClick(SweetAlertDialog sweetAlertDialog) {
 
-                                /* POINT - : Delete Database */
-                                final HealthDatabase mHealthDatabase = new HealthDatabase(mContext);
-                                mHealthDatabase.deleteTodoData(mHealthDatabase.getWritableDatabase(), mToDoList.get(position).getMainTitle());
-
-                                mToDoList.remove(position);
+                                Realm.getDefaultInstance().executeTransaction(new Realm.Transaction() {
+                                    @Override
+                                    public void execute(Realm realm) { mToDoList.get(position).deleteFromRealm(); }
+                                });
                                 mToDoAdapter.notifyItemRemoved(position);
                                 mToDoAdapter.notifyDataSetChanged();
 

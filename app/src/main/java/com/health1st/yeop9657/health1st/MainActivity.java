@@ -32,10 +32,9 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.health1st.yeop9657.health1st.Accessory.MibandManager;
-import com.health1st.yeop9657.health1st.Database.HealthAdapter;
-import com.health1st.yeop9657.health1st.Database.HealthDatabase;
-import com.health1st.yeop9657.health1st.Database.LocationAdapter;
-import com.health1st.yeop9657.health1st.Database.TodoAdapter;
+import com.health1st.yeop9657.health1st.Database.HealthRealmAdapter;
+import com.health1st.yeop9657.health1st.Database.LocationRealmAdapter;
+import com.health1st.yeop9657.health1st.Database.TodoRealmAdapter;
 import com.health1st.yeop9657.health1st.Location.Location;
 import com.health1st.yeop9657.health1st.Preference.ParentActivity;
 import com.health1st.yeop9657.health1st.ResourceData.BasicData;
@@ -49,6 +48,8 @@ import java.util.Date;
 import java.util.HashMap;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
+import io.realm.Realm;
+import io.realm.RealmResults;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener, OnMapReadyCallback, GoogleMap.OnMapLongClickListener
 {
@@ -67,9 +68,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     /* POINT - : RecyclerView */
     private RecyclerView mToDoRecyclerView = null;
 
-    /* POINT - : HealthDatabase */
-    private HealthDatabase mHealthDatabase = null;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,9 +80,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         /* MARK - : Button */
         final Button aButton[] = {(Button) findViewById(R.id.Main_Patient_SOS_Call), (Button) findViewById(R.id.Main_Patient_SOS_MMS), (Button) findViewById(R.id.MainHelperCall)};
         for (final Button mButton : aButton) { mButton.setOnClickListener(this); }
-
-        /* MARK - : HealthDatabase */
-        mHealthDatabase = new HealthDatabase(mContext);
 
         /* MARK - : TextView */
         cTextViewMap.put("Helper_Name", (TextView) findViewById(R.id.MainHelperName));
@@ -123,6 +118,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         setImageView(mContext, mHelperImage, BasicData.HELPER_IMAGE);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        mRealm.close();
+    }
+
     /* MARK - : Setting Graph Method */
     private void setGraph(final LineChart mLineChart) {
 
@@ -131,16 +133,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         final ArrayList<Float> mSpO2List = new ArrayList<Float>(10);
 
         /* MARK - : HealthDatabase */
-        final HealthDatabase mHealthDatabase = new HealthDatabase(mContext);
-        final ArrayList<HealthAdapter> mHealthAdapterList = mHealthDatabase.selectHealthData(mHealthDatabase.getReadableDatabase(), mContext);
+        final RealmResults<HealthRealmAdapter> mHealthAdapterList = mRealm.where(HealthRealmAdapter.class).findAllSorted("mDate");
 
         if (mHealthAdapterList != null && mHealthAdapterList.size() != 0) {
 
             /* POINT - : Graph Adapter */
             final GraphAdapter mGraphAdapter = new GraphAdapter(mContext);
-            for (final HealthAdapter mAdapter : mHealthAdapterList) {
-                mHeartList.add((float) mAdapter.getHeartBeatRate());
-                mSpO2List.add((float) mAdapter.getSPO2Rate());
+            for (final HealthRealmAdapter mAdapter : mHealthAdapterList) {
+                mHeartList.add((float) mAdapter.getHRM());
+                mSpO2List.add((float) mAdapter.getSPO2());
             }
 
             mGraphAdapter.drawHealthLinerGraph(mLineChart, mHeartList, mSpO2List);
@@ -190,7 +191,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        final ArrayList<TodoAdapter> mTodoList = mHealthDatabase.selectTodoData(mHealthDatabase.getReadableDatabase(), mContext);
+        final RealmResults<TodoRealmAdapter> mTodoList = mRealm.where(TodoRealmAdapter.class).findAll();
         mRecyclerView.setAdapter(new ToDoListAdapter(mContext, mTodoList));
     }
 
@@ -241,15 +242,23 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                     /* POINT - : Simple Date Format */
                     final SimpleDateFormat mSimple = new SimpleDateFormat("MM-dd hh:mm");
 
-                    /* POINT - : String */
-                    final String mDate = mSimple.format(new Date(System.currentTimeMillis()));
-                    final String mMainTitle = mToDoEdit.getText().toString();
+                    /* POINT - : Realm */
+                    mRealm.executeTransaction(new Realm.Transaction() {
+                        @Override
+                        public void execute(Realm realm) {
+                            final TodoRealmAdapter mAdapter = realm.createObject(TodoRealmAdapter.class);
+                            mAdapter.setDate( mSimple.format(new Date(System.currentTimeMillis())) );
+                            mAdapter.setMainTitle( mToDoEdit.getText().toString() );
+                            mAdapter.setSummary(BasicData.TODO_INPUT_PATIENT);
+                        }
+                    });
 
-                    mHealthDatabase.insertTodoData(mHealthDatabase.getWritableDatabase(), mContext, mMainTitle, BasicData.TODO_INPUT_PATIENT, mDate);
-                    setRecyclerView(mToDoRecyclerView);
-
+                    /* POINT - : SweetAlertDialog */
                     new SweetAlertDialog(mContext, SweetAlertDialog.SUCCESS_TYPE).setTitleText("ToDo 생성완료")
-                            .setContentText(String.format("%s가 생성되었습니다.", mToDoEdit.getText().toString())).show();
+                            .setContentText(String.format("%s가 생성되었습니다.", mToDoEdit.getText().toString())).setConfirmText("확인").setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sweetAlertDialog) { setRecyclerView(mToDoRecyclerView); sweetAlertDialog.dismiss(); }
+                    }).show();
                     mToDoEdit.setText(null);
                 } break;
             }
@@ -306,8 +315,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sLatLng, 15));
 
         /* MARK - : Import Location Data */
-        final ArrayList<LocationAdapter> mLocationList = mHealthDatabase.selectLocationData(mHealthDatabase.getReadableDatabase(), mContext);
-        for (final LocationAdapter mAdapter : mLocationList) { googleMap.addMarker(setMapMarker("PATIENT TRACE", mAdapter.getDate(), new LatLng(mAdapter.getLatitude(), mAdapter.getdLongitude()))); }
+        final RealmResults<LocationRealmAdapter> mLocationList = mRealm.where(LocationRealmAdapter.class).findAll();
+        for (final LocationRealmAdapter mAdapter : mLocationList) {
+            googleMap.addMarker(setMapMarker("PATIENT TRACE", mAdapter.getDate().toString(), new LatLng(mAdapter.getLatitude(), mAdapter.getLongitude())));
+        }
 
         /* MARK - : Export Jurisdiction Data */
         final String mString = mShared.getString(BasicData.LOCATION_PATIENT_KEY, null);
@@ -347,8 +358,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             @Override
             public void onClick(SweetAlertDialog sweetAlertDialog) {
 
-                /* POINT - : Location Database */
-                mHealthDatabase.insertLocationData(mHealthDatabase.getWritableDatabase(), mContext, mLocation.getLatitude(), mLocation.getLongitude(), new Date().toString());
+                /* POINT - : Realm Location Database */
+                mRealm.executeTransaction(new Realm.Transaction() {
+                    @Override
+                    public void execute(Realm realm) {
+                        final LocationRealmAdapter mAdapter = realm.createObject(LocationRealmAdapter.class);
+                        mAdapter.setLatitude(mLocation.getLatitude());
+                        mAdapter.setLongitude(mLocation.getLongitude());
+                        mAdapter.setAddress(cTextViewMap.get("Patient_Location").getText().toString());
+                        mAdapter.setDate(new Date());
+                    }
+                });
 
                 sweetAlertDialog.cancel(); finish();
             }

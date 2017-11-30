@@ -13,11 +13,12 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.health1st.yeop9657.health1st.ResourceData.BasicData;
-import com.tsengvn.typekit.Typekit;
-import com.tsengvn.typekit.TypekitContextWrapper;
 
+import java.security.SecureRandom;
 import java.util.Random;
 
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 public class BaseActivity extends AppCompatActivity
@@ -31,6 +32,9 @@ public class BaseActivity extends AppCompatActivity
 
     /* String */
     private String sSecurityPassword = null;
+
+    /* MARK - : Realm */
+    protected Realm mRealm = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,14 +60,13 @@ public class BaseActivity extends AppCompatActivity
             }
         }
 
-        /* POINT - : FONT Open Source */
-        Typekit.getInstance().addNormal(Typekit.createFromAsset(this, "BMHANNA_11yrs_ttf.ttf")).addBold(Typekit.createFromAsset(this, "BMHANNA_11yrs_ttf.ttf"));
-    }
+        /* POINT - : Realm */
+        if (mRealm == null) {
 
-    /* MARK - : Typekit Method */
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(TypekitContextWrapper.wrap(newBase));
+            /* POINT - : RealmConfig */
+            Realm.init(this);
+           mRealm = Realm.getDefaultInstance();
+        }
     }
 
     /* MARK - : User Custom Method */
