@@ -7,7 +7,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.database.sqlite.SQLiteStatement;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
@@ -228,9 +227,9 @@ public class HealthDatabase extends SQLiteOpenHelper {
     }
 
     /* TODO - : Todo Delete Database Method */
-    public final boolean deleteTodoData(final SQLiteDatabase mSQLite, final String sTitle) {
-        try { mSQLite.delete(DATABASE_INFORMATION.DATABASE_TODO_NAME, null, null); return true; }
-        catch (SQLiteException error) {  Log.e(TAG, error.getMessage()); error.printStackTrace(); return false; }
+    public final void deleteTodoData(final SQLiteDatabase mSQLite, final String sTitle) {
+        try { mSQLite.delete(DATABASE_INFORMATION.DATABASE_TODO_NAME, null, null); }
+        catch (SQLiteException error) {  Log.e(TAG, error.getMessage()); error.printStackTrace(); }
         finally { mSQLite.close(); }
     }
 }
