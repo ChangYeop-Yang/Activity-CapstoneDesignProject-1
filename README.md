@@ -79,6 +79,8 @@ This Capstone Design Project 1 (CDP1) course is a team-based project class. Each
 
 ![Alt text](http://blogfiles.naver.net/MjAxNzExMjZfMiAg/MDAxNTExNjk1NjMzOTMw.26_39lbWgSGQc-sbQSW_nHmw9HlrahOsKG_gV6d8LuUg.SRe9j8LkkQdJE78pOTWEml0ZZQP-rSuc4jinNoLHsDYg.JPEG.yeop9657/%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C5.JPGg "Application Core Tech")
 
+![Alt text](http://blogfiles.naver.net/MjAxNzExMjZfMjgy/MDAxNTExNjk1NjM0MDcy.995NpkbUY9SfH7226MVZRNX3s-635GwicZMaUj5nF98g.PQujjTf22vuVr3aSAoAEy9pqgidaq-lXyvafWBI6zsEg.JPEG.yeop9657/%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C13.JPG "Application Process")
+
 ![Alt text](http://blogfiles.naver.net/MjAxNzExMjZfMjIw/MDAxNTExNjk1NjM0MDc1.Mt0o07g4S3WtUEZ5tAIoH0wdoq0cv9fKEIVZiAPVS3Mg.bUxrJXWWZAQnivJ4an3QvYbKXAUOhmbLuI4sIXjddE0g.JPEG.yeop9657/%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C10.JPG "Application Structure")
 
 ![Alt text](http://blogfiles.naver.net/MjAxNzExMjZfOSAg/MDAxNTExNjk1NjM0MDc1.g1jWCTOHJnrdtBEOizti8UWwg2o437rPAHZTT1evpTsg.nReurqyin_ka9fht3w3SJBlR2PXOskDK3ttQtzA7XcYg.JPEG.yeop9657/%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C11.JPG "Application Class Diagram")
