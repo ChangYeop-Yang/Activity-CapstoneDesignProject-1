@@ -5,7 +5,7 @@
 
 **⌘ Application Icon**
 
-![Alt text](http://blogfiles.naver.net/MjAxNzExMjZfNjUg/MDAxNTExNjk2NDE3MjI0.RS7BDnSUMD9e3tMPtqJQ28EswLE-VzW2EfdJnNORMQkg.lVbw3RADcM02Eps6o3dqV_BKMKKDv1LX9AQ_j4yTV-kg.PNG.yeop9657/icon.png)
+<span style="display:block;text-align:center">![Test Automation](http://blogfiles.naver.net/MjAxNzExMjZfNjUg/MDAxNTExNjk2NDE3MjI0.RS7BDnSUMD9e3tMPtqJQ28EswLE-VzW2EfdJnNORMQkg.lVbw3RADcM02Eps6o3dqV_BKMKKDv1LX9AQ_j4yTV-kg.PNG.yeop9657/icon.png)</span>
 
 * * *
 
