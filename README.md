@@ -71,6 +71,8 @@ This Capstone Design Project 1 (CDP1) course is a team-based project class. Each
 
 > ⌘ Application Thesis: [Thesis](https://github.com/ChangYeop-Yang/Activity-Thesis)
 
+> ⌘ Slide Share: [Slide](https://www.slideshare.net/Yangchangyeop/university-83851915)
+
 > ⌘ Naver Blog: [Naver](http://yeop9657.blog.me/221111128215)
 
 * * *
