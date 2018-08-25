@@ -88,3 +88,11 @@ This Capstone Design Project 1 (CDP1) course is a team-based project class. Each
 ![Alt text](http://blogfiles.naver.net/MjAxNzExMjZfOSAg/MDAxNTExNjk1NjM0MDc1.g1jWCTOHJnrdtBEOizti8UWwg2o437rPAHZTT1evpTsg.nReurqyin_ka9fht3w3SJBlR2PXOskDK3ttQtzA7XcYg.JPEG.yeop9657/%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C11.JPG "Application Class Diagram")
 
 * * *
+
+**⌘ Application Demo Play**
+
+|DEMO PLAY 1|DEMO PLAY 2|
+|:---------:|:---------:|
+|![](http://drive.google.com/uc?export=view&id=1d2K5mS0kwGKkGfhup0b4Ur8sFJ3dt5ox)|![](http://drive.google.com/uc?export=view&id=1blwuUb0_GvV51KtBhNFBL7BNjMtrg24P)|
+
+* * *
