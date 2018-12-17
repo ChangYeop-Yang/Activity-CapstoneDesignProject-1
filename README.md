@@ -55,7 +55,7 @@ This Capstone Design Project 1 (CDP1) course is a team-based project class. Each
 
 ## ★ REFERENCE
 
-:airplane: [Android Application Version - Github](http://bit.ly/2Q0oEPP)
+:airplane: [iOS Application Version - Github](http://bit.ly/2zt8ZkT)
 
 :airplane: [Slide Share](https://www.slideshare.net/Yangchangyeop/university-83851915)
 
