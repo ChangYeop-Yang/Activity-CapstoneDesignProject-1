@@ -1,5 +1,5 @@
-# ■ Android-Health1street
-**[Capstone Design 1] Team School Health1st Android Project. (Prof. 고석주)**
+# ■ Android-Health1street <kbd>[Kyungpook National University](http://www.knu.ac.kr/wbbs/)</kbd>
+[Capstone Design 1] Team School Health1st Android Project. (Prof. 고석주)
 
 <p align="center">
   <img src="http://blogfiles.naver.net/MjAxNzExMjZfNjUg/MDAxNTExNjk2NDE3MjI0.RS7BDnSUMD9e3tMPtqJQ28EswLE-VzW2EfdJnNORMQkg.lVbw3RADcM02Eps6o3dqV_BKMKKDv1LX9AQ_j4yTV-kg.PNG.yeop9657/icon.png/" width="350" height="350">
