@@ -5,7 +5,7 @@
   <img src="http://blogfiles.naver.net/MjAxNzExMjZfNjUg/MDAxNTExNjk2NDE3MjI0.RS7BDnSUMD9e3tMPtqJQ28EswLE-VzW2EfdJnNORMQkg.lVbw3RADcM02Eps6o3dqV_BKMKKDv1LX9AQ_j4yTV-kg.PNG.yeop9657/icon.png/" width="350" height="350">
 </p>
 
-## 📋 Course Goals and Objectives
+## 📋 학습 목표 (Course Goals and Objectives)
 
 This Capstone Design Project 1 (CDP1) course is a team-based project class. Each team consists of 3 students. Some or all teams may work with the project issues that will be proposed by the CSE professors and Industry experts. The details of class schedule will be discussed in the first class.
 
@@ -21,7 +21,7 @@ This Capstone Design Project 1 (CDP1) course is a team-based project class. Each
 
 * 일부 과제는 오픈 소스 SW 프로젝트로 진행함
 
-## 📋 Course Description, Methods, and Materials
+## 📋 수업 과정 및 설명 (Course Description, Methods, and Materials)
 
 1. This class is a project-based education, and thus the conventional teaching is not given.
 
@@ -31,7 +31,7 @@ This Capstone Design Project 1 (CDP1) course is a team-based project class. Each
 
 4. As the continuation of this CDP1, the corresponding CDP2 class will be open in the next semester.
 
-## 📋 Syllabus for lecture
+## 📋 학습계획서 (Syllabus for lecture)
 
 |:page_facing_up: syllabus for lecture 001|:page_facing_up: syllabus for lecture 002|
 |:---------------------------------------:|:---------------------------------------:|
