@@ -37,7 +37,7 @@ This Capstone Design Project 1 (CDP1) course is a team-based project class. Each
 |:---------------------------------------:|:---------------------------------------:|
 |![](https://user-images.githubusercontent.com/20036523/50081046-d2cf5680-0230-11e9-83a8-837940844378.jpg)|![](https://user-images.githubusercontent.com/20036523/50081047-d367ed00-0230-11e9-9854-f5a2e4727d8a.jpg)|
 
-## ★ Application Structure
+## 💾 Android Application Structure
 
 ![Alt text](http://blogfiles.naver.net/MjAxNzExMjZfMiAg/MDAxNTExNjk1NjMzOTMw.26_39lbWgSGQc-sbQSW_nHmw9HlrahOsKG_gV6d8LuUg.SRe9j8LkkQdJE78pOTWEml0ZZQP-rSuc4jinNoLHsDYg.JPEG.yeop9657/%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C5.JPGg "Application Core Tech")
 
@@ -47,23 +47,35 @@ This Capstone Design Project 1 (CDP1) course is a team-based project class. Each
 
 ![Alt text](http://blogfiles.naver.net/MjAxNzExMjZfOSAg/MDAxNTExNjk1NjM0MDc1.g1jWCTOHJnrdtBEOizti8UWwg2o437rPAHZTT1evpTsg.nReurqyin_ka9fht3w3SJBlR2PXOskDK3ttQtzA7XcYg.JPEG.yeop9657/%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C11.JPG "Application Class Diagram")
 
-## ★ Application Demo Play
+## 💾 iOS Application Structure
+
+![Alt text](http://blogfiles.naver.net/MjAxNzExMjZfMiAg/MDAxNTExNjk1NjMzOTMw.26_39lbWgSGQc-sbQSW_nHmw9HlrahOsKG_gV6d8LuUg.SRe9j8LkkQdJE78pOTWEml0ZZQP-rSuc4jinNoLHsDYg.JPEG.yeop9657/%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C5.JPGg "Application Core Tech")
+
+![Alt text](http://blogfiles.naver.net/MjAxNzExMjZfMjgy/MDAxNTExNjk1NjM0MDcy.995NpkbUY9SfH7226MVZRNX3s-635GwicZMaUj5nF98g.PQujjTf22vuVr3aSAoAEy9pqgidaq-lXyvafWBI6zsEg.JPEG.yeop9657/%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C13.JPG "Application Process")
+
+![Alt text](http://blogfiles.naver.net/MjAxNzExMjZfMjIw/MDAxNTExNjk1NjM0MDc1.Mt0o07g4S3WtUEZ5tAIoH0wdoq0cv9fKEIVZiAPVS3Mg.bUxrJXWWZAQnivJ4an3QvYbKXAUOhmbLuI4sIXjddE0g.JPEG.yeop9657/%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C10.JPG "Application Structure")
+
+![Alt text](http://blogfiles.naver.net/MjAxNzExMjZfOSAg/MDAxNTExNjk1NjM0MDc1.g1jWCTOHJnrdtBEOizti8UWwg2o437rPAHZTT1evpTsg.nReurqyin_ka9fht3w3SJBlR2PXOskDK3ttQtzA7XcYg.JPEG.yeop9657/%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C11.JPG "Application Class Diagram")
+
+## 📹 Android Application Demo Play
 
 |:movie_camera: DEMO PLAY 1|:movie_camera:DEMO PLAY 2|
 |:------------------------:|:-----------------------:|
 |<img src="http://drive.google.com/uc?export=view&id=1d2K5mS0kwGKkGfhup0b4Ur8sFJ3dt5ox" width="750" height="750" />|<img src="http://drive.google.com/uc?export=view&id=1blwuUb0_GvV51KtBhNFBL7BNjMtrg24P" width="750" height="750" />|
 
-## ★ Copyright Registration
+## 📹 iOS Application Demo Play
+  
+|:movie_camera: DEMO PLAY 1|:movie_camera:DEMO PLAY 2|
+|:------------------------:|:-----------------------:|
+|<img src="http://drive.google.com/uc?export=view&id=1gnhRrskwHE3_pVjWtnxfy85t08SNqVE-" width="750" height="750" />|<img src="http://drive.google.com/uc?export=view&id=1Td1XmfIImiC70V1BYE7Dc6IVk1I-MSFP" width="750" height="750" />|
+
+## 📄 Application Copyright Registration
 
 |:bookmark_tabs: Copyright Registration 001|:bookmark_tabs: Copyright Registration 002|:bookmark_tabs: Copyright Registration 003|
 |:----------------------------------------:|:----------------------------------------:|:----------------------------------------:|
 |![](https://user-images.githubusercontent.com/20036523/50513518-9d9df080-0adb-11e9-9004-1490aa294a9f.jpg)|![](https://user-images.githubusercontent.com/20036523/50513519-a0004a80-0adb-11e9-856e-5488197ca1ce.jpg)|![](https://user-images.githubusercontent.com/20036523/50513521-a262a480-0adb-11e9-96e6-e383792205f3.jpg)|
 
 ## ★ REFERENCE
-
-:airplane: [iOS Application Version - Github](http://bit.ly/2zt8ZkT)
-
-:airplane: [Slide Share](https://www.slideshare.net/Yangchangyeop/university-83851915)
 
 :airplane: [Naver Blog](http://bit.ly/2OkxUk9)
 
