@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="S8p-CD-Aoa">
+    <device id="retina4_0" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="HelveticaNeue.ttc">
+            <string>HelveticaNeue-Bold</string>
+        </array>
+    </customFonts>
+    <scenes>
+        <!--환자정보-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Health1st" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="R5q-YW-hvr">
+                                <rect key="frame" x="0.0" y="20" width="320" height="425.5"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="oZE-13-ELf">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="44.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text=" Health 1st Street" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rsp-rK-10Z">
+                                                <rect key="frame" x="0.0" y="0.0" width="320" height="24"/>
+                                                <color key="backgroundColor" red="0.24662965536117554" green="0.33391320705413818" blue="0.68623155355453491" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                                <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text=" - Helper Version" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MEu-iL-JYQ">
+                                                <rect key="frame" x="0.0" y="24" width="320" height="20.5"/>
+                                                <color key="backgroundColor" red="0.18823529411764706" green="0.24705882352941178" blue="0.62352941176470589" alpha="1" colorSpace="calibratedRGB"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="qRp-j5-H56">
+                                        <rect key="frame" x="0.0" y="64.5" width="320" height="102.5"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="ic_user.png" translatesAutoresizingMaskIntoConstraints="NO" id="D0b-nN-SMc">
+                                                <rect key="frame" x="0.0" y="0.0" width="160" height="102.5"/>
+                                            </imageView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="aSC-a8-ye6">
+                                                <rect key="frame" x="160" y="0.0" width="160" height="102.5"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="PATIENT INFO" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J6A-RZ-lxu">
+                                                        <rect key="frame" x="0.0" y="0.0" width="160" height="20.5"/>
+                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                        <color key="textColor" red="1" green="0.1857388616" blue="0.57339501380000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DCc-h0-TIH">
+                                                        <rect key="frame" x="0.0" y="20.5" width="160" height="20.5"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bbM-N7-hTd">
+                                                        <rect key="frame" x="0.0" y="41" width="160" height="20.5"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bP9-Yo-xdh">
+                                                        <rect key="frame" x="0.0" y="61.5" width="160" height="20.5"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7ph-lV-1GZ">
+                                                        <rect key="frame" x="0.0" y="82" width="160" height="20.5"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="aSC-a8-ye6" firstAttribute="width" secondItem="D0b-nN-SMc" secondAttribute="width" id="muT-hb-amv"/>
+                                        </constraints>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="xb6-Fo-eMI">
+                                        <rect key="frame" x="0.0" y="187" width="320" height="110"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="XjN-G0-97j">
+                                                <rect key="frame" x="0.0" y="0.0" width="160" height="110"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="PATIENT STATE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GRR-si-xD2">
+                                                        <rect key="frame" x="0.0" y="0.0" width="160" height="20.5"/>
+                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                        <color key="textColor" red="1" green="0.1857388616" blue="0.57339501380000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="ic_circle_gre.png" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="07V-xS-bEp">
+                                                        <rect key="frame" x="0.0" y="20.5" width="160" height="64"/>
+                                                    </imageView>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="snS-GY-WXq">
+                                                        <rect key="frame" x="0.0" y="84.5" width="160" height="25.5"/>
+                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="21"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                            </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="byj-rV-Q8x">
+                                                <rect key="frame" x="160" y="0.0" width="160" height="110"/>
+                                                <subviews>
+                                                    <button opaque="NO" tag="11" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4nm-I8-skj">
+                                                        <rect key="frame" x="0.0" y="0.0" width="160" height="55"/>
+                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                        <inset key="titleEdgeInsets" minX="20" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                        <state key="normal" title="환자에게 전화하기" image="ic_call.png">
+                                                            <color key="titleColor" red="0.0207074862" green="0.42678582669999998" blue="0.94214403629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="act_HelperBtn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="wYY-6o-91Q"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" tag="12" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mti-9v-PA9">
+                                                        <rect key="frame" x="0.0" y="55" width="160" height="55"/>
+                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                        <inset key="titleEdgeInsets" minX="20" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                        <state key="normal" title="환자에게 문자하기" image="ic_message.png">
+                                                            <color key="titleColor" red="0.0207074862" green="0.42678582669999998" blue="0.94214403629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="act_HelperBtn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="E5w-ir-kVK"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstItem="mti-9v-PA9" firstAttribute="height" secondItem="4nm-I8-skj" secondAttribute="height" id="8Ha-q1-DH2"/>
+                                                </constraints>
+                                            </stackView>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="byj-rV-Q8x" firstAttribute="width" secondItem="XjN-G0-97j" secondAttribute="width" id="2FQ-2E-zza"/>
+                                        </constraints>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="cTy-1n-dvj">
+                                        <rect key="frame" x="0.0" y="317" width="320" height="108.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="PATIENT MEAURE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rml-Ti-AJk">
+                                                <rect key="frame" x="0.0" y="0.0" width="320" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                <color key="textColor" red="1" green="0.1857388616" blue="0.57339501380000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="GLh-hP-xYc">
+                                                <rect key="frame" x="0.0" y="20.5" width="320" height="88"/>
+                                                <subviews>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="2LP-OF-X4c">
+                                                        <rect key="frame" x="0.0" y="0.0" width="160" height="88"/>
+                                                        <subviews>
+                                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="ic_cardiogram.png" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aVt-Ol-Wd6">
+                                                                <rect key="frame" x="0.0" y="0.0" width="160" height="64"/>
+                                                            </imageView>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WQK-9i-eM9">
+                                                                <rect key="frame" x="0.0" y="64" width="160" height="24"/>
+                                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                        </subviews>
+                                                    </stackView>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="zk9-u6-QOj">
+                                                        <rect key="frame" x="160" y="0.0" width="160" height="88"/>
+                                                        <subviews>
+                                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="ic_o2.png" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Prl-Lg-B0t">
+                                                                <rect key="frame" x="0.0" y="0.0" width="160" height="64"/>
+                                                            </imageView>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OSD-ld-8tM">
+                                                                <rect key="frame" x="0.0" y="64" width="160" height="24"/>
+                                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                        </subviews>
+                                                    </stackView>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstItem="zk9-u6-QOj" firstAttribute="width" secondItem="2LP-OF-X4c" secondAttribute="width" id="snH-kf-6gZ"/>
+                                                </constraints>
+                                            </stackView>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="xb6-Fo-eMI" firstAttribute="width" secondItem="R5q-YW-hvr" secondAttribute="width" id="BFp-o8-nZE"/>
+                                    <constraint firstItem="qRp-j5-H56" firstAttribute="width" secondItem="R5q-YW-hvr" secondAttribute="width" id="U96-8Z-skK"/>
+                                    <constraint firstItem="cTy-1n-dvj" firstAttribute="width" secondItem="R5q-YW-hvr" secondAttribute="width" id="s59-gu-FQ7"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="R5q-YW-hvr" firstAttribute="width" secondItem="6Tk-OE-BBY" secondAttribute="width" id="8Qq-Ky-aND"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="top" secondItem="R5q-YW-hvr" secondAttribute="bottom" constant="-425.5" id="kGy-Vr-JUE"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" tag="10" title="환자정보" image="ic_assignment_ind_white.png" id="C8e-vU-aFo"/>
+                    <connections>
+                        <outlet property="iv_PatientFace" destination="D0b-nN-SMc" id="uAs-YD-kyU"/>
+                        <outlet property="iv_PatientState" destination="07V-xS-bEp" id="gIj-1f-Tjr"/>
+                        <outlet property="lb_PatientAge" destination="bbM-N7-hTd" id="C9E-Aq-Fwf"/>
+                        <outlet property="lb_PatientBlood" destination="7ph-lV-1GZ" id="M2U-1p-PKF"/>
+                        <outlet property="lb_PatientHRM" destination="WQK-9i-eM9" id="Kxl-7r-FGG"/>
+                        <outlet property="lb_PatientHW" destination="bP9-Yo-xdh" id="I3Z-Tg-zPE"/>
+                        <outlet property="lb_PatientName" destination="DCc-h0-TIH" id="k14-0d-UMx"/>
+                        <outlet property="lb_PatientSPO2" destination="OSD-ld-8tM" id="qhV-lr-rNJ"/>
+                        <outlet property="lb_PatientState" destination="snS-GY-WXq" id="xUk-Xg-Dyl"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="805.60000000000002" y="22.938530734632685"/>
+        </scene>
+        <!--지도-->
+        <scene sceneID="iNB-wa-XZF">
+            <objects>
+                <viewController id="RNU-vB-TfM" customClass="MapViewController" customModule="Health1st" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8ee-ag-p0d">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="2qH-n9-XMZ"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" tag="20" title="지도" image="ic_place_white.png" id="I8B-Eg-7Bl"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yh7-z2-E5l" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-738.75" y="786.97183098591552"/>
+        </scene>
+        <!--그래프-->
+        <scene sceneID="3eV-AZ-6OW">
+            <objects>
+                <viewController id="DAR-8M-7q2" customClass="ChartViewController" customModule="Health1st" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ESK-pu-DaJ">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gUn-yl-ziF" customClass="LineChartView" customModule="Charts">
+                                <rect key="frame" x="0.0" y="134" width="320" height="385"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="JfH-nl-KEt">
+                                <rect key="frame" x="0.0" y="20" width="320" height="106"/>
+                                <subviews>
+                                    <navigationBar contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SYL-e7-Ybs">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                        <items>
+                                            <navigationItem title="생체정보 그래프 화면" id="ukq-yq-Ftm">
+                                                <barButtonItem key="rightBarButtonItem" tag="21" systemItem="camera" id="1pW-Jn-CsS">
+                                                    <connections>
+                                                        <action selector="actPitcure:" destination="DAR-8M-7q2" id="b69-UD-uOE"/>
+                                                    </connections>
+                                                </barButtonItem>
+                                            </navigationItem>
+                                        </items>
+                                    </navigationBar>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="PATIENT MEAURE CHART" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="haa-sz-vdS">
+                                        <rect key="frame" x="0.0" y="54" width="320" height="21.5"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="18"/>
+                                        <color key="textColor" red="1" green="0.1857388616" blue="0.57339501380000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f2x-xo-kEs">
+                                        <rect key="frame" x="0.0" y="85.5" width="320" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="uCy-Qp-rVT" firstAttribute="top" secondItem="JfH-nl-KEt" secondAttribute="bottom" constant="-106" id="iNV-iL-4Vg"/>
+                            <constraint firstItem="JfH-nl-KEt" firstAttribute="width" secondItem="ESK-pu-DaJ" secondAttribute="width" id="uck-SD-Dub"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="uCy-Qp-rVT"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" tag="30" title="그래프" image="ic_assessment_white.png" id="lgL-Hv-ABw"/>
+                    <connections>
+                        <outlet property="lb_LastTime" destination="f2x-xo-kEs" id="ErQ-EP-fMD"/>
+                        <outlet property="lcv_Meaure" destination="gUn-yl-ziF" id="xPH-Y7-w4p"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="OUx-LL-Mg7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="170.625" y="786.97183098591552"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="7WB-Lj-1NX">
+            <objects>
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="S8p-CD-Aoa" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="pMK-3p-VGo">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="pio-g6-meT"/>
+                        <segue destination="DAR-8M-7q2" kind="relationship" relationship="viewControllers" id="7to-GF-p67"/>
+                        <segue destination="RNU-vB-TfM" kind="relationship" relationship="viewControllers" id="9mb-sS-cpO"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IfV-0F-Tuj" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-267.19999999999999" y="32.383808095952027"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="ic_assessment_white.png" width="24" height="24"/>
+        <image name="ic_assignment_ind_white.png" width="24" height="24"/>
+        <image name="ic_call.png" width="24" height="24"/>
+        <image name="ic_cardiogram.png" width="64" height="64"/>
+        <image name="ic_circle_gre.png" width="64" height="64"/>
+        <image name="ic_message.png" width="24" height="24"/>
+        <image name="ic_o2.png" width="64" height="64"/>
+        <image name="ic_place_white.png" width="24" height="24"/>
+        <image name="ic_user.png" width="64" height="64"/>
+    </resources>
+</document>
