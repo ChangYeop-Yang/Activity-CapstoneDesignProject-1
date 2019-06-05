@@ -1,11 +1,11 @@
-# ■ Android-Health1street <kbd>[Kyungpook National University](http://www.knu.ac.kr/wbbs/)</kbd>
+# ■ Activity - Capstone Design Project 1 <kbd>[Kyungpook National University](http://www.knu.ac.kr/wbbs/)</kbd>
 [Capstone Design 1] Team School Health1st Android Project. (Prof. 고석주)
 
 <p align="center">
   <img src="http://blogfiles.naver.net/MjAxNzExMjZfNjUg/MDAxNTExNjk2NDE3MjI0.RS7BDnSUMD9e3tMPtqJQ28EswLE-VzW2EfdJnNORMQkg.lVbw3RADcM02Eps6o3dqV_BKMKKDv1LX9AQ_j4yTV-kg.PNG.yeop9657/icon.png/" width="350" height="350">
 </p>
 
-## ★ Course Goals and Objectives
+## 📋 Course Goals and Objectives
 
 This Capstone Design Project 1 (CDP1) course is a team-based project class. Each team consists of 3 students. Some or all teams may work with the project issues that will be proposed by the CSE professors and Industry experts. The details of class schedule will be discussed in the first class.
 
@@ -21,7 +21,7 @@ This Capstone Design Project 1 (CDP1) course is a team-based project class. Each
 
 * 일부 과제는 오픈 소스 SW 프로젝트로 진행함
 
-## ★ Course Description, Methods, and Materials
+## 📋 Course Description, Methods, and Materials
 
 1. This class is a project-based education, and thus the conventional teaching is not given.
 
@@ -31,7 +31,7 @@ This Capstone Design Project 1 (CDP1) course is a team-based project class. Each
 
 4. As the continuation of this CDP1, the corresponding CDP2 class will be open in the next semester.
 
-## ★ Syllabus for lecture
+## 📋 Syllabus for lecture
 
 |:page_facing_up: syllabus for lecture 001|:page_facing_up: syllabus for lecture 002|
 |:---------------------------------------:|:---------------------------------------:|
@@ -75,11 +75,11 @@ This Capstone Design Project 1 (CDP1) course is a team-based project class. Each
 |:----------------------------------------:|:----------------------------------------:|:----------------------------------------:|
 |![](https://user-images.githubusercontent.com/20036523/50513518-9d9df080-0adb-11e9-9004-1490aa294a9f.jpg)|![](https://user-images.githubusercontent.com/20036523/50513519-a0004a80-0adb-11e9-856e-5488197ca1ce.jpg)|![](https://user-images.githubusercontent.com/20036523/50513521-a262a480-0adb-11e9-96e6-e383792205f3.jpg)|
 
-## ★ REFERENCE
+## 📣 REFERENCE
 
 :airplane: [Naver Blog](http://bit.ly/2OkxUk9)
 
-## ★ Developer Information
+## 📣 Developer Information
 
 |:rocket: Github QR Code|:pencil: Naver-Blog QR Code|:eyeglasses: Linked-In QR Code|
 |:---------------------:|:-------------------------:|:----------------------------:|
